@@ -1,11 +1,11 @@
 $('.getDB').click(getDB);
 
-const getDB = () => {
+function getDB(e) {
     fetch('/get-db')
         .then(res => res.json())
         .then(res => {
             console.log(res);
-            $('.ins').innerHTML = 'Here is Your DB:<br>';
+            $('.ins').html('Here is Your DB:<br>');
             let tableString = '<table><tr>';
             Object.keys(res[0]).forEach(keyName => tableString += `<th>${keyName}</th>`);
             tableString += '</tr>';
@@ -17,6 +17,6 @@ const getDB = () => {
                 tableString += '</tr>';
             });
             tableString += '</table>';
-            $('.ins').innerHTML += tableString;
+            $('.ins').append(tableString);
         });
-};
+}

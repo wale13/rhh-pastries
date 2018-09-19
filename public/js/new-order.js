@@ -1,4 +1,4 @@
-$('.submit-new').click(testSend);
+$('.submit-new').click(sendOrder);
 
 jQuery.fn.serializeObject = function() {
     let arrayData = this.serializeArray();
@@ -22,7 +22,7 @@ jQuery.fn.serializeObject = function() {
     return objectData;
 };
 
-function testSend(e) {
+function sendOrder(e) {
     const form = $('.cake');
     if (form[0].checkValidity()) {
         e.preventDefault();
