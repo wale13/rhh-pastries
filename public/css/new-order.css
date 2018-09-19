@@ -1,0 +1,38 @@
+body {
+    background-color: #000;
+}
+form {
+    border: 1px solid #F50;
+    border-radius: 15px;
+    padding: 10px;
+    display: inline-block;
+    background-color: #FFF;
+}
+.order-number {
+    text-align: center;
+}
+input[type=text], select {
+    padding: 7px 11px;
+    margin: 5px 0;
+    box-sizing: border-box;
+    border: none;
+    background-color: #EEE;
+}
+legend {
+    text-align: center;
+    padding: 5px;
+    display: inline-block;
+    border: 1px solid #F50;
+    border-radius: 8px;
+    background-color: #F50;
+    color: white;
+}
+.form-holder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+fieldset {
+    border: 1px solid #F50;
+    border-radius: 15px;
+}
