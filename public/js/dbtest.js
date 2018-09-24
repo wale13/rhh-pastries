@@ -4,7 +4,6 @@ function getDB(e) {
     fetch('/get-db')
         .then(res => res.json())
         .then(res => {
-            console.log(res);
             $('.ins').html('Here is Your DB:<br>');
             let tableString = '<table><tr>';
             Object.keys(res[0]).forEach(keyName => tableString += `<th>${keyName}</th>`);

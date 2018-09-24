@@ -32,7 +32,7 @@ getEntireDBRouter.get('/', (req, res) => {
         if (err) {
             console.log(err);
         }
-        res.send(rows);
+        res.status(200).send(rows);
     });
 });
 
