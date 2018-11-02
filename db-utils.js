@@ -6,86 +6,62 @@ const addNewOrderRouter = express.Router();
 
 addNewOrderRouter.post('/', (req, res) => {
     let body = req.body;
-    let clientId;
-    const begin = ()=>{db.all(
+    const begin = () => {
+        db.get(
             'SELECT client_id FROM Clients WHERE name = $name AND surname = $surname',
             {
                 $name: body.name,
                 $surname: body.surname
             },
-            (err, row)=>{
+            (err, row) => {
                 if (err) {
                     console.log(err);
                     return;
                 }
-                else if (row[0]) {
-                    clientId = row[0].client_id;
+                else if (typeof(row) != 'undefined') {
+                    body.client_id = row.client_id;
+                    let orderKeys = Object.keys(body).filter(key => {
+                        if (key !== 'name' && key !== 'surname' && key !== 'tel' && key !== 'avatar' && body[key] !== '') {
+                            return key;
+                        } 
+                    }).toString();
+                    let orderValues = Object.keys(body).filter(key => {
+                        if (key !== 'name' && key !== 'surname' && key !== 'tel' && key !== 'avatar' && body[key] !== '') {
+                            return key;
+                        }
+                    }).map(key => JSON.stringify(body[key].toString()));
+                    let orderQuery = 'INSERT INTO Orders(' + orderKeys + ') VALUES (' + orderValues + ')';
+                    db.run(orderQuery, logNodeError);
+                    res.status(201).send(JSON.stringify('Order succesfully added!'));
                 } else {
-                    clientId = 0;
+                    let clientKeys = Object.keys(body).filter(key => {
+                        if (key == 'name' || key == 'surname' || key == 'tel' || key == 'avatar' && body[key] !== '') {
+                            return key;
+                        } 
+                    }).toString();
+                    let clientValues = Object.keys(body).filter(key => {
+                        if (key == 'name' || key == 'surname' || key == 'tel' || key == 'avatar' && body[key] !== '') {
+                            return key;
+                        }
+                    }).map(key => JSON.stringify(body[key].toString()));
+                    let clientQuery = 'INSERT INTO Clients(' + clientKeys + ') VALUES (' + clientValues + ')';
+                    db.run(clientQuery, logNodeError);
+                    console.log('Added new client with id:');
+                    begin();
                 }
-                console.log(clientId);
+                console.log(body.client_id);
             }
-    )};
+        );
+    };
     begin();
-    if (clientId === 0) {
-        console.log('trying to write to Client table');
-        let clientKeys = Object.keys(body).filter(key => {
-            if (key == 'name' || key == 'surname' || key == 'tel' || key == 'avatar' && body[key] !== '') {
-                return key;
-            } 
-        }).toString();
-        let clientValues = Object.keys(body).filter(key => {
-            if (key == 'name' || key == 'surname' || key == 'tel' || key == 'avatar' && body[key] !== '') {
-                return key;
-            }
-        }).map(key => JSON.stringify(body[key].toString()));
-        let clientQuery = 'INSERT INTO Clients(' + clientKeys + ') VALUES (' + clientValues + ')';
-        db.run(clientQuery, err => {
-            if (err) {
-                console.log(err);
-            }
-        });
-        begin();
-        // db.all(
-        //     'SELECT client_id FROM Clients WHERE name = $name AND surname = $surname',
-        //     {
-        //         $name: body.name,
-        //         $surname: body.surname
-        //     },
-        //     (err, row)=>{
-        //         if (err) {
-        //             console.log(err);
-        //             return;
-        //         }
-        //         if (row[0]) {
-        //             clientId = row[0].client_id;
-        //         }
-        //     }
-        // );
-    }
-    let orderKeys = Object.keys(body).filter(key => {
-        if (key !== 'name' && key !== 'surname' && key !== 'tel' && key !== 'avatar' && body[key] !== '') {
-            return key;
-        } 
-    }).toString();
-    let orderValues = Object.keys(body).filter(key => {
-        if (key !== 'name' && key !== 'surname' && key !== 'tel' && key !== 'avatar' && body[key] !== '') {
-            return key;
-        }
-    }).map(key => JSON.stringify(body[key].toString()));
-    let orderQuery = 'INSERT INTO Orders(' + orderKeys + ') VALUES (' + orderValues + ')';
-    db.run(orderQuery, err => {
-        if (err) {
-            console.log(err);
-        }
-    });
-    res.status(201).send();
+    
+    
 });
 
 const getEntireDBRouter = express.Router();
 
 getEntireDBRouter.get('/', (req, res) => {
-    db.all("SELECT * FROM Clients", (err, rows) => {
+    db.all("SELECT * FROM Orders", (err, rows) => {
         if (err) {
             console.log(err);
         }
@@ -95,7 +71,7 @@ getEntireDBRouter.get('/', (req, res) => {
 
 const logNodeError = error => {
   if (error) {
-    throw error;
+    console.log(error);
   }
 };
 
