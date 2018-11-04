@@ -3,6 +3,8 @@ const app = express();
 app.use(express.static('public'));
 app.use(express.json());
 
+const { logNodeError, addNewOrderRouter, getEntireDBRouter, getLastOrderIDRouter } = require('./db-utils');
+
 console.log('Server is running on', process.env.PORT || 8080, process.env.IP || '0.0.0.0');
 
 app.listen(process.env.PORT || 8080, process.env.IP || '0.0.0.0' );
@@ -15,9 +17,7 @@ const db = new sqlite3.Database('./cake-db/orders.db', (err) => {
     console.log('Connected to orders.db!');
 });
 
-const { logNodeError, addNewOrderRouter, getEntireDBRouter } = require('./db-utils');
-
-db.serialize(()=>{
+db.serialize(() => {
     db.run("DROP TABLE IF EXISTS Clients", logNodeError);
     db.run("DROP TABLE IF EXISTS Orders", logNodeError);
     db.run("CREATE TABLE IF NOT EXISTS Clients (client_id INTEGER PRIMARY KEY,name,surname,tel,avatar)", logNodeError);
@@ -29,3 +29,4 @@ db.serialize(()=>{
 
 app.use('/add-order', addNewOrderRouter);
 app.use('/get-db', getEntireDBRouter);
+app.use('/get-last-order-id', getLastOrderIDRouter);

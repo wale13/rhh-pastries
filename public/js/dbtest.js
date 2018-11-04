@@ -11,6 +11,10 @@ function getDB(e) {
             res.forEach(el => {
                 tableString += '<tr>';
                 Object.values(el).forEach(val => {
+                    if (val === null) {
+                        tableString += `<td></td>`;
+                        return;
+                    }
                     tableString += `<td>${val}</td>`;
                 });
                 tableString += '</tr>';

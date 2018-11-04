@@ -2,11 +2,18 @@ const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('./cake-db/orders.db');
 
+const logNodeError = error => {
+  if (error) {
+    console.log(error);
+  }
+};
+
 const addNewOrderRouter = express.Router();
 
 addNewOrderRouter.post('/', (req, res) => {
+    console.log('Received some new order...');
     let body = req.body;
-    const begin = () => {
+    const addNewOrder = () => {
         db.get(
             'SELECT client_id FROM Clients WHERE name = $name AND surname = $surname',
             {
@@ -31,8 +38,14 @@ addNewOrderRouter.post('/', (req, res) => {
                         }
                     }).map(key => JSON.stringify(body[key].toString()));
                     let orderQuery = 'INSERT INTO Orders(' + orderKeys + ') VALUES (' + orderValues + ')';
-                    db.run(orderQuery, logNodeError);
-                    res.status(201).send(JSON.stringify('Order succesfully added!'));
+                    db.run(orderQuery, function(err) {
+                        if (err) {
+                            console.log(err);
+                            return;
+                        }
+                        res.status(201).send(JSON.stringify(`Order # ${this.lastID} successfully added!`));
+                        console.log('Added new order # ' + this.lastID);
+                    });
                 } else {
                     let clientKeys = Object.keys(body).filter(key => {
                         if (key == 'name' || key == 'surname' || key == 'tel' || key == 'avatar' && body[key] !== '') {
@@ -46,37 +59,51 @@ addNewOrderRouter.post('/', (req, res) => {
                     }).map(key => JSON.stringify(body[key].toString()));
                     let clientQuery = 'INSERT INTO Clients(' + clientKeys + ') VALUES (' + clientValues + ')';
                     db.run(clientQuery, logNodeError);
-                    console.log('Added new client with id:');
-                    begin();
+                    console.log('Added new client: ' + body.name + ' ' + body.surname);
+                    addNewOrder();
                 }
-                console.log(body.client_id);
             }
         );
     };
-    begin();
-    
-    
+    addNewOrder();
 });
 
 const getEntireDBRouter = express.Router();
 
 getEntireDBRouter.get('/', (req, res) => {
-    db.all("SELECT * FROM Orders", (err, rows) => {
+    console.log('Received query to get entire DB...');
+    db.all("SELECT * FROM Orders INNER JOIN Clients ON Orders.client_id = Clients.client_id", (err, rows) => {
         if (err) {
             console.log(err);
+            return;
         }
         res.status(200).send(rows);
+        console.log("Entire DB was sent successfully!");
     });
 });
 
-const logNodeError = error => {
-  if (error) {
-    console.log(error);
-  }
-};
+const getLastOrderIDRouter = express.Router();
+
+getLastOrderIDRouter.get('/', (req, res) => {
+    console.log("Received query to get last order's id");
+    db.get("SELECT rowid from Orders order by ROWID DESC limit 1", (err, row) => {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        else if (typeof(row) === 'undefined') {
+            row = {"order_id": 0};
+            console.log('Manually writing row...');
+        }
+        console.log(row);
+        res.status(200).send(JSON.stringify(row.order_id));
+        console.log(`Last order's ID (${row.order_id}) was sent.`);
+    });
+});
 
 module.exports = {
     logNodeError: logNodeError,
     addNewOrderRouter: addNewOrderRouter,
-    getEntireDBRouter: getEntireDBRouter
+    getEntireDBRouter: getEntireDBRouter,
+    getLastOrderIDRouter: getLastOrderIDRouter
 };
