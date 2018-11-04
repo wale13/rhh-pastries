@@ -15,6 +15,10 @@ function getDB(e) {
                         tableString += `<td></td>`;
                         return;
                     }
+                    else if (/http/i.test(val)) {
+                        tableString += `<td><img src=${val}></td>`;
+                        return;
+                    }
                     tableString += `<td>${val}</td>`;
                 });
                 tableString += '</tr>';
