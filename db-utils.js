@@ -27,16 +27,13 @@ addNewOrderRouter.post('/', (req, res) => {
                 }
                 else if (typeof(row) != 'undefined') {
                     body.client_id = row.client_id;
-                    let orderKeys = Object.keys(body).filter(key => {
+                    let onlyOrderKeys = Object.keys(body).filter(key => {
                         if (key !== 'name' && key !== 'surname' && key !== 'tel' && key !== 'avatar' && body[key] !== '') {
                             return key;
                         } 
-                    }).toString();
-                    let orderValues = Object.keys(body).filter(key => {
-                        if (key !== 'name' && key !== 'surname' && key !== 'tel' && key !== 'avatar' && body[key] !== '') {
-                            return key;
-                        }
-                    }).map(key => JSON.stringify(body[key].toString()));
+                    });
+                    let orderKeys = onlyOrderKeys.toString();
+                    let orderValues = onlyOrderKeys.map(key => JSON.stringify(body[key].toString()));
                     let orderQuery = 'INSERT INTO Orders(' + orderKeys + ') VALUES (' + orderValues + ')';
                     db.run(orderQuery, function(err) {
                         if (err) {
@@ -47,16 +44,13 @@ addNewOrderRouter.post('/', (req, res) => {
                         console.log('Added new order # ' + this.lastID);
                     });
                 } else {
-                    let clientKeys = Object.keys(body).filter(key => {
+                    let onlyClientKeys = Object.keys(body).filter(key => {
                         if (key == 'name' || key == 'surname' || key == 'tel' || key == 'avatar' && body[key] !== '') {
                             return key;
                         } 
-                    }).toString();
-                    let clientValues = Object.keys(body).filter(key => {
-                        if (key == 'name' || key == 'surname' || key == 'tel' || key == 'avatar' && body[key] !== '') {
-                            return key;
-                        }
-                    }).map(key => JSON.stringify(body[key].toString()));
+                    });
+                    let clientKeys = onlyClientKeys.toString();
+                    let clientValues = onlyClientKeys.map(key => JSON.stringify(body[key].toString()));
                     let clientQuery = 'INSERT INTO Clients(' + clientKeys + ') VALUES (' + clientValues + ')';
                     db.run(clientQuery, logNodeError);
                     console.log('Added new client: ' + body.name + ' ' + body.surname);
