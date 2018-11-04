@@ -38,9 +38,9 @@ function sendOrder(e) {
 }
 
 $(() => {
-    fetch('/get-last-order-id')
+    fetch('/get-new-order-id')
         .then(res => res.json())
         .then(res => {
-            $('.order-number').append(res+1);
+            $('.order-number').append(res);
         });
 });

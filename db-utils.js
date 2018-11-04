@@ -82,22 +82,20 @@ getEntireDBRouter.get('/', (req, res) => {
     });
 });
 
-const getLastOrderIDRouter = express.Router();
+const getNewOrderIDRouter = express.Router();
 
-getLastOrderIDRouter.get('/', (req, res) => {
-    console.log("Received query to get last order's id");
+getNewOrderIDRouter.get('/', (req, res) => {
+    console.log("Received query to get new order id");
     db.get("SELECT rowid from Orders order by ROWID DESC limit 1", (err, row) => {
+        let newOrderID;
+        console.log(row);
         if (err) {
             console.log(err);
             return;
         }
-        else if (typeof(row) === 'undefined') {
-            row = {"order_id": 0};
-            console.log('Manually writing row...');
-        }
-        console.log(row);
-        res.status(200).send(JSON.stringify(row.order_id));
-        console.log(`Last order's ID (${row.order_id}) was sent.`);
+        else (typeof(row) === 'undefined' ? newOrderID = 1 : newOrderID = row.order_id + 1);
+        res.status(200).send(JSON.stringify(newOrderID));
+        console.log(`New order ID (${newOrderID}) was sent.`);
     });
 });
 
@@ -105,5 +103,5 @@ module.exports = {
     logNodeError: logNodeError,
     addNewOrderRouter: addNewOrderRouter,
     getEntireDBRouter: getEntireDBRouter,
-    getLastOrderIDRouter: getLastOrderIDRouter
+    getNewOrderIDRouter: getNewOrderIDRouter
 };

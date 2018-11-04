@@ -3,7 +3,7 @@ const app = express();
 app.use(express.static('public'));
 app.use(express.json());
 
-const { logNodeError, addNewOrderRouter, getEntireDBRouter, getLastOrderIDRouter } = require('./db-utils');
+const { logNodeError, addNewOrderRouter, getEntireDBRouter, getNewOrderIDRouter } = require('./db-utils');
 
 console.log('Server is running on', process.env.PORT || 8080, process.env.IP || '0.0.0.0');
 
@@ -29,4 +29,4 @@ db.serialize(() => {
 
 app.use('/add-order', addNewOrderRouter);
 app.use('/get-db', getEntireDBRouter);
-app.use('/get-last-order-id', getLastOrderIDRouter);
+app.use('/get-new-order-id', getNewOrderIDRouter);
