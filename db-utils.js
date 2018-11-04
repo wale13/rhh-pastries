@@ -88,7 +88,6 @@ getNewOrderIDRouter.get('/', (req, res) => {
     console.log("Received query to get new order id");
     db.get("SELECT rowid from Orders order by ROWID DESC limit 1", (err, row) => {
         let newOrderID;
-        console.log(row);
         if (err) {
             console.log(err);
             return;
