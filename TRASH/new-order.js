@@ -1,5 +1,3 @@
-$('.submit-new').click(sendOrder);
-
 jQuery.fn.serializeObject = function() {
     let arrayData = this.serializeArray();
     let objectData = {};
@@ -22,7 +20,20 @@ jQuery.fn.serializeObject = function() {
     return objectData;
 };
 
-function sendOrder(e) {
+const showAlert = (message) => {
+    const alertTemplate = 
+        `<div class="alert-success">
+          <strong>${message}</strong>
+        </div>`;
+    $('.form-holder').append(alertTemplate);
+    $('.cake').fadeOut(1500, () => {
+        $('.alert-success').fadeOut(700, () => {
+            $('.form-holder').toggleClass('show-form');
+        });
+    });
+};
+
+const sendOrder = (e) => {
     const form = $('.cake');
     if (form[0].checkValidity()) {
         e.preventDefault();
@@ -33,9 +44,15 @@ function sendOrder(e) {
             },
             method: 'POST',
             body: data
-        });
+        })
+            .then(res => res.json())
+            .then(res => {
+                showAlert(res);
+            });
     }
-}
+};
+
+$('.submit-new').click(sendOrder);
 
 $(() => {
     fetch('/get-new-order-id')

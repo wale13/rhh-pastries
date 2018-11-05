@@ -8,12 +8,119 @@
     <link rel="stylesheet" href="css/index.css" type="text/css">
 </head>
 <body>
-    <a href="new-order.html" title="Open form in new tab" target="_blank">Add new order</a>
     <h1>Hi there!</h1>
     <p class="ins">Here will be Your DB<br></p>
     <button type='button' class='getDB'>Get DB</button>
+    <button type='button' class='btn-add-order'>Add new order</button>
+    
+    <!--Add new order form-->
+    <div class='form-holder'>
+        <form name='order' class='cake' autocomplete="on">
+            <div class='form-close'></div>
+            <p class='form-header'>Замовлення № <span class='order-number'></span></p><br>
+            <fieldset>
+                <legend>Замовник:</legend>
+                <label for="name">Ім'я*:</label>
+                <input type="text" name="name" placeholder="Ім'я" autofocus required>
+                <label for="surname">Прізвище:</label>
+                <input type="text" name="surname" placeholder="Прізвище"><br>
+                <label for="tel">Номер тел.*:</label>
+                <input type="text" name="tel" placeholder="Телефон" required>
+                <label for="avatar">Ссилка на фото клієнта:</label>
+                <input type="text" name="avatar" placeholder="URL аватарки">
+            </fieldset>
+            <fieldset>
+                <legend>Найголовніше:</legend>
+                <label for="cake-type">Оздоблення*:</label>
+                <select name='cake_type' required>
+                    <option value='Мастіка'>Мастіка</option>
+                    <option value='Крем'>Крем</option>
+                    <option value='Дзеркальна глазур'>Дзеркальна глазур</option>
+                    <option value='Шоколадна заливка'>Шоколадна заливка</option>
+                </select>
+                <label for="theme">Тематика*:</label>
+                <input type="text" name="theme" placeholder="Тема торта" required><br>
+                <label for="deadline">На коли*:</label>
+                <input type="date" name="deadline" required>
+                <label for="desired_weight">Бажана вага:</label>
+                <input type="text" name="desired_weight" placeholder="Бажана вага">кг<br>
+                <label for="desired_value">Бажана ціна:</label>
+                <input type="text" name="desired_value" placeholder="Бажана ціна">грн.
+                <label for="base_price">Базова ціна*:</label>
+                <input type="text" name="base_price" value='270'required>грн/кг<br>
+                d коржів*: <select name='diameter' required>
+                    <option value='18 см'>18 см</option>
+                    <option value='22 см'>22 см</option>
+                    <option value='25 см'>25 см</option>
+                    <option value='28 см'>28 см</option>
+                    <option value='Інше'>Інше</option>
+                </select>
+            </fieldset>
+            <fieldset>
+                <legend>Наповнення:</legend>
+                <fieldset>
+                    <legend>Коржі:</legend>
+                    <input type="checkbox" name="sponges" value='ванільні'>Ванільні
+                    <input type="checkbox" name="sponges" value='шоколадні'>Шоколадні
+                    <input type="checkbox" name="sponges" value='горіхові'>Горіхові
+                    <input type="checkbox" name="sponges" value='червоний оксамит'>Червоний оксамит
+                    <input type="checkbox" name="sponges" value='медові'>Медові
+                    <input type="checkbox" name="sponges" value='кокосові'>Кокосові
+                    <input type="checkbox" name="sponges" value='кольорові'>Кольорові<br>
+                    <input type="checkbox" name="sponges" value='УЗГОДИТИ'>УЗГОДИТИ!
+                    <label>Інше:<input type="text" name="sponges" placeholder='інше'></label>
+                </fieldset>
+                <fieldset>
+                    <legend>Начинки:</legend>
+                    <input type="checkbox" name="fillings" value='персики'>Персики
+                    <input type="checkbox" name="fillings" value='банани'>Банани
+                    <input type="checkbox" name="fillings" value='вишня'>Вишня
+                    <input type="checkbox" name="fillings" value='чорниця'>Чорниця
+                    <input type="checkbox" name="fillings" value='малина'>Малина
+                    <input type="checkbox" name="fillings" value='чорна смородина'>Чорна смородина
+                    <input type="checkbox" name="fillings" value='ананаси'>Ананаси
+                    <input type="checkbox" name="fillings" value='горіхи'>Горіхи
+                    <input type="checkbox" name="fillings" value='кокос'>Кокос<br>
+                    <label>Інше:<input type="text" name="fillings" placeholder='інше'></label>
+                </fieldset>
+                <fieldset>
+                    <legend>Крем:</legend>
+                    <input type="checkbox" name="cream" value='сметанковий'>Сметанковий
+                    <input type="checkbox" name="cream" value='маскарпоне+вершки'>Маскарпоне+вершки
+                    <input type="checkbox" name="cream" value='маскарпоне+шоколад'>Маскарпоне+шоколад
+                    <input type="checkbox" name="cream" value='масло+шоколад'>Масло+шоколад
+                    <input type="checkbox" name="cream" value='масло+згущонка'>Масло+згущонка<br>
+                    <input type="checkbox" name="cream" value='творожний'>Творожний
+                    <input type="checkbox" name="cream" value='заварний+згущонка'>Заварний+згущонка
+                    <input type="checkbox" name="cream" value='заварний+шоколад'>Заварний+шоколад<br>
+                    <input type="checkbox" name="cream" value='УЗГОДИТИ'>УЗГОДИТИ!
+                    <label>Інше:<input type="text" name="cream" placeholder='інше'></label>
+                </fieldset>
+            </fieldset>
+            <fieldset>
+                <input type="checkbox" name="delivery" value='з доставкою'>ДОСТАВКА
+                <label for="prototype">Ссилка на торт-приклад:</label>
+                <input type="text" name="prototype" placeholder='Ссилка на торт-приклад'><br>
+                <label for="comments">Коментар:</label>
+                <textarea rows="5" cols="40" name="comments">Коментар</textarea>
+            </fieldset>
+            <fieldset>
+                <legend>Результат:</legend>
+                <label for="result-photo">Ссилка на результат:</label>
+                <input type="text" name="result_photo" placeholder='Ссилка на результат'>
+                <label for="final_weight">Фінальна вага:</label>
+                <input type="text" name="final_weight" placeholder="Фінальна вага">кг<br>
+                <label for="final_value">Фінальна ціна:</label>
+                <input type="text" name="final_value" placeholder="Фінальна ціна">грн.
+            </fieldset>
+            <input type='submit' class='submit-new'>
+            <input type='reset' value='Очистити'>
+        </form>
+    </div>
     
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="./js/dbtest.js"></script>
+    <script type="text/javascript" src="./js/index.js"></script>
 </body>
 </html>
