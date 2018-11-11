@@ -1,3 +1,14 @@
+const showForm = () => {
+    $('div.form-holder').toggleClass('show-form', 500);
+    fetch('/get-new-order-id')
+        .then(res => res.json())
+        .then(res => {
+            $('.order-number').html(res);
+        });
+};
+
+$('.btn-add-order, .form-close').on('click', showForm);
+
 jQuery.fn.serializeObject = function() {
     let arrayData = this.serializeArray();
     let objectData = {};
@@ -22,15 +33,12 @@ jQuery.fn.serializeObject = function() {
 
 const showAlert = (message) => {
     const alertTemplate = 
-        `<div class="alert-success">
-          <strong>${message}</strong>
-        </div>`;
+        `<div class="alert-success">${message}</div>`;
     $('.form-holder').append(alertTemplate);
-    $('.cake').fadeOut(1500, () => {
-        $('.alert-success').fadeOut(700, () => {
-            $('.form-holder').toggleClass('show-form');
-        });
-    });
+    showForm();
+    setTimeout(() => {
+        $('.alert-success').fadeOut(1500);
+    }, 1000);
 };
 
 const sendOrder = (e) => {
@@ -53,11 +61,3 @@ const sendOrder = (e) => {
 };
 
 $('.submit-new').click(sendOrder);
-
-$(() => {
-    fetch('/get-new-order-id')
-        .then(res => res.json())
-        .then(res => {
-            $('.order-number').append(res);
-        });
-});

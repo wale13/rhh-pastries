@@ -27,5 +27,5 @@ db.serialize(() => {
 
 
 app.use('/add-order', addNewOrderRouter);
-app.use('/get-db', getEntireDBRouter);
 app.use('/get-new-order-id', getNewOrderIDRouter);
+app.use('/get-db', getEntireDBRouter); 

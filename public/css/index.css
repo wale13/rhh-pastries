@@ -1,144 +1,63 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
 }
 
-table {
-    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-    border-collapse: collapse;
-    width: 100%
-}
-
-td, th {
-    border: 1px solid #ddd;
-    padding: 8px
-}
-
-table tr:nth-child(even){
-    background-color: #f2f2f2
-    
-}
-
-table tr:hover {
-    background-color: #ddd
-    
-}
-
-table th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    background-color: #4CAF50;
-    color: white
-}
-
-img {
-    max-width: 120px;
-    max-height: 120px
-}
-
-.form-holder {
-    display: flex;
-    background-color: rgba(0,0,0,0.4);
-    width: 100%;
-    height: 100%;
-    justify-content: center;
-    align-items: center;
-    z-index: 2;
-    position: fixed;
-    bottom: 110%;
-}
-
-.show-form {
-    bottom: 0;
-}
-
-.cake {
-    border: 1px solid #F50;
-    border-radius: 15px;
-    padding: 10px;
-    background-color: #FFF;
-    z-index: 3;
-}
-
-.form-header {
+header {
     text-align: center;
-}
-
-input[type=text], select {
-    padding: 7px 11px;
-    margin: 5px 0;
-    box-sizing: border-box;
-    border: none;
-    background-color: #EEE;
-}
-
-legend {
-    text-align: center;
-    padding: 5px;
-    display: inline-block;
-    border: 1px solid #F50;
-    border-radius: 8px;
+    padding: 30px;
     background-color: #F50;
     color: white;
 }
 
-fieldset {
-    border: 1px solid #F50;
-    border-radius: 15px;
+section {
+    display: flex;
 }
 
-.alert-success {
-    position: fixed;
-    bottom: 50px;
-    left: 45%;
-    background-color: green;
-    border-radius: 5px;
-    padding: 7px 15px;
-    z-index: 1;
+nav {
+    flex: 1;
+    background-color: #09c;
+    padding: 15px;
+}
+
+.products-container {
+    flex: 9;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    background-color: #ff6;
+    padding: 15px;
+}
+
+footer {
+    text-align: center;
+    padding: 5px;
+    background-color: lightgray;
     color: white;
-    opacity: 0.7;
 }
 
-.form-close {
-    display: block;
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 32px;
-    height: 32px;
-    transition: transform .5s ease-in-out;
+.card {
+    flex: 0 0 10%;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color: #fff;
+    margin: 10px;
 }
-.form-close:hover {
-    transform: rotate(180deg);
-    cursor: pointer;
+
+.cake-icon {
+    width: 200px;
+    height: 200px;
+    padding: 5px;
+    object-fit: cover;
 }
-.form-close:before {
-    content: "";
-    position: absolute;
-    display: block;
-    margin: auto;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    width: 32px;
-    height: 0;
-    border-top: 2px solid #f50;
-    transform: rotate(45deg);
-    transform-origin: center;
+
+.card-body {
+    
 }
-.form-close:after {
-    content: "";
-    position: absolute;
-    display: block;
-    margin: auto;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    width: 32px;
-    height: 0;
-    border-top: 2px solid #f50;
-    transform: rotate(-45deg);
-    transform-origin: center;
+
+.cake-name {
+    text-align: center;
 }
