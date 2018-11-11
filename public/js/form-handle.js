@@ -1,5 +1,5 @@
 const showForm = () => {
-    $('div.form-holder').toggleClass('show-form', 500);
+    $('div.form-holder').toggleClass('show-form', 750);
     fetch('/get-new-order-id')
         .then(res => res.json())
         .then(res => {
