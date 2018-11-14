@@ -18,8 +18,6 @@ const db = new sqlite3.Database('./cake-db/orders.db', (err) => {
 });
 
 db.serialize(() => {
-    // db.run("DROP TABLE IF EXISTS Clients", logNodeError);
-    // db.run("DROP TABLE IF EXISTS Orders", logNodeError);
     db.run("CREATE TABLE IF NOT EXISTS Clients (client_id INTEGER PRIMARY KEY,name,surname,tel,avatar)", logNodeError);
     db.run("CREATE TABLE IF NOT EXISTS Orders (order_id INTEGER PRIMARY KEY,client_id,cake_type,theme,deadline,desired_weight,desired_value,base_price,diameter,sponges,fillings,cream,delivery,prototype,comments,result_photo,final_weight,final_value)", logNodeError);
 });
