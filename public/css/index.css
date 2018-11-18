@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Marck+Script|Ruslan+Display');
+
 * {
     box-sizing: border-box;
 }
@@ -10,7 +12,10 @@ header {
     text-align: center;
     padding: 30px;
     background-color: #F50;
-    color: white;
+    background: linear-gradient(141deg, #9fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
+    color: yellow;
+    font-family: 'Ruslan Display', cursive;
+    font-size: xx-large;
 }
 
 section {
@@ -28,7 +33,7 @@ nav {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
-    background-color: #ff6;
+    background: linear-gradient(to bottom left, #7cc 0%, #c69 100%);
     padding: 15px;
 }
 
@@ -46,22 +51,26 @@ footer {
     flex-direction: column;
     border-radius: 20px 30px;
     box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.35), 0 7px 20px 0 rgba(0, 0, 0, 0.25);
-    background-color: #f0f0f0;
+    background: linear-gradient(to bottom right, gold 0%, #ffffff 90%);
     margin: 10px;
 }
 
 .cake-icon {
-    flex: 60%;
-    height: 175px;
+    height: 200px;
     padding: 10px 10px 0 10px;
     object-fit: cover;
     border-radius: 20px 30px 0 0;
 }
 
 .card-body {
-    flex: 40%;
+    
 }
 
 .cake-name {
     text-align: center;
+    font-family: 'Marck Script', cursive;
+    font-size: xx-large;
+    font-stretch: semi-expanded;
+    color: #333;
+    text-shadow: 3px 2px 3px #999;
 }
