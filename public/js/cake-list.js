@@ -12,7 +12,7 @@ class CakeList {
         cakes.forEach(cake => {
             cakeListDomString += 
                 `<div class='card'>
-                    <img class='cake-icon' src='${(cake.result_photo !== null ? cake.result_photo : cake.prototype)}'
+                    <img class='cake-icon' src='${(cake.result_photo !== null ? cake.result_photo : cake.prototype !== null ? cake.prototype : './pic/cake.jpg')}'
                         alt='${cake.theme}'>
                     <div class='card-body'>
                         <h4 class='cake-name'>${cake.theme}</h4>
