@@ -26,7 +26,7 @@ db.serialize(() => {
     db.run("CREATE TABLE IF NOT EXISTS Orders (order_id INTEGER PRIMARY KEY,client_id,cake_type,theme,deadline,desired_weight,desired_value,base_price,diameter,sponges,fillings,cream,delivery,prototype,comments,result_photo,final_weight,final_value)", logNodeError);
 });
 
-const backupDB = new CronJob('00 00 03 * * *', () => {
+const backupDB = new CronJob('00 00 23 * * *', () => {
     const filePrefix = () => timeStamp('yyyy-MM-dd', new Date());
     console.log(timeStamp('yyyy.MM.dd hh:mm:ss', new Date()), 'Starting backup...');
     fs.copyFile('./cake-db/orders.db', `./cake-db/backup/orders-${filePrefix()}.db`, (err) => {
