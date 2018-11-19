@@ -1,7 +1,10 @@
 const express = require('express');
 const app = express();
+const CronJob = require('cron').CronJob;
+const fs = require('fs');
 app.use(express.static('public'));
 app.use(express.json());
+
 
 const { logNodeError, addNewOrderRouter, getEntireDBRouter, getNewOrderIDRouter } = require('./db-utils');
 
@@ -22,7 +25,17 @@ db.serialize(() => {
     db.run("CREATE TABLE IF NOT EXISTS Orders (order_id INTEGER PRIMARY KEY,client_id,cake_type,theme,deadline,desired_weight,desired_value,base_price,diameter,sponges,fillings,cream,delivery,prototype,comments,result_photo,final_weight,final_value)", logNodeError);
 });
 
-
+const job = new CronJob('00 00 20 * * *', () => {
+    db.close();
+}, () => {
+    fs.copyFile('./cake-db/orders.db', './cake-db/orders-backup.db');
+    const db = new sqlite3.Database('./cake-db/orders.db', (err) => {
+        if (err) {
+            console.log(err);
+        }
+        console.log('Connected to orders.db!');
+    });
+}, true);
 
 app.use('/add-order', addNewOrderRouter);
 app.use('/get-new-order-id', getNewOrderIDRouter);
