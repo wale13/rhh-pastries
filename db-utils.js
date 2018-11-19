@@ -1,6 +1,7 @@
 const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('./cake-db/orders.db');
+const timeStamp = require('date-format');
 
 const logNodeError = error => {
   if (error) {
@@ -11,7 +12,7 @@ const logNodeError = error => {
 const addNewOrderRouter = express.Router();
 
 addNewOrderRouter.post('/', (req, res) => {
-    console.log('Received some new order...');
+    console.log(timeStamp('yyyy.MM.dd hh:mm:ss', new Date()), 'Received some new order...');
     let body = req.body;
     const addNewOrder = () => {
         db.get(
@@ -41,7 +42,7 @@ addNewOrderRouter.post('/', (req, res) => {
                             return;
                         }
                         res.status(201).send(JSON.stringify(`Order # ${this.lastID} successfully added!`));
-                        console.log('Added new order # ' + this.lastID);
+                        console.log(timeStamp('yyyy.MM.dd hh:mm:ss', new Date()), 'Added new order # ' + this.lastID);
                     });
                 } else {
                     let onlyClientKeys = Object.keys(body).filter(key => {
@@ -53,7 +54,7 @@ addNewOrderRouter.post('/', (req, res) => {
                     let clientValues = onlyClientKeys.map(key => JSON.stringify(body[key].toString()));
                     let clientQuery = 'INSERT INTO Clients(' + clientKeys + ') VALUES (' + clientValues + ')';
                     db.run(clientQuery, logNodeError);
-                    console.log('Added new client: ' + body.name + ' ' + body.surname);
+                    console.log(timeStamp('yyyy.MM.dd hh:mm:ss', new Date()), 'Added new client: ' + body.name + ' ' + body.surname);
                     addNewOrder();
                 }
             }
@@ -65,21 +66,18 @@ addNewOrderRouter.post('/', (req, res) => {
 const getEntireDBRouter = express.Router();
 
 getEntireDBRouter.get('/', (req, res) => {
-    console.log('Received query to get entire DB...');
     db.all("SELECT * FROM Orders INNER JOIN Clients ON Orders.client_id = Clients.client_id", (err, rows) => {
         if (err) {
             console.log(err);
             return;
         }
         res.status(200).send(rows);
-        console.log("Entire DB was sent successfully!");
     });
 });
 
 const getNewOrderIDRouter = express.Router();
 
 getNewOrderIDRouter.get('/', (req, res) => {
-    console.log("Received query to get new order id");
     db.get("SELECT rowid from Orders order by ROWID DESC limit 1", (err, row) => {
         let newOrderID;
         if (err) {
@@ -88,7 +86,6 @@ getNewOrderIDRouter.get('/', (req, res) => {
         }
         else (typeof(row) === 'undefined' ? newOrderID = 1 : newOrderID = row.order_id + 1);
         res.status(200).send(JSON.stringify(newOrderID));
-        console.log(`New order ID (${newOrderID}) was sent.`);
     });
 });
 
