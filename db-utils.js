@@ -1,7 +1,13 @@
 const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
-const db = new sqlite3.Database('./cake-db/orders.db');
 const timeStamp = require('date-format');
+
+const db = new sqlite3.Database('./cake-db/orders.db', (err) => {
+    if (err) {
+        console.log(err);
+    }
+    console.log(timeStamp('yyyy.MM.dd hh:mm:ss', new Date()), 'Connected to orders.db!');
+});
 
 const logNodeError = error => {
   if (error) {
@@ -93,5 +99,7 @@ module.exports = {
     logNodeError: logNodeError,
     addNewOrderRouter: addNewOrderRouter,
     getEntireDBRouter: getEntireDBRouter,
-    getNewOrderIDRouter: getNewOrderIDRouter
+    getNewOrderIDRouter: getNewOrderIDRouter,
+    sqlite3: sqlite3,
+    db: db
 };

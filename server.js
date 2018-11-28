@@ -5,21 +5,11 @@ app.use(express.json());
 const fs = require('fs');
 const CronJob = require('cron').CronJob;
 const timeStamp = require('date-format');
-
-
-const { logNodeError, addNewOrderRouter, getEntireDBRouter, getNewOrderIDRouter } = require('./db-utils');
+const { logNodeError, addNewOrderRouter, getEntireDBRouter, getNewOrderIDRouter, db } = require('./db-utils');
 
 console.log('Server is running...', process.env.PORT || 8080, process.env.IP || '0.0.0.0');
 
 app.listen(process.env.PORT || 8080, process.env.IP || '0.0.0.0' );
-
-const sqlite3 = require('sqlite3').verbose();
-const db = new sqlite3.Database('./cake-db/orders.db', (err) => {
-    if (err) {
-        console.log(err);
-    }
-    console.log(timeStamp('yyyy.MM.dd hh:mm:ss', new Date()), 'Connected to orders.db!');
-});
 
 db.serialize(() => {
     db.run("CREATE TABLE IF NOT EXISTS Clients (client_id INTEGER PRIMARY KEY,name,surname,tel,avatar)", logNodeError);
@@ -40,4 +30,4 @@ const backupDB = new CronJob('00 00 23 * * *', () => {
 
 app.use('/add-order', addNewOrderRouter);
 app.use('/get-new-order-id', getNewOrderIDRouter);
-app.use('/get-db', getEntireDBRouter); 
+app.use('/get-db', getEntireDBRouter);
