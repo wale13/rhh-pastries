@@ -43,10 +43,10 @@ class CakeList {
         } else {
             for (let i = 1; i <= Math.ceil(pagesQty); i++) {
                 if (i === curPage) {
-                    htmlString += `<a href="#" class='active' data-id='${i}'>${i}</a>`;
+                    htmlString += `<a class='active' data-id='${i}'>${i}</a>`;
                     continue;
                 }
-                htmlString += `<a href="#" class='page-link' data-id='${i}'>${i}</a>`;
+                htmlString += `<a class='page-link' data-id='${i}'>${i}</a>`;
             }
         }
         $('.pagination').html(htmlString);

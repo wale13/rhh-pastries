@@ -104,6 +104,7 @@ section {
 
 .pagination a:hover:not(.active) {
     background-color: #ddd;
+    cursor: pointer;
 }
 
 footer {
