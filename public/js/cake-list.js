@@ -1,5 +1,5 @@
 class CakeList {
-    constructor (offset, limit, currentPage) {
+    constructor (offset, limit, curPage) {
         const data = {offset: offset, limit: limit};
         fetch('/get-page', {
             headers: {
@@ -17,7 +17,8 @@ class CakeList {
             .then(res => res.json())
             .then(qty => {
                 this.pages = qty['count(*)'];
-                this.renderPaginator(this.pages, limit, currentPage);
+                this.renderPaginator(this.pages, limit, curPage);
+                this.addEventListeners();
             });
     }
     renderCakes(cakes) {
@@ -34,20 +35,27 @@ class CakeList {
         });
         $('.products-showcase').html(cakeListDomString);
     }
-    renderPaginator(pages, limit, currentPage) {
+    renderPaginator(pages, limit, curPage) {
         const pagesQty = pages / limit;
         let htmlString = '';
         if (pagesQty <= 1) {
             return;
         } else {
             for (let i = 1; i <= Math.ceil(pagesQty); i++) {
-                if (i === currentPage) {
-                    htmlString += `<a href="#" class='active'>${i}</a>`;
+                if (i === curPage) {
+                    htmlString += `<a href="#" class='active' data-id='${i}'>${i}</a>`;
                     continue;
                 }
-                htmlString += `<a href="#">${i}</a>`;
+                htmlString += `<a href="#" class='page-link' data-id='${i}'>${i}</a>`;
             }
         }
         $('.pagination').html(htmlString);
+    }
+    addEventListeners() {
+        $('a.page-link').click(function() {
+            console.log();
+            currentPage = $(this).data("id");
+            cakeList();
+        });
     }
 }

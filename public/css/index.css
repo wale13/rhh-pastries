@@ -47,7 +47,6 @@ section {
 
 .card {
     flex: 18%;
-    max-width: 30%;
     display: flex;
     justify-content: center;
     flex-direction: column;
