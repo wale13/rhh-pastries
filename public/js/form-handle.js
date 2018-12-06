@@ -1,4 +1,4 @@
-const showForm = () => {
+const toggleForm = () => {
     $('div.form-holder').toggleClass('show-form', 750);
     fetch('/get-new-order-id')
         .then(res => res.json())
@@ -7,7 +7,7 @@ const showForm = () => {
         });
 };
 
-$('.btn-add-order, .form-close').on('click', showForm);
+$('.btn-add-order, .form-close').on('click', toggleForm);
 
 jQuery.fn.serializeObject = function() {
     let arrayData = this.serializeArray();
@@ -31,11 +31,11 @@ jQuery.fn.serializeObject = function() {
     return objectData;
 };
 
-const showAlert = (message) => {
+const showSendOrderAlert = (message) => {
     const alertTemplate = 
         `<div class="alert-success">${message}</div>`;
     $('.form-holder').append(alertTemplate);
-    showForm();
+    toggleForm();
     setTimeout(() => {
         $('.alert-success').fadeOut(1500);
     }, 1000);
@@ -45,17 +45,17 @@ const sendOrder = (e) => {
     const form = $('.cake');
     if (form[0].checkValidity()) {
         e.preventDefault();
-        const data = JSON.stringify(form.serializeObject());
+        // const data = JSON.stringify(form.serializeObject());
         fetch('/add-order', {
             headers: {
                 'Content-type': 'application/json'
             },
             method: 'POST',
-            body: data
+            body: /**data**/JSON.stringify(form.serializeObject())
         })
             .then(res => res.json())
             .then(res => {
-                showAlert(res);
+                showSendOrderAlert(res);
             });
     }
 };

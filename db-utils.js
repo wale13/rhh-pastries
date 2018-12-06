@@ -84,7 +84,7 @@ getEntireDBRouter.get('/', (req, res) => {
 const getNewOrderIDRouter = express.Router();
 
 getNewOrderIDRouter.get('/', (req, res) => {
-    db.get("SELECT rowid from Orders order by ROWID DESC limit 1", (err, row) => {
+    db.get("SELECT rowid from Orders ORDER BY rowid DESC LIMIT 1", (err, row) => {
         let newOrderID;
         if (err) {
             console.log(err);
@@ -95,11 +95,38 @@ getNewOrderIDRouter.get('/', (req, res) => {
     });
 });
 
+const getCakesQtyRouter = express.Router();
+
+getCakesQtyRouter.get('/', (req, res) => {
+    db.get("SELECT count(*) FROM Orders", (err, rows) => {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        res.status(200).send(JSON.stringify(rows));
+    });
+});
+
+const getPageContentRouter = express.Router();
+
+getPageContentRouter.post('/', (req, res) => {
+    const query = `SELECT * FROM Orders INNER JOIN Clients ON Orders.client_id = Clients.client_id ORDER BY Orders.rowid DESC LIMIT ${req.body.offset}, ${req.body.limit}`;
+    db.all(query, (err, rows) => {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        res.status(200).send(rows);
+    });
+});
+
 module.exports = {
     logNodeError: logNodeError,
     addNewOrderRouter: addNewOrderRouter,
     getEntireDBRouter: getEntireDBRouter,
     getNewOrderIDRouter: getNewOrderIDRouter,
+    getCakesQtyRouter: getCakesQtyRouter,
+    getPageContentRouter: getPageContentRouter,
     sqlite3: sqlite3,
     db: db
 };

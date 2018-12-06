@@ -22,7 +22,7 @@ section {
     display: flex;
 }
 
-nav {
+.left-menu {
     flex: 1;
     background-color: #09c;
     padding: 15px;
@@ -30,22 +30,24 @@ nav {
 
 .products-container {
     flex: 9;
+}
+
+.sorteners {
+    height: 40px;
+    background: linear-gradient(to top right, #7cc 0%, #c69 100%);
+}
+
+.products-showcase {
     display: flex;
     flex-flow: row wrap;
-    justify-content: space-between;
+    justify-content: space-around;
     background: linear-gradient(to bottom left, #7cc 0%, #c69 100%);
     padding: 15px;
 }
 
-footer {
-    text-align: center;
-    padding: 5px;
-    background-color: lightgray;
-    color: white;
-}
-
 .card {
-    flex: 15%;
+    flex: 18%;
+    max-width: 30%;
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -73,4 +75,46 @@ footer {
     font-stretch: semi-expanded;
     color: #333;
     text-shadow: 3px 2px 3px #999;
+    margin: 10px;
+}
+
+.pagination {
+    height: 40px;
+    background: linear-gradient(to top right, #7cc 0%, #c69 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pagination a {
+    color: black;
+    float: left;
+    padding: 5px 10px;
+    text-decoration: none;
+    transition: background-color .5s;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-right: 5px;
+}
+
+.pagination .active {
+    background-color: #4CAF50;
+    color: white;
+    border: 1px solid #4CAF50;
+}
+
+.pagination a:hover:not(.active) {
+    background-color: #ddd;
+}
+
+footer {
+    text-align: center;
+    padding: 5px;
+    background-color: lightgray;
+    color: white;
+}
+
+p {
+    margin: 0;
+    text-align: center;
 }
