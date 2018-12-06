@@ -110,7 +110,7 @@ getCakesQtyRouter.get('/', (req, res) => {
 const getPageContentRouter = express.Router();
 
 getPageContentRouter.post('/', (req, res) => {
-    const query = `SELECT * FROM Orders INNER JOIN Clients ON Orders.client_id = Clients.client_id ORDER BY Orders.rowid DESC LIMIT ${req.body.offset}, ${req.body.limit}`;
+    const query = `SELECT * FROM Orders ORDER BY rowid DESC LIMIT ${req.body.offset}, ${req.body.limit}`;
     db.all(query, (err, rows) => {
         if (err) {
             console.log(err);
