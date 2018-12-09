@@ -43,7 +43,7 @@
                 <legend align='center'>Найголовніше:</legend>
                 <div class='fieldset-items'>
                     <div class='details-left'>
-                        <label for="cake-type">Оздоблення:</label>
+                        <label for="cake_type">Оздоблення:</label>
                         <select name='cake_type' required>
                             <option value='Мастіка'>Мастіка</option>
                             <option value='Крем'>Крем</option>
@@ -132,12 +132,22 @@
                 <legend align='center'>Результат:</legend>
                 <div class='fieldset-items'>
                     <div class='details-left'>
-                        <label for="result-photo">Лінк на результат:</label>
+                        <label for="result_photo">Лінк на результат:</label>
                         <input type="url" id='result-link' name="result_photo" placeholder='Ссилка на результат'><br>
                         <label for="final_weight">Фінальна вага:</label>
                         <input type="text" name="final_weight" placeholder="Фінальна вага"><br>
                         <label for="final_value">Фінальна ціна:</label>
-                        <input type="text" name="final_value" placeholder="Фінальна ціна">
+                        <input type="text" name="final_value" placeholder="Фінальна ціна"><br>
+                        <label for='cake_section'>Тематичний розділ: </label>
+                        <select name='cake_section' required>
+                            <option value='Тематичні'>Тематичні</option>
+                            <option value='Для дівчат'>Для дівчат</option>
+                            <option value='Для хлопчиків'>Для хлопчиків</option>
+                            <option value='Жінкам'>Жінкам</option>
+                            <option value='Чоловікам'>Чоловікам</option>
+                            <option value='На хрестини'>На хрестини</option>
+                            <option value='Весільні'>Весільні</option>
+                        </select>
                     </div>
                     <div class='details-simple'>
                         <img id='result-img' src="./pic/cake.jpg"></img>
