@@ -17,22 +17,24 @@
     <!--Add new order form-->
     <div class='form-holder'>
         <form name='order' class='cake' autocomplete="on">
-            <div class='form-close'></div>
-            <p class='form-header'>Замовлення № <span class='order-number'></span></p><br>
+            <div class='form-header'>
+                <div class='form-close'></div>
+                <p class='order-header'>Замовлення № <span class='order-number'></span></p><br>
+            </div>
             <fieldset>
                 <legend>Замовник:</legend>
                 <div class='fieldset-items'>
                     <div class='details-left'>
-                        <label for="name">Ім'я*:</label>
+                        <label for="name">Ім'я:</label>
                         <input type="text" name="name" placeholder="Ім'я" required><br>
                         <label for="surname">Прізвище:</label>
                         <input type="text" name="surname" placeholder="Прізвище"><br>
-                        <label for="tel">Номер тел.*:</label>
+                        <label for="tel">Номер тел.:</label>
                         <input type="text" name="tel" placeholder="Телефон" required><br>
                         <label for="avatar">Ссилка на фото клієнта:</label>
                         <input type="url" id='avatar-link' name="avatar" placeholder="URL аватарки">
                     </div>
-                    <div class='details-right'>
+                    <div class='details-simple'>
                         <img id='avatar-img' src="./pic/noavatar.jpg" alt='аватарка'></img>
                     </div>
                 </div>
@@ -41,16 +43,16 @@
                 <legend>Найголовніше:</legend>
                 <div class='fieldset-items'>
                     <div class='details-left'>
-                        <label for="cake-type">Оздоблення*:</label>
+                        <label for="cake-type">Оздоблення:</label>
                         <select name='cake_type' required>
                             <option value='Мастіка'>Мастіка</option>
                             <option value='Крем'>Крем</option>
                             <option value='Дзеркальна глазур'>Дзеркальна глазур</option>
                             <option value='Шоколадна заливка'>Шоколадна заливка</option>
                         </select><br>
-                        <label for="theme">Тематика*:</label>
+                        <label for="theme">Тематика:</label>
                         <input type="text" name="theme" placeholder="Тема торта" required><br>
-                        <label for="deadline">На коли*:</label>
+                        <label for="deadline">На коли:</label>
                         <input type="date" name="deadline" required><br>
                         <label for="desired_weight">Бажана вага:</label>
                         <input type="text" name="desired_weight" placeholder="Бажана вага"><br>
@@ -58,9 +60,10 @@
                     <div class='details-right'>
                         <label for="desired_value">Бажана ціна:</label>
                         <input type="text" name="desired_value" placeholder="Бажана ціна"><br>
-                        <label for="base_price">Ціна за кг*:</label>
+                        <label for="base_price">Ціна за кг:</label>
                         <input type="text" name="base_price" value='270'required><br>
-                        d коржів*: <select name='diameter' required>
+                        <label for='diameter'>d коржів: </label>
+                        <select name='diameter' required>
                             <option value='18 см'>18 см</option>
                             <option value='22 см'>22 см</option>
                             <option value='25 см'>25 см</option>
@@ -70,7 +73,7 @@
                         <label for="prototype">Лінк на прототип:</label>
                         <input type="url" id='prototype-link' name="prototype" placeholder='Ссилка на торт-приклад'>
                     </div>
-                    <div class='additional-details'>
+                    <div class='details-simple'>
                         <img id='prototype-img' src='./pic/cake.jpg'>
                     </div>
                 </div>
@@ -115,18 +118,31 @@
                 </div>
             </fieldset>
             <fieldset>
-                <input type="checkbox" name="delivery" value='з доставкою'>ДОСТАВКА
-                <label for="comments">Коментар:</label>
-                <textarea rows="3" cols="60" name="comments"></textarea>
+                <div class='fieldset-items'>
+                    <div class='details-simple'>
+                        <label><input type="checkbox" name="delivery" value='з доставкою'><span>ДОСТАВКА</span></label>
+                    </div>
+                    <div class='details-simple'>
+                        <label id='comments-label' for="comments">Коментар: </label>
+                        <textarea rows="3" cols="60" name="comments"></textarea>
+                    </div>
+                </div>
             </fieldset>
             <fieldset>
                 <legend>Результат:</legend>
-                <label for="result-photo">Ссилка на результат:</label>
-                <input type="url" name="result_photo" placeholder='Ссилка на результат'>
-                <label for="final_weight">Фінальна вага:</label>
-                <input type="text" name="final_weight" placeholder="Фінальна вага"><br>
-                <label for="final_value">Фінальна ціна:</label>
-                <input type="text" name="final_value" placeholder="Фінальна ціна">
+                <div class='fieldset-items'>
+                    <div class='details-left'>
+                        <label for="result-photo">Лінк на результат:</label>
+                        <input type="url" id='result-link' name="result_photo" placeholder='Ссилка на результат'><br>
+                        <label for="final_weight">Фінальна вага:</label>
+                        <input type="text" name="final_weight" placeholder="Фінальна вага"><br>
+                        <label for="final_value">Фінальна ціна:</label>
+                        <input type="text" name="final_value" placeholder="Фінальна ціна">
+                    </div>
+                    <div class='details-simple'>
+                        <img id='result-img' src="./pic/cake.jpg"></img>
+                    </div>
+                </div>
             </fieldset>
             <input type='submit' class='submit-new'>
             <input type='reset' value='Очистити'>
