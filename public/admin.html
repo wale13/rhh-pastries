@@ -22,7 +22,7 @@
                 <p class='order-header'>Замовлення № <span class='order-number'></span></p><br>
             </div>
             <fieldset>
-                <legend>Замовник:</legend>
+                <legend align='center'>Замовник:</legend>
                 <div class='fieldset-items'>
                     <div class='details-left'>
                         <label for="name">Ім'я:</label>
@@ -40,7 +40,7 @@
                 </div>
             </fieldset>
             <fieldset>
-                <legend>Найголовніше:</legend>
+                <legend align='center'>Найголовніше:</legend>
                 <div class='fieldset-items'>
                     <div class='details-left'>
                         <label for="cake-type">Оздоблення:</label>
@@ -79,7 +79,7 @@
                 </div>
             </fieldset>
             <fieldset>
-                <legend>Коржі:</legend>
+                <legend align='center'>Коржі:</legend>
                 <div class='details-simple'>
                     <label><input type="checkbox" name="sponges" value='ванільні'><span>Ванільні</span></label>
                     <label><input type="checkbox" name="sponges" value='шоколадні'><span>Шоколадні</span></label>
@@ -91,7 +91,7 @@
                 </div>
             </fieldset>
             <fieldset>
-                <legend>Начинки:</legend>
+                <legend align='center'>Начинки:</legend>
                 <div class='details-simple'>
                     <label><input type="checkbox" name="fillings" value='персики'><span>Персики</span></label>
                     <label><input type="checkbox" name="fillings" value='банани'><span>Банани</span></label>
@@ -105,7 +105,7 @@
                 </div>
             </fieldset>
             <fieldset>
-                <legend>Крем:</legend>
+                <legend align='center'>Крем:</legend>
                 <div class='details-simple'>
                     <label><input type="checkbox" name="cream" value='сметанковий'><span>Сметанковий</span></label>
                     <label><input type="checkbox" name="cream" value='маскарпоне+вершки'><span>Маскарпоне + вершки</span></label>
@@ -129,7 +129,7 @@
                 </div>
             </fieldset>
             <fieldset>
-                <legend>Результат:</legend>
+                <legend align='center'>Результат:</legend>
                 <div class='fieldset-items'>
                     <div class='details-left'>
                         <label for="result-photo">Лінк на результат:</label>
@@ -144,8 +144,10 @@
                     </div>
                 </div>
             </fieldset>
-            <input type='submit' class='submit-new'>
-            <input type='reset' value='Очистити'>
+            <div class='form-buttons'>
+                <input type='submit' class='submit-new action-button green' value='Зберегти'>
+                <input type='reset' class='action-button red' value='Очистити'>
+            </div>
         </form>
     </div>
     

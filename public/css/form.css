@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Marck+Script|Caveat|Lobster');
+@import url('https://fonts.googleapis.com/css?family=Marck+Script|Caveat|Lobster|Pacifico');
 
 .form-holder {
     display: flex;
@@ -38,6 +38,7 @@
     font-size: x-large;
     color: white;
     text-shadow: 1px 1px 2px black, 0 0 25px #F73, 0 0 8px #F50;
+    cursor: default;
 }
 
 input[type=text], input[type=url], input[type=date], select {
@@ -53,8 +54,11 @@ input:focus, textarea:focus, select:focus {
     outline-color: #F50;
 }
 
+input[type=reset], input[type=submit] {
+    cursor: pointer;
+}
+
 legend {
-    text-align: center;
     text-shadow: 1px 1px 3px;
     padding: 4px 7px;
     display: inline-block;
@@ -65,6 +69,10 @@ legend {
     font-size: x-large;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
     background: linear-gradient(140deg, #EEE 25%, #F5F5F5 51%, #E0E0E0 85%);
+    cursor: default;
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 label {
@@ -176,4 +184,39 @@ fieldset {
     border-top: 2px solid #f50;
     transform: rotate(-45deg);
     transform-origin: center;
+}
+
+.form-buttons {
+    text-align: center;
+}
+
+.action-button {
+	padding: 1px 8px;
+    margin: 0 2px;
+	border-radius: 10px;
+	font-family: 'Pacifico', cursive;
+	font-size: 18px;
+	color: #FFF;
+	transition: all 0.4s;
+}
+
+.green {
+	background-color: #82BF56;
+	border-bottom: 5px solid #669644;
+	text-shadow: 0px -2px #669644;
+}
+
+.red {
+	background-color: #E74C3C;
+	border-bottom: 5px solid #BD3E31;
+	text-shadow: 0px -2px #BD3E31;
+}
+
+.action-button:active {
+	transform: translate(0px,5px);
+	border-bottom: 1px solid;
+}
+
+.action-button:focus {
+	outline: none;
 }

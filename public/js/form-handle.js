@@ -71,6 +71,6 @@ $('#result-link').change(function() {
     $('#result-img').attr('src', $(this).val());
 });
 
-$('input[required], select[required]').prev().css('color', '#F50');
+$('*[required]').prev().css('color', '#F50');
 
 $('.submit-new').click(sendOrder);
