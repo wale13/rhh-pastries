@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Marck+Script|Caveat');
+
 .form-holder {
     display: flex;
     background-color: rgba(0,0,0,0.6);
@@ -15,38 +17,88 @@
 }
 
 .cake {
-    border: 1px solid #F50;
+    border: 1px solid #000;
     border-radius: 15px;
-    padding: 10px;
-    background-color: #FFF;
+    padding: 5px 7px;
+    background-color: #EEE;
     z-index: 3;
 }
 
 .form-header {
     text-align: center;
+    margin: 10px 0 0 0;
 }
 
-input[type=text], select {
-    padding: 7px 11px;
-    margin: 5px 0;
+input[type=text], input[type=url], select {
+    padding: 4px 11px;
+    margin: 3px 0;
     box-sizing: border-box;
     border: none;
     background-color: #EEE;
 }
 
+input:focus, textarea:focus, select:focus {
+    outline-color: #F50;
+}
+
 legend {
     text-align: center;
-    padding: 5px;
+    text-shadow: 1px 1px 3px;
+    padding: 4px 7px;
     display: inline-block;
-    border: 1px solid #F50;
-    border-radius: 8px;
-    background-color: #F50;
-    color: white;
+    border: 1px solid #555;
+    border-radius: 5px;
+    color: #F50;
+    font-family: 'Marck Script';
+    font-size: x-large;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+    background: linear-gradient(140deg, #EEE 25%, #F5F5F5 51%, #E0E0E0 85%);
+}
+
+label {
+    font-family: 'Caveat';
+    font-size: 1.4rem;
+    line-height: 0.6;
+    text-shadow: 1px 1px 1px #AAA;
+}
+
+.details-simple label:hover, input:checked + span {
+    color: #F50;
 }
 
 fieldset {
-    border: 1px solid #F50;
+    border: 1px solid #555;
     border-radius: 15px;
+    margin-bottom: 5px;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 5px 12px 0 rgba(0, 0, 0, 0.19);
+    background-color: #FFF;
+}
+
+.fieldset-items {
+    display: flex;
+    justify-content: space-between;
+}
+
+.details-left {
+    text-align: right;
+}
+
+.details-right {
+    text-align: right;
+    margin: 0 5px;
+}
+
+.details-simple {
+    text-align: center;
+}
+
+#avatar-img, #prototype-img {
+    display: block;
+    height: 95%;
+    padding: 5px;
+    border: 1px solid;
+    border-radius: 5px;
+    object-fit: cover;
 }
 
 .alert-success {

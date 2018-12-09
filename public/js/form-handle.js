@@ -45,13 +45,12 @@ const sendOrder = (e) => {
     const form = $('.cake');
     if (form[0].checkValidity()) {
         e.preventDefault();
-        // const data = JSON.stringify(form.serializeObject());
         fetch('/add-order', {
             headers: {
                 'Content-type': 'application/json'
             },
             method: 'POST',
-            body: /**data**/JSON.stringify(form.serializeObject())
+            body: JSON.stringify(form.serializeObject())
         })
             .then(res => res.json())
             .then(res => {
@@ -59,5 +58,13 @@ const sendOrder = (e) => {
             });
     }
 };
+
+$('#avatar-link').change(function() {
+    $('#avatar-img').attr('src', $(this).val());
+});
+
+$('#prototype-link').change(function() {
+    $('#prototype-img').attr('src', $(this).val());
+});
 
 $('.submit-new').click(sendOrder);
