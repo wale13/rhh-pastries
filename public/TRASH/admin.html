@@ -1,38 +1,19 @@
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Admin page</title>
-    <link rel="stylesheet" href="css/index.css" type="text/css">
+    <title>Administration</title>
+    <link rel="stylesheet" href="css/admin.css" type="text/css">
     <link rel="stylesheet" href="css/form.css" type="text/css">
 </head>
 <body>
-    <header>
-        <h1>Випічка руденької господині</h1>
-    </header>
-    
-    <section>
-        <nav class='left-menu'>
-            <button type='button' class='btn-add-order'>Add new order</button>
-        </nav>
-        
-        <div class='products-container'>
-            <div class='sorteners'>
-                <p>sorteners will be here</p>
-            </div>
-            
-            <div class='products-showcase'><!-- Product cards are placed here --></div>
-            
-            <nav class='pagination'></nav>
-        </div>
-    </section>
-    
-    <footer>
-        <h1>Some footer</h1>
-        <a href='index.html'>Головна сторінка</a>
-    </footer>
+    <h1>Hi there!</h1>
+    <button type='button' class='getDB'>Get DB</button>
+    <button type='button' class='btn-add-order'>Add new order</button>
+    <button type='button' class='btn-edit-order'>Edit order</button>
+    <p class="ins">Here will be Your DB<br></p>
     
     <!--Add new order form-->
     <div class='form-holder'>
@@ -159,7 +140,7 @@
                         <label for="final_value">Фінальна ціна:</label>
                         <input type="text" name="final_value" placeholder="Фінальна ціна"><br>
                         <label for='cake_section'>Тематичний розділ: </label>
-                        <select name='cake_section'>
+                        <select name='cake_section' required>
                             <option value='Тематичні'>Тематичні</option>
                             <option value='Для дівчат'>Для дівчат</option>
                             <option value='Для хлопчиків'>Для хлопчиків</option>
@@ -172,12 +153,6 @@
                     <div class='details-simple'>
                         <img id='result-img' src="./pic/cake.jpg"></img>
                     </div>
-                    <div class='details-right'>
-                        <label for="client_id">клієнт №</label>
-                        <input type="text" name="client_id" readonly><br>
-                        <label for="order_id">замовлення №</label>
-                        <input type="text" name="order_id" readonly><br>
-                    </div>
                 </div>
             </fieldset>
             <div class='form-buttons'>
@@ -189,7 +164,7 @@
     
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="./js/admin-page.js"></script>
+    <script type="text/javascript" src="./js/admin.js"></script>
     <script type="text/javascript" src="./js/form-handle.js"></script>
 </body>
 </html>

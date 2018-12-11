@@ -1,3 +1,7 @@
+/* global $ fetch */
+let currentPage = 1;
+let showQty = 10;
+
 class CakeList {
     constructor (offset, limit, curPage) {
         const data = {offset: offset, limit: limit};
@@ -31,6 +35,9 @@ class CakeList {
                     <div class='card-body'>
                         <h4 class='cake-name'>${cake.theme}</h4>
                     </div>
+                    <div class='form-buttons'>
+                        <button type='button' class='btn-edit-order action-button green' data-id='${cake.order_id}'>Edit order</button>
+                    </div>
                 </div>`;
         });
         $('.products-showcase').html(cakeListDomString);
@@ -58,3 +65,5 @@ class CakeList {
         });
     }
 }
+let cakeList = () => {new CakeList(showQty * currentPage - showQty, showQty, currentPage)};
+cakeList();

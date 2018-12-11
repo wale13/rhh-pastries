@@ -1,4 +1,3 @@
-// Request entire DB and display it on page as table
 $('.getDB').click(getDB);
 
 function getDB(e) {
