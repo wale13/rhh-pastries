@@ -13,6 +13,8 @@ const toggleForm = (e) => {
         .then(res => {
             $('.order-number').html(res);
         });
+        $('#avatar-link').click();
+        $('#prototype-link').click();
     } else if (purpose === 'edit') {
         $('#result-fieldset').prop('disabled', false);
         const id = $(e.target).data('id');
