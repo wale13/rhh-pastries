@@ -1,6 +1,7 @@
 /* global $ fetch cakeList */
 const toggleFormShow = () => {
     $('div.form-holder').toggleClass('show-form', 750);
+    $('form.cake')[0].reset();
 };
 
 const toggleForm = (e) => {
@@ -46,32 +47,35 @@ const sendOrder = (e) => {
     }
 };
 
-const fillForm = (data) => {
-    $('input[type="reset"').click();
+const fillForm = (productData) => {
+    const data = productData;
     $('.order-number').html(data['order_id']);
-    const keys = Object.keys(data);
+    let keys = Object.keys(data);
     keys.forEach((key) => {
         const formTargetEl = $('.cake').find(`[name='${key}']`);
         if (formTargetEl) {
-            if (formTargetEl.length > 1 && data[key]) {
-                const values = data[key].split(',');
+            if (formTargetEl.length > 1) {
+                let values = [];
+                if (data[key] !== null) {
+                    values = data[key].split(',');
+                }
                 for (let i = 0; i < formTargetEl.length; i++) {
                     const targeted = formTargetEl[i];
                     if (values.some(val => targeted.value === val)) {
                         targeted.checked = true;
                     }
                 }
-            } else if (formTargetEl.length === 1 &&
-                       formTargetEl[0].type === 'checkbox' &&
-                       formTargetEl[0].value === data[key]) {
-                formTargetEl[0].checked = true;
+            } else if (formTargetEl.length === 1 && formTargetEl[0].type === 'checkbox') {
+                if (formTargetEl[0].value === data[key]) {
+                    formTargetEl[0].checked = true;
+                }
             } else {
                 formTargetEl.val(data[key]);
             }
-            $('#avatar-link').click();
-            $('#prototype-link').click();
-            $('#result-link').click();
         }
+        $('#avatar-link').click();
+        $('#prototype-link').click();
+        $('#result-link').click();
     });
 };
 
