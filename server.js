@@ -4,7 +4,7 @@ app.use(express.static('public'));
 app.use(express.json());
 const fs = require('fs');
 const CronJob = require('cron').CronJob;
-const { db, logNodeError, addNewOrderRouter, editOrderRouter, getEntireDBRouter, getNewOrderIDRouter, getPageContentRouter, getCakesQtyRouter, getOrderRouter, insertTimeStamp } = require('./db-utils');
+const { db, logNodeError, addNewOrderRouter, editOrderRouter, /*getEntireDBRouter,*/ getNewOrderIDRouter, getPageContentRouter, getCakesQtyRouter, getOrderRouter, insertTimeStamp } = require('./db-utils');
 
 console.log(insertTimeStamp(), 'Server is running...', process.env.PORT || 8080, process.env.IP || '0.0.0.0');
 
@@ -29,7 +29,7 @@ const backupDB = new CronJob('00 00 23 * * *', () => {
 app.use('/add-order', addNewOrderRouter);
 app.use('/edit-order', editOrderRouter);
 app.use('/get-new-order-id', getNewOrderIDRouter);
-app.use('/get-db', getEntireDBRouter);
+// app.use('/get-db', getEntireDBRouter);
 app.use('/get-page', getPageContentRouter);
 app.use('/get-cakes-qty', getCakesQtyRouter);
 app.use('/get-order', getOrderRouter);
