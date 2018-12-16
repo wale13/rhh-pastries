@@ -4,10 +4,9 @@ app.use(express.static('public'));
 app.use(express.json());
 const fs = require('fs');
 const CronJob = require('cron').CronJob;
-const timeStamp = require('date-format');
-const { db, logNodeError, addNewOrderRouter, editOrderRouter, getEntireDBRouter, getNewOrderIDRouter, getPageContentRouter, getCakesQtyRouter, getOrderRouter } = require('./db-utils');
+const { db, logNodeError, addNewOrderRouter, editOrderRouter, getEntireDBRouter, getNewOrderIDRouter, getPageContentRouter, getCakesQtyRouter, getOrderRouter, insertTimeStamp } = require('./db-utils');
 
-console.log('Server is running...', process.env.PORT || 8080, process.env.IP || '0.0.0.0');
+console.log(insertTimeStamp(), 'Server is running...', process.env.PORT || 8080, process.env.IP || '0.0.0.0');
 
 app.listen(process.env.PORT || 8080, process.env.IP || '0.0.0.0' );
 
@@ -17,14 +16,13 @@ db.serialize(() => {
 });
 
 const backupDB = new CronJob('00 00 23 * * *', () => {
-    const filePrefix = () => timeStamp('yyyy-MM-dd', new Date());
-    console.log(timeStamp('yyyy.MM.dd hh:mm:ss', new Date()), 'Starting backup...');
-    fs.copyFile('./cake-db/orders.db', `./cake-db/backup/orders-${filePrefix()}.db`, (err) => {
+    console.log(insertTimeStamp(), 'Starting backup...');
+    fs.copyFile('./cake-db/orders.db', `./cake-db/backup/orders-${insertTimeStamp()}.db`, (err) => {
         if (err) {
             console.log(err);
             return;
         }
-        console.log(timeStamp('yyyy.MM.dd hh:mm:ss', new Date()), 'Backup is done.');
+        console.log(insertTimeStamp(), 'Backup is done.');
     });
 }, null, true);
 

@@ -16,40 +16,18 @@ const logNodeError = error => {
   }
 };
 
-const tableDataParser = (req, res, next) => {
-    let body = req.body;
-    const clientKeyNames = ['name', 'surname', 'tel', 'avatar'];
-    let onlyOrderKeys = Object.keys(body).filter(key => {
-        if (!clientKeyNames.includes(key) && body[key] !== '') {
-            return key;
-        }
-    });
-    const orderKeys = onlyOrderKeys.toString();
-    req.orderKeys = orderKeys;
-    const orderValues = onlyOrderKeys.map(key => JSON.stringify(req.body[key].toString()));
-    req.orderValues = orderValues;
-    let onlyClientKeys = Object.keys(body).filter(key => {
-        if (['client_id', 'name', 'surname', 'tel', 'avatar'].includes(key)) {
-            return key;
-        } 
-    });
-    const clientKeys = onlyClientKeys.toString();
-    req.clientKeys = clientKeys;
-    const clientValues = onlyClientKeys.map(key => JSON.stringify(body[key].toString()));
-    req.clientValues = clientValues;
-    next();
-};
-
 const addNewOrderRouter = express.Router();
 
-addNewOrderRouter.post('/', tableDataParser, (req, res) => {
+addNewOrderRouter.post('/', (req, res) => {
     console.log(insertTimeStamp(), 'Received some new order...');
+    let body = req.body;
+    const clientKeyNames = ['name', 'surname', 'tel', 'avatar'];
     const addNewOrder = () => {
         db.get(
-            'SELECT client_id FROM Clients WHERE name = $name AND surname = $surname',
+            `SELECT client_id FROM Clients WHERE name = $name AND surname = $surname ;`,
             {
-                $name: req.body.name,
-                $surname: req.body.surname
+                $name: body.name,
+                $surname: body.surname || ''
             },
             (err, row) => {
                 if (err) {
@@ -57,8 +35,15 @@ addNewOrderRouter.post('/', tableDataParser, (req, res) => {
                     return;
                 }
                 else if (typeof(row) != 'undefined') {
-                    const orderQuery = 'INSERT INTO Orders(client_id,' + req.orderKeys + ') VALUES ("' + row.client_id + '",' + req.orderValues + ')';
-                    console.log(orderQuery);
+                    body.client_id = row.client_id;
+                    let onlyOrderKeys = Object.keys(body).filter(key => {
+                        if (!clientKeyNames.includes(key) && body[key] !== '') {
+                            return key;
+                        } 
+                    });
+                    let orderKeys = onlyOrderKeys.toString();
+                    let orderValues = onlyOrderKeys.map(key => JSON.stringify(body[key].toString()));
+                    let orderQuery = 'INSERT INTO Orders(' + orderKeys + ') VALUES (' + orderValues + ');';
                     db.run(orderQuery, function(err) {
                         if (err) {
                             console.log(err);
@@ -68,9 +53,16 @@ addNewOrderRouter.post('/', tableDataParser, (req, res) => {
                         console.log(insertTimeStamp(), 'Added new order # ' + this.lastID);
                     });
                 } else {
-                    const clientQuery = 'INSERT INTO Clients(' + req.clientKeys + ') VALUES (' + req.clientValues + ')';
+                    let onlyClientKeys = Object.keys(body).filter(key => {
+                        if (['client_id', 'name', 'surname', 'tel', 'avatar'].includes(key)) {
+                            return key;
+                        } 
+                    });
+                    let clientKeys = onlyClientKeys.toString();
+                    let clientValues = onlyClientKeys.map(key => JSON.stringify(body[key].toString()));
+                    let clientQuery = 'INSERT INTO Clients(' + clientKeys + ') VALUES (' + clientValues + ');';
                     db.run(clientQuery, logNodeError);
-                    console.log(insertTimeStamp(), 'Added new client: ' + req.body.name + ' ' + req.body.surname);
+                    console.log(insertTimeStamp(), 'Added new client: ' + body.name + ' ' + body.surname);
                     addNewOrder();
                 }
             }
@@ -82,10 +74,25 @@ addNewOrderRouter.post('/', tableDataParser, (req, res) => {
 const editOrderRouter = express.Router();
 
 editOrderRouter.post('/', (req, res) => {
-    console.log(insertTimeStamp(), 'Received some order changes...');
-    
-    console.log(req.body);    // delete this when finish!!!
-    res.status(201).send(JSON.stringify(`Замовлення оновлено!`));
+    // console.log(insertTimeStamp(), 'Received some order changes...');
+    // let body = req.body;
+    // const onlyOrderKeys = Object.keys(body).filter(key => {
+    //     if (key !== ('client_id' && 'name' && 'surname' && 'tel' && 'avatar') && body[key] !== '') {
+    //         return key;
+    //     }
+    // });
+    // const orderKeys = onlyOrderKeys.toString();
+    // const orderValues = onlyOrderKeys.map(key => JSON.stringify(body[key].toString()));
+    // const onlyClientKeys = Object.keys(body).filter(key => {
+    //     if (key === ('client_id' || 'name' || 'surname' || 'tel' || 'avatar') && body[key] !== '') {
+    //         return key;
+    //     } 
+    // });
+    // const clientKeys = onlyClientKeys.toString();
+    // const clientValues = onlyClientKeys.map(key => JSON.stringify(body[key].toString()));
+    // // delete above when finish!!!
+    // console.log(body);
+    // res.status(201).send(JSON.stringify(`Дані отримано!`));
 });
 
 const getEntireDBRouter = express.Router();

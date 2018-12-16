@@ -81,7 +81,7 @@ const fillForm = (productData) => {
     });
 };
 
-$.fn.serializeObject = function() {
+jQuery.fn.serializeObject = function() {
     let arrayData = this.serializeArray();
     let objectData = {};
     $.each(arrayData, function() {
