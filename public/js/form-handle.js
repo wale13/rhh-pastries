@@ -25,7 +25,7 @@ const toggleForm = (e) => {
                 fillForm(product);
             });
     }
-    $('.submit-new').on('click', {formPurpose: purpose}, sendOrder);
+    $('.submit-new').off().on('click', {formPurpose: purpose}, sendOrder);
     toggleFormShow();
 };
 
@@ -47,6 +47,17 @@ const sendOrder = (e) => {
                 showSendOrderAlert(res);
             });
     }
+};
+
+const showSendOrderAlert = (message) => {
+    const alertTemplate = 
+        `<div class="alert-success">${message}</div>`;
+    $('.form-holder').append(alertTemplate);
+    toggleFormShow();
+    cakeList();
+    setTimeout(() => {
+        $('.alert-success').fadeOut(3500);
+    }, 2000);
 };
 
 const fillForm = (productData) => {
@@ -101,17 +112,6 @@ jQuery.fn.serializeObject = function() {
         }
     });
     return objectData;
-};
-
-const showSendOrderAlert = (message) => {
-    const alertTemplate = 
-        `<div class="alert-success">${message}</div>`;
-    $('.form-holder').append(alertTemplate);
-    toggleFormShow();
-    cakeList();
-    setTimeout(() => {
-        $('.alert-success').fadeOut(2500);
-    }, 1000);
 };
 
 $('.btn-add-order').on('click', {formPurpose: 'create'}, toggleForm);

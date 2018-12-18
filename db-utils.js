@@ -17,16 +17,17 @@ const logNodeError = error => {
 };
 
 const tableDataParser = (req, res, next) => {
-    const clientKeyNames = ['name', 'surname', 'tel', 'avatar'];
+    if (!req.body.delivery) {req.body.delivery = ''}
+    const clientKeyNames = ['client_id', 'name', 'surname', 'tel', 'avatar'];
     let onlyOrderKeys = Object.keys(req.body).filter(key => {
-        if (!clientKeyNames.includes(key) && req.body[key] !== '') {
+        if (!clientKeyNames.includes(key, 1)) {
             return key;
         }
     });
     req.orderKeys = onlyOrderKeys.toString();
     req.orderValues = onlyOrderKeys.map(key => JSON.stringify(req.body[key].toString()));
     let onlyClientKeys = Object.keys(req.body).filter(key => {
-        if (['client_id', 'name', 'surname', 'tel', 'avatar'].includes(key)) {
+        if (clientKeyNames.includes(key)) {
             return key;
         } 
     });
@@ -75,11 +76,13 @@ addNewOrderRouter.post('/', tableDataParser, (req, res) => {
 
 const editOrderRouter = express.Router();
 
-editOrderRouter.post('/', (req, res) => {
+editOrderRouter.post('/', tableDataParser, (req, res) => {
     console.log(insertTimeStamp(), 'Received some order changes...');
-    
-    console.log(req.body);    // delete this when finish!!!
-    res.status(201).send(JSON.stringify(`Замовлення оновлено!`));
+    db.parallelize(() => {
+        db.run(`UPDATE Clients SET (${req.clientKeys}) = (${req.clientValues}) WHERE client_id = ${req.body.client_id}`, logNodeError);
+        db.run(`UPDATE Orders SET (${req.orderKeys}) = (${req.orderValues}) WHERE order_id = ${req.body.order_id}`, logNodeError);
+    });
+    res.status(201).send(JSON.stringify('Дані успішно оновлено.'));
 });
 
 // const getEntireDBRouter = express.Router();

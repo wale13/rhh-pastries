@@ -30,7 +30,7 @@ class CakeList {
         cakes.forEach(cake => {
             cakeListDomString += 
                 `<div class='card'>
-                    <img class='cake-icon' src='${(cake.result_photo !== null ? cake.result_photo : cake.prototype !== null ? cake.prototype : './pic/cake.jpg')}'
+                    <img class='cake-icon' src='${(cake.result_photo ? cake.result_photo : cake.prototype ? cake.prototype : './pic/cake.jpg')}'
                         alt='${cake.theme}'>
                     <div class='card-body'>
                         <h4 class='cake-name'>${cake.theme}</h4>
@@ -65,5 +65,5 @@ class CakeList {
         });
     }
 }
-let cakeList = () => {new CakeList(showQty * currentPage - showQty, showQty, currentPage)};
+let cakeList = () => new CakeList(showQty * currentPage - showQty, showQty, currentPage);
 cakeList();
