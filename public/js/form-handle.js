@@ -13,6 +13,7 @@ const toggleForm = (e) => {
         .then(res => {
             $('.order-number').html(res);
         });
+        $('input[type=reset').removeClass('invisible');
         $('#avatar-link').click();
         $('#prototype-link').click();
     } else if (purpose === 'edit') {
@@ -24,6 +25,7 @@ const toggleForm = (e) => {
             .then(product => {
                 fillForm(product);
             });
+        $('input[type=reset').addClass('invisible');
     }
     $('.submit-new').off().on('click', {formPurpose: purpose}, sendOrder);
     toggleFormShow();
@@ -118,7 +120,7 @@ $('.btn-add-order').on('click', {formPurpose: 'create'}, toggleForm);
 
 $('.products-showcase').on('click', '.btn-edit-order', {formPurpose: 'edit'}, toggleForm);
 
-$('.form-close').on('click', toggleFormShow);
+$('.form-close, .close-btn').on('click', toggleFormShow);
 
 $('#avatar-link').on('click change', function() {
     if ($(this).val()) {

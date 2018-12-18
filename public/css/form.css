@@ -46,12 +46,6 @@ input[type=text], input[type=url], input[type=date], select {
 input:focus, textarea:focus, select:focus {
     outline-color: #F50;
 }
-input[name=client_id], input[name=order_id] {
-    width: 30px;
-}
-input[type=reset], input[type=submit] {
-    cursor: pointer;
-}
 legend {
     text-shadow: 1px 1px 3px;
     padding: 4px 7px;
@@ -192,6 +186,7 @@ fieldset:disabled {
 	font-size: 18px;
 	color: #FFF;
 	transition: all 0.4s;
+	cursor: pointer;
 }
 .action-button:focus {
 	outline: none;
@@ -200,23 +195,30 @@ fieldset:disabled {
 	transform: translate(0px,5px);
 	border-bottom: 1px solid;
 }
-.green {
+.green-btn {
 	background-color: #82BF56;
 	border-bottom: 5px solid #669644;
 	text-shadow: 0px -2px #669644;
 }
-.green:hover {
+.green-btn:hover {
     background-color: #6aa63f;
 }
-.red {
+.red-btn {
 	background-color: #E74C3C;
 	border-bottom: 5px solid #BD3E31;
 	text-shadow: 0px -2px #BD3E31;
 }
-.red:hover {
+.red-btn:hover {
     background-color: #e3301c;
 }
-
+.grey-btn {
+    background-color: #aaa;
+	border-bottom: 5px solid #777;
+	text-shadow: 0px -2px #999;
+}
+.grey-btn:hover {
+    background-color: #999;
+}
 .invisible {
     display: none;
 }

@@ -36,7 +36,7 @@ class CakeList {
                         <h4 class='cake-name'>${cake.theme}</h4>
                     </div>
                     <div class='form-buttons'>
-                        <button type='button' class='btn-edit-order action-button green' data-id='${cake.order_id}'>Edit order</button>
+                        <button type='button' class='btn-edit-order action-button grey-btn' data-id='${cake.order_id}'>Edit order</button>
                     </div>
                 </div>`;
         });

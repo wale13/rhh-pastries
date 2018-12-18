@@ -11,6 +11,21 @@ const db = new sqlite3.Database('./cake-db/orders.db', err => {
     console.log(insertTimeStamp(), 'Connected to orders.db!');
 });
 
+const checkOrdersDB = () => {
+    db.serialize(() => {
+        db.run(`CREATE TABLE IF NOT EXISTS Clients 
+                (client_id INTEGER PRIMARY KEY,
+                name,surname,tel,avatar);`, 
+                logNodeError);
+        db.run(`CREATE TABLE IF NOT EXISTS Orders 
+                (order_id INTEGER PRIMARY KEY,
+                client_id,cake_type,theme,deadline,desired_weight,desired_value,
+                base_price,diameter,sponges,fillings,cream,delivery,prototype,
+                comments,result_photo,final_weight,final_value,cake_section);`, 
+                logNodeError);
+    });
+};
+
 const logNodeError = error => {
   if (error) {
     console.log(error);
@@ -163,14 +178,13 @@ getOrderRouter.get('/:id', (req, res) => {
 });
 
 module.exports = {
-    logNodeError,
     editOrderRouter,
     addNewOrderRouter,
     getNewOrderIDRouter,
     getCakesQtyRouter,
     getPageContentRouter,
-    db,
     getOrderRouter,
+    checkOrdersDB,
     insertTimeStamp,
     insertDateStamp
 };
