@@ -29,7 +29,6 @@ const backupDB = new CronJob('00 00 23 * * *', () => {
 app.use('/add-order', addNewOrderRouter);
 app.use('/edit-order', editOrderRouter);
 app.use('/get-new-order-id', getNewOrderIDRouter);
-// app.use('/get-db', getEntireDBRouter);
 app.use('/get-page', getPageContentRouter);
 app.use('/get-cakes-qty', getCakesQtyRouter);
 app.use('/get-order', getOrderRouter);

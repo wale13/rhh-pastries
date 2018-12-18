@@ -85,18 +85,6 @@ editOrderRouter.post('/', tableDataParser, (req, res) => {
     res.status(201).send(JSON.stringify('Дані успішно оновлено.'));
 });
 
-// const getEntireDBRouter = express.Router();
-
-// getEntireDBRouter.get('/', (req, res) => {
-//     db.all("SELECT * FROM Orders INNER JOIN Clients ON Orders.client_id = Clients.client_id", (err, rows) => {
-//         if (err) {
-//             console.log(err);
-//             return;
-//         }
-//         res.status(200).send(rows);
-//     });
-// });
-
 const getNewOrderIDRouter = express.Router();
 
 getNewOrderIDRouter.get('/', (req, res) => {
@@ -153,7 +141,6 @@ module.exports = {
     logNodeError,
     editOrderRouter,
     addNewOrderRouter,
-    // getEntireDBRouter,
     getNewOrderIDRouter,
     getCakesQtyRouter,
     getPageContentRouter,
