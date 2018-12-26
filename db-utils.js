@@ -2,9 +2,9 @@ const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const timeStamp = require('date-format');
 const insertTimeStamp = () => timeStamp('yyyy.MM.dd hh:mm:ss', new Date());
-const insertDateStamp = () => timeStamp('yyyy.MM.dd', new Date());
+const insertDateStamp = () => timeStamp('yyyy-MM-dd', new Date());
 
-const db = new sqlite3.Database('./cake-db/orders.db', err => {
+const db = new sqlite3.Database(`${process.env.DB_PATH}orders.db`, err => {
     if (err) {
         console.log(err);
     }
@@ -29,6 +29,7 @@ const checkOrdersDB = () => {
 const logNodeError = error => {
   if (error) {
     console.log(error);
+    return;
   }
 };
 

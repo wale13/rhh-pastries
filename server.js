@@ -7,18 +7,15 @@ const CronJob = require('cron').CronJob;
 const { checkOrdersDB, addNewOrderRouter, editOrderRouter, 
         getNewOrderIDRouter, getPageContentRouter, getCakesQtyRouter, 
         getOrderRouter, insertTimeStamp, insertDateStamp } = require('./db-utils');
-
-console.log(insertTimeStamp(), 'Server is running...', 
-            process.env.PORT || 8080, process.env.IP || '0.0.0.0');
+const passport = require('./passport.js');
+const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn();
 
 checkOrdersDB();
 
-app.listen(process.env.PORT || 8080, process.env.IP || '0.0.0.0' );
-
 const backupDB = new CronJob('00 00 23 * * *', () => {
     console.log(insertTimeStamp(), 'Starting backup...');
-    fs.copyFile('./cake-db/orders.db', 
-                `./cake-db/backup/orders-${insertDateStamp()}.db`, 
+    fs.copyFile(`${process.env.DB_PATH}orders.db`, 
+                `${process.env.DB_PATH}backup/orders-${insertDateStamp()}.db`, 
                 (err) => {
                     if (err) {
                         console.log(err);
@@ -33,3 +30,31 @@ app.use('/get-new-order-id', getNewOrderIDRouter);
 app.use('/get-page', getPageContentRouter);
 app.use('/get-cakes-qty', getCakesQtyRouter);
 app.use('/get-order', getOrderRouter);
+app.use(require('cookie-parser')());
+app.use(require('body-parser').urlencoded({ extended: true }));
+app.use(require('express-session')({ secret: process.env.SECRET,
+                                     resave: false,
+                                     saveUninitialized: false }));
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.get('/', 
+    (req, res) => res.redirect('../index.html'));
+
+app.route('/login')
+    .get((req, res) => res.redirect('../login.html'))
+    .post(passport.authenticate('local', 
+        { successReturnToOrRedirect: '/', failureRedirect: '/login' }));
+
+app.get('/logout', (req, res) => {
+    req.logout();
+    res.redirect('/')});
+
+app.get('/admin*',
+    ensureLoggedIn,
+    (req, res) => res.sendFile(__dirname + process.env.ADMIN_PAGE));
+
+app.listen(process.env.PORT || 8080, process.env.IP || '0.0.0.0' );
+
+console.log(insertTimeStamp(), 'Server is running...', 
+            process.env.PORT || 8080, process.env.IP || '0.0.0.0');
