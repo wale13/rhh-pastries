@@ -17,6 +17,12 @@ class CakeList {
                 this.cakes = cakes;
                 this.renderCakes(cakes);
             });
+        fetch('/get-sections')
+            .then(res => res.json())
+            .then(sections => {
+                this.sections = sections;
+                this.renderSections(this.sections);
+            });
         fetch('/get-cakes-qty')
             .then(res => res.json())
             .then(qty => {
@@ -56,6 +62,15 @@ class CakeList {
                 </div>`;
         });
         $('.products-showcase').html(cakeListDomString);
+    }
+    renderSections(sections) {
+        let sectionsDomString = '<ul class="sections-menu">';
+        sections.forEach(section => {
+            const name = section.cake_section;
+            sectionsDomString += `<li data-name="${name}"><p>${name}</p></li>`;
+        });
+        sectionsDomString += '</ul>';
+        $('.left-menu').html(sectionsDomString);
     }
     renderPaginator(pages, limit, curPage) {
         const pagesQty = pages / limit;

@@ -1,8 +1,7 @@
-@import url('https://fonts.googleapis.com/css?family=Marck+Script|Pacifico|Ruslan+Display');
+@import url('https://fonts.googleapis.com/css?family=Marck+Script|Ruslan+Display');
 
 * {
     box-sizing: border-box;
-    -webkit-backface-visibility: hidden;
 }
 
 body {
@@ -26,22 +25,7 @@ section {
 .left-menu {
     flex: 1;
     background-color: #09c;
-}
-
-.sections-menu {
-    list-style-type: none;
-    padding: 0;
-}
-
-.sections-menu li {
-    height: 30px;
-    background-color: lawngreen;
-    margin-top: 10px;
-}
-
-.sections-menu li p {
-    text-align: center;
-    padding-top: 5px;
+    padding: 15px;
 }
 
 .products-container {
@@ -65,43 +49,20 @@ section {
     flex: 1 1 auto;
     width: 18.5%;
     min-width: 240px;
-    display: block;
+    display: flex;
     justify-content: center;
     flex-direction: column;
-    margin: 10px;
-    height: 300px;
-    position: relative;
-    transition: all 0.5s ease-out;
-}
-
-.card:hover {
-    z-index: 2;
-}
-
-.card-body {
-    display: block;
-    position: absolute;
-    width: 100%;
-    height: auto;
     border-radius: 20px 30px;
     box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.35), 0 7px 20px 0 rgba(0, 0, 0, 0.25);
     background: linear-gradient(to bottom right, gold 0%, #ffffff 90%);
-    transition: all 0.5s ease-out;
-    z-index: 2;
-}
-
-.card-body:hover {
-    transform: scale(1.05);
+    margin: 10px;
 }
 
 .cake-icon {
-    width: 100%;
-    display: block;
     height: 250px;
     padding: 10px 10px 0 10px;
     object-fit: cover;
     border-radius: 20px 30px 0 0;
-    position: relative;
 }
 
 .cake-name {
@@ -112,34 +73,6 @@ section {
     color: #333;
     text-shadow: 3px 2px 3px #999;
     margin: 10px;
-    display: block;
-}
-
-.cake-details {
-    display: none;
-    transition: all 2s ease-out;
-}
-
-.card:hover .cake-details {
-    display: block;
-}
-
-.cake-details div {
-    margin: 0 5% 10px 5%;
-}
-
-h5, h6 {
-    display: inline;
-    font-size: 1.3rem;
-    text-shadow: 1px 1px 3px white, -1px -1px 3px white;
-}
-
-h5 {
-    font-family: 'Ruslan Display';
-}
-
-h6 {
-    font-family: 'Marck Script', cursive;
 }
 
 .pagination {
@@ -177,4 +110,9 @@ footer {
     padding: 5px;
     background-color: lightgray;
     color: white;
+}
+
+p {
+    margin: 0;
+    text-align: center;
 }

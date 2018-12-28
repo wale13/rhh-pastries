@@ -168,6 +168,21 @@ getPageContentRouter.post('/', (req, res) => {
             });
 });
 
+const getSectionsRouter = express.Router();
+
+getSectionsRouter.get('/', (req, res) => {
+    db.all(`SELECT DISTINCT cake_section
+            FROM Orders
+            WHERE cake_section NOT NULL`,
+            (err, rows) => {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                res.status(200).send(rows);
+            });
+});
+
 const getAdminPageContentRouter = express.Router();
 
 getAdminPageContentRouter.post('/', (req, res) => {
@@ -207,6 +222,7 @@ module.exports = {
     getNewOrderIDRouter,
     getCakesQtyRouter,
     getPageContentRouter,
+    getSectionsRouter,
     getAdminPageContentRouter,
     getOrderRouter,
     checkOrdersDB,
