@@ -26,7 +26,7 @@ body {
     width: 20rem;
     height: 20rem;
     padding: 3em;
-    background: var(--main-bg-color);
+    background: transparent;
     border-radius: 50%;
     overflow: hidden;
     transition: all 1s ease;
@@ -34,12 +34,12 @@ body {
 
 .login:hover>header,
 .login.clicked>header {
-    width: 2rem;
+    width: 2.3rem;
 }
 
 .login:hover>header>.text,
 .login.clicked>header>.text {
-    font-size: 1rem;
+    font-size: 0.9rem;
     transform: rotate(-90deg);
 }
 
@@ -143,18 +143,23 @@ input {
     width: 80%;
     font-size: 1.5rem;
     padding: 0.2rem 0.5rem;
-    box-shadow: none;
     border-color: var(--secondary-bg-color);
     border-width: 0 0 3px 0;
     transition: all .5s ease-in;
     outline: transparent;
     text-align: center;
     margin: 10px 0 0;
-    -webkit-box-shadow: 0 0 0px 1000px white inset;
+    background-color: white;
 }
 
 input:focus {
     border-bottom: 3px solid lawngreen;
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px white inset;
+    -moz-box-shadow: 0 0 0px 1000px white inset;
+    box-shadow: 0 0 0px 1000px white inset;
 }
 
 button {
@@ -164,9 +169,8 @@ button {
     width: 4rem;
     height: 4rem;
     border: none;
-    background: var(--main-bg-color);
+    background: transparent;
     font-size: 0;
-    border: none;
     transition: all 0.3s ease-in-out;
 }
 

@@ -3,9 +3,9 @@ let currentPage = 1;
 let showQty = 10;
 
 class CakeList {
-    constructor (offset, limit, curPage) {
+    constructor(offset, limit, curPage) {
         const data = {offset: offset, limit: limit};
-        fetch('/get-page', {
+        fetch('/get-admin-page', {
             headers: {
                 'Content-type': 'application/json'
             },
@@ -28,12 +28,13 @@ class CakeList {
     renderCakes(cakes) {
         let cakeListDomString = '';
         cakes.forEach(cake => {
+            const cakeName = cake.theme;
             cakeListDomString += 
                 `<div class='card'>
                     <img class='cake-icon' src='${(cake.result_photo ? cake.result_photo : cake.prototype ? cake.prototype : './pic/cake.jpg')}'
-                        alt='${cake.theme}'>
+                        alt='${cakeName}'>
                     <div class='card-body'>
-                        <h4 class='cake-name'>${cake.theme}</h4>
+                        <h4 class='cake-name'>${cakeName.charAt(0).toUpperCase() + cakeName.slice(1)}</h4>
                     </div>
                     <div class='form-buttons'>
                         <button type='button' class='btn-edit-order action-button grey-btn' data-id='${cake.order_id}'>Edit order</button>

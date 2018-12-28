@@ -1,6 +1,7 @@
 /* global $ fetch */
 let currentPage = 1;
 let showQty = 8;
+
 class CakeList {
     constructor(offset, limit, curPage) {
         const data = {offset: offset, limit: limit};
@@ -27,12 +28,30 @@ class CakeList {
     renderCakes(cakes) {
         let cakeListDomString = '';
         cakes.forEach(cake => {
+            const cakeName = cake.theme,
+                  sponges = cake.sponges,
+                  cream = cake.cream,
+                  filling = cake.fillings,
+                  weight = cake.final_weight;
+            let details = '';
+            if (sponges) {
+                details += `<div><h5>Коржі: </h5><h6>${sponges.replace(/,/g, ', ').replace(/\+/g, ' + ')}.</h6></div>`;
+            } if (cream) {
+                details += `<div><h5>Крем: </h5><h6>${cream.replace(/,/g, ', ').replace(/\+/g, ' + ')}.</h6></div>`;
+            } if (filling) {
+                details += `<div><h5>Наповнення: </h5><h6>${filling.replace(/,/g, ', ').replace(/\+/g, ' + ')}.</h6></div>`;
+            } if (weight) {
+                details += `<div><h5>Вага: </h5><h6>${weight} кг</h6></div>`;
+            }
             cakeListDomString += 
                 `<div class='card'>
-                    <img class='cake-icon' src='${(cake.result_photo ? cake.result_photo : cake.prototype ? cake.prototype : './pic/cake.jpg')}'
-                        alt='${cake.theme}'>
                     <div class='card-body'>
-                        <h4 class='cake-name'>${cake.theme}</h4>
+                        <img class='cake-icon' src='${(cake.result_photo ? cake.result_photo : cake.prototype ? cake.prototype : './pic/cake.jpg')}'
+                            alt='${cakeName}'>
+                        <h4 class='cake-name'>${cakeName.charAt(0).toUpperCase() + cakeName.slice(1)}</h4>
+                        <div class='cake-details'>
+                            ${details}
+                        </div>
                     </div>
                 </div>`;
         });
@@ -59,7 +78,13 @@ class CakeList {
             currentPage = $(this).data("id");
             cakeList();
         });
+        $('.products-showcase').off().on('mouseenter', '.card', function() {
+            $(this).siblings('.card').css('filter', 'blur(4px) grayscale(80%)');
+        }).on('mouseleave', '.card', function() {
+            $(this).siblings('.card').css('filter', 'none');
+        });
     }
 }
+
 let cakeList = () => new CakeList(showQty * currentPage - showQty, showQty, currentPage);
 cakeList();

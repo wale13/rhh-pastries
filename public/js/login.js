@@ -9,6 +9,6 @@ $(() => {
         e.preventDefault();
         setTimeout(() => {
             this.submit();
-        }, 2000);
+        }, 2500);
     });
 });

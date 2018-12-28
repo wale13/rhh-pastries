@@ -148,6 +148,29 @@ getCakesQtyRouter.get('/', (req, res) => {
 const getPageContentRouter = express.Router();
 
 getPageContentRouter.post('/', (req, res) => {
+    db.all(`SELECT 
+                prototype,
+                result_photo,
+                theme,
+                cream,
+                fillings,
+                final_weight,
+                sponges
+            FROM Orders 
+            ORDER BY rowid DESC 
+            LIMIT ${req.body.offset}, ${req.body.limit};`, 
+            (err, rows) => {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                res.status(200).send(rows);
+            });
+});
+
+const getAdminPageContentRouter = express.Router();
+
+getAdminPageContentRouter.post('/', (req, res) => {
     db.all(`SELECT * 
             FROM Orders 
             ORDER BY rowid DESC 
@@ -184,6 +207,7 @@ module.exports = {
     getNewOrderIDRouter,
     getCakesQtyRouter,
     getPageContentRouter,
+    getAdminPageContentRouter,
     getOrderRouter,
     checkOrdersDB,
     insertTimeStamp,
