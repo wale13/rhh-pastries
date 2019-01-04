@@ -26,6 +26,7 @@ section {
 .left-menu {
     flex: 1;
     background-color: #09c;
+    text-align: center;
 }
 
 .sections-menu {
@@ -34,14 +35,11 @@ section {
 }
 
 .sections-menu li {
-    height: 30px;
     background-color: lawngreen;
     margin-top: 10px;
-}
-
-.sections-menu li p {
     text-align: center;
-    padding-top: 5px;
+    padding: 5px;
+    cursor: pointer;
 }
 
 .products-container {
@@ -49,8 +47,12 @@ section {
 }
 
 .sorteners {
+    padding-right: 20px;
     height: 40px;
     background: linear-gradient(to top right, #7cc 0%, #c69 100%);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 }
 
 .products-showcase {
@@ -65,6 +67,7 @@ section {
     flex: 1 1 auto;
     width: 18.5%;
     min-width: 240px;
+    max-width: 30%;
     display: block;
     justify-content: center;
     flex-direction: column;
@@ -75,7 +78,7 @@ section {
 }
 
 .card:hover {
-    z-index: 2;
+    z-index: 1;
 }
 
 .card-body {
@@ -109,15 +112,17 @@ section {
     font-family: 'Marck Script', cursive;
     font-size: xx-large;
     font-stretch: semi-expanded;
-    color: #333;
-    text-shadow: 3px 2px 3px #999;
-    margin: 10px;
+    color: white;
+    margin: -1px 10px 10px 10px;
+    padding: 3px 0;
     display: block;
+    border-radius: 0 0 15px 20px;
+    background-color: #111;
+    transition: all 1s;
 }
 
 .cake-details {
     display: none;
-    transition: all 2s ease-out;
 }
 
 .card:hover .cake-details {

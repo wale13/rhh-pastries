@@ -55,6 +55,11 @@ const tableDataParser = (req, res, next) => {
     next();
 };
 
+const checkSection = (req, res, next) => {
+    req.body.section ? req.body.whereClause = `WHERE cake_section = "${req.body.section}"` : req.body.whereClause = '';
+    next();
+};
+
 const addNewOrderRouter = express.Router();
 
 addNewOrderRouter.post('/', tableDataParser, (req, res) => {
@@ -62,8 +67,8 @@ addNewOrderRouter.post('/', tableDataParser, (req, res) => {
     const addNewOrder = () => {
         db.get(`SELECT client_id 
                 FROM Clients 
-                WHERE name = ${req.body.name} 
-                AND surname = ${req.body.surname};`,
+                WHERE name = '${req.body.name}' 
+                AND surname = '${req.body.surname}';`,
                 (err, row) => {
                     if (err) {
                         console.log(err);
@@ -133,9 +138,10 @@ getNewOrderIDRouter.get('/', (req, res) => {
 
 const getCakesQtyRouter = express.Router();
 
-getCakesQtyRouter.get('/', (req, res) => {
+getCakesQtyRouter.all('/', checkSection, (req, res) => {
     db.get(`SELECT count(*) 
-            FROM Orders;`, 
+            FROM Orders 
+            ${req.body.whereClause};`, 
             (err, row) => {
                 if (err) {
                     console.log(err);
@@ -147,7 +153,7 @@ getCakesQtyRouter.get('/', (req, res) => {
 
 const getPageContentRouter = express.Router();
 
-getPageContentRouter.post('/', (req, res) => {
+getPageContentRouter.post('/', checkSection, (req, res) => {
     db.all(`SELECT 
                 prototype,
                 result_photo,
@@ -157,6 +163,7 @@ getPageContentRouter.post('/', (req, res) => {
                 final_weight,
                 sponges
             FROM Orders 
+            ${req.body.whereClause} 
             ORDER BY rowid DESC 
             LIMIT ${req.body.offset}, ${req.body.limit};`, 
             (err, rows) => {
