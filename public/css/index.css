@@ -87,6 +87,7 @@ section {
     height: 300px;
     position: relative;
     transition: all 0.5s ease-out;
+    cursor: pointer;
 }
 
 .card:hover {

@@ -15,7 +15,6 @@
 .show-form {
     bottom: 0;
     height: 100%;
-    position: fixed;
 }
 .cake {
     border: 1px solid #000;
