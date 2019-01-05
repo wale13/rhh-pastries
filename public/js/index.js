@@ -1,14 +1,16 @@
 /* global $ fetch */
-let currentPage = 1;
-let showQty = 10;
-let section = 'none';
+let currentPage = 1,
+    showQty = 10,
+    section = 'none';
 
 class CakeList {
+    
     constructor(offset, limit, curPage, section) {
         let data = {offset: offset, limit: limit};
         if (section != 'none') {
             data.section = section;
         }
+        this.section = section;
         fetch('/get-page', {
             headers: {
                 'Content-type': 'application/json'
@@ -41,6 +43,7 @@ class CakeList {
                 this.addEventListeners();
             });
     }
+    
     renderCakes(cakes) {
         let cakeListDomString = '';
         cakes.forEach(cake => {
@@ -73,6 +76,7 @@ class CakeList {
         });
         $('.products-showcase').html(cakeListDomString);
     }
+    
     renderSections(sections) {
         let sectionsDomString = `<ul class="sections-menu">
                                 <li data-name="none">Всі</li>`;
@@ -82,7 +86,9 @@ class CakeList {
         });
         sectionsDomString += '</ul>';
         $('.cake-sections').html(sectionsDomString);
+        $(`.cake-sections li[data-name="${this.section}"]`).addClass('active');
     }
+    
     renderPaginator(pages, limit, curPage) {
         const pagesQty = pages / limit;
         let htmlString = '';
@@ -97,12 +103,13 @@ class CakeList {
         }
         $('.pagination').html(htmlString);
     }
+    
     addEventListeners() {
         $('a.page-link').click(function() {
             currentPage = $(this).data("id");
             cakeList();
         });
-        $('.products-showcase').off().on('mouseenter', '.card', function() {
+        $('.products-showcase').off('mouseenter mouseleave').on('mouseenter', '.card', function() {
             $(this).siblings('.card').css('filter', 'blur(2px) grayscale(50%)');
         }).on('mouseleave', '.card', function() {
             $(this).siblings('.card').css('filter', 'none');
@@ -110,15 +117,29 @@ class CakeList {
     }
 }
 
-let cakeList = () => new CakeList(showQty * currentPage - showQty, showQty, currentPage, section);
+const cakeList = () => new CakeList(showQty * currentPage - showQty, showQty, currentPage, section);
 cakeList();
 
 $('.sorteners select').change(() => {
     showQty = $('select option:selected').data('qty');
+    currentPage = 1;
     cakeList();
 });
 
 $('.cake-sections').on('click', '.sections-menu li', function() {
     section = $(this).data('name');
+    currentPage = 1;
     cakeList();
 });
+
+$('.products-showcase').on('click', '.card img', function() {
+    let link = $(this).prop('src');
+    let caption = $(this).siblings('.cake-name').html();
+    $('.modal-img').prop('src', link);
+    $('.modal-caption').html(caption);
+    $('.modal').fadeIn(600);
+});
+
+$('.modal, .close-modal').click(() => {
+    $('.modal').fadeOut(300);
+})

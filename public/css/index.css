@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Marck+Script|Pacifico|Ruslan+Display');
+@import url('https://fonts.googleapis.com/css?family=Marck+Script|Caveat:400,700|Pacifico|Ruslan+Display');
 
 * {
     box-sizing: border-box;
@@ -15,7 +15,7 @@ header {
     background-color: #F50;
     background: linear-gradient(141deg, #9fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
     color: yellow;
-    font-family: 'Ruslan Display', cursive;
+    font-family: 'Ruslan Display';
     font-size: xx-large;
 }
 
@@ -35,11 +35,23 @@ section {
 }
 
 .sections-menu li {
-    background-color: lawngreen;
-    margin-top: 10px;
-    text-align: center;
+    background-color: lightskyblue;
+    font-family: 'Caveat';
+    font-weight: bold;
+    font-size: 1.5rem;
+    letter-spacing: 1px;
     padding: 5px;
+    margin: 10px 5px 0 5px;
     cursor: pointer;
+    transition: all 0.5s;
+    border-radius: 5px;
+    box-shadow: 5px 5px 10px #333;
+}
+
+.sections-menu li:hover,
+.sections-menu li.active {
+    background-color: PaleTurquoise;
+    box-shadow: 2px 2px 3px #222;
 }
 
 .products-container {
@@ -66,8 +78,8 @@ section {
 .card {
     flex: 1 1 auto;
     width: 18.5%;
-    min-width: 240px;
-    max-width: 30%;
+    min-width: 260px;
+    max-width: 35%;
     display: block;
     justify-content: center;
     flex-direction: column;
@@ -111,7 +123,6 @@ section {
     text-align: center;
     font-family: 'Marck Script', cursive;
     font-size: xx-large;
-    font-stretch: semi-expanded;
     color: white;
     margin: -1px 10px 10px 10px;
     padding: 3px 0;
@@ -156,7 +167,7 @@ h6 {
 }
 
 .pagination a {
-    color: black;
+    color: white;
     float: left;
     padding: 5px 10px;
     text-decoration: none;
@@ -166,15 +177,14 @@ h6 {
     margin-right: 5px;
 }
 
-.pagination .active {
+.pagination a.active {
     background-color: #4CAF50;
-    color: white;
-    border: 1px solid #4CAF50;
 }
 
 .pagination a:hover:not(.active) {
     background-color: #ddd;
     cursor: pointer;
+    color: #4CAF50
 }
 
 footer {
@@ -182,4 +192,49 @@ footer {
     padding: 5px;
     background-color: lightgray;
     color: white;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 3;
+    padding-top: 10%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.95);
+    text-align: center;
+}
+
+.modal-img {
+    display: inline-block;
+    max-width: 80%;
+    max-height: 80%;
+}
+
+.modal-caption {
+    display: block;
+    color: white;
+    text-align: center;
+    font-family: 'Marck Script', cursive;
+    font-size: 3rem;
+    text-shadow: 0 0 20px #FFF;
+}
+
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.5s;
+    text-shadow: 0 0 20px #FFF;
+}
+
+.close-modal:hover {
+    color: lawngreen;
+    transform: rotate(90deg);
 }
