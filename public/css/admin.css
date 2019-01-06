@@ -18,24 +18,33 @@ header {
 }
 
 header div a {
+    display: inline-block;
     padding: 2px 10px;
     font-family: 'Marck Script', cursive;
     font-size: 1.8rem;
-    color: #FFF;
-    
     text-decoration: none;
     border: solid 3px #00CC00;
     border-radius: 7px;
     background-color: #00E000;
-    outline: none;
-    
-    animation: blinking 1s ease-out infinite alternate;
+    animation: blinking 4s ease-out infinite alternate;
+}
+
+header div a:hover {
+    text-shadow: 0px 0px 5px #FFF;
+    color: white;
+    box-shadow: 5px 5px 10px rgba(0,0,0,0.1), 0px 0px 40px 5px #AFA;
+    animation: none;
 }
 
 @keyframes blinking {
-    0%    {text-shadow:none; box-shadow:5px 5px 10px rgba(0,0,0,0.3);}
-    50%   {text-shadow:none; box-shadow:5px 5px 10px rgba(0,0,0,0.3);}
-    100%  {text-shadow:0px 0px 5px #FFF; box-shadow:5px 5px 10px rgba(0,0,0,0.1), 0px 0px 40px 5px #AFA;}
+    0%    {text-shadow:none; color:#EEE; box-shadow:5px 5px 10px rgba(0,0,0,0.3);}
+    50%   {text-shadow:none; color:#EEE; box-shadow:5px 5px 10px rgba(0,0,0,0.3);}
+    53%   {text-shadow:0px 0px 5px #FFF; color:white; box-shadow:5px 5px 10px rgba(0,0,0,0.1), 0px 0px 40px 5px #AFA;}
+    58%   {text-shadow:0px 0px 5px #FFF; color:white; box-shadow:5px 5px 10px rgba(0,0,0,0.1), 0px 0px 40px 5px #AFA;}
+    59%   {text-shadow:none; color:#EEE; box-shadow:5px 5px 10px rgba(0,0,0,0.3);}
+    61%   {text-shadow:none; color:#EEE; box-shadow:5px 5px 10px rgba(0,0,0,0.3);}
+    63%   {text-shadow:0px 0px 5px #FFF; color:white; box-shadow:5px 5px 10px rgba(0,0,0,0.1), 0px 0px 40px 5px #AFA;}
+    100%  {text-shadow:0px 0px 5px #FFF; color:white; box-shadow:5px 5px 10px rgba(0,0,0,0.1), 0px 0px 40px 5px #AFA;}
 }
 
 header h1 {
