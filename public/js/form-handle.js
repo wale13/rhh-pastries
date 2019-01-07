@@ -122,7 +122,7 @@ $('.products-showcase').on('click', '.btn-edit-order', {formPurpose: 'edit'}, to
 
 $('.delete-btn').click(function() {
     const id = $(this).data('id');
-    $('.delete-modal').fadeIn(600);
+    $('.delete-modal').fadeIn(400);
     $('.ok-btn').off().click(() => {
         const link = '/delete-order/' + id;
         fetch(link)
