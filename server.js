@@ -4,10 +4,10 @@ app.use(express.static('public'));
 app.use(express.json());
 const fs = require('fs');
 const CronJob = require('cron').CronJob;
-const { checkOrdersDB, addNewOrderRouter, editOrderRouter, insertTimeStamp, 
-        getNewOrderIDRouter, getPageContentRouter, getCakesQtyRouter, 
-        getOrderRouter, insertDateStamp, getAdminPageContentRouter,
-        getSectionsRouter } = require('./db-utils');
+const { checkOrdersDB, addNewOrderRouter, editOrderRouter, deleteOrderRouter, 
+        insertTimeStamp, getNewOrderIDRouter, getPageContentRouter, 
+        getCakesQtyRouter, getOrderRouter, insertDateStamp, 
+        getAdminPageContentRouter, getSectionsRouter } = require('./db-utils');
 const passport = require('./passport.js');
 const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn();
 const backupDB = new CronJob('00 00 23 * * *', () => {
@@ -24,6 +24,7 @@ const backupDB = new CronJob('00 00 23 * * *', () => {
 
 app.use('/add-order', addNewOrderRouter);
 app.use('/edit-order', editOrderRouter);
+app.use('/delete-order', deleteOrderRouter);
 app.use('/get-new-order-id', getNewOrderIDRouter);
 app.use('/get-page', getPageContentRouter);
 app.use('/get-admin-page', getAdminPageContentRouter);

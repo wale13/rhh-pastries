@@ -40,7 +40,6 @@ input[type=text], input[type=url], input[type=date], select {
     margin: 3px 0;
     border: none;
     background-color: #EEE;
-    /*box-shadow: 1px 1px 4px #666 inset, -1px -1px 4px #666 inset;*/
 }
 input:focus, textarea:focus, select:focus {
     outline-color: #F50;
@@ -220,4 +219,33 @@ fieldset:disabled {
 }
 .invisible {
     display: none;
+}
+.delete-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.95);
+    z-index: 3;
+}
+.delete-modal-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+.modal-window {
+    display: block;
+    background-color: #EEE;
+    border-radius: 10px;
+    padding: 10px;
+}
+.modal-body {
+    text-align: center;
+    margin: 20px;
+    font-family: 'Lobster', cursive;
+    font-size: x-large;
 }

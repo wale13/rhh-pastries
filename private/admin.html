@@ -39,7 +39,7 @@
         <a href='index.html'>Головна сторінка</a>
     </footer>
     
-    <!--Add new order form-->
+    <!--Order form-->
     <div class='form-holder'>
         <form name='order' class='cake' autocomplete="on">
             <div class='form-header'>
@@ -187,10 +187,25 @@
             </fieldset>
             <div class='form-buttons'>
                 <input type='submit' class='submit-new action-button green-btn' value='Зберегти'>
-                <input type='reset' class='action-button grey-btn' value='Очистити'>
-                <input type='button' class='close-btn action-button red-btn' value='Закрити'>
+                <input type='reset' class='reset-btn action-button red-btn' value='Очистити'>
+                <input type='button' class='delete-btn action-button red-btn' value='Видалити'>
+                <input type='button' class='close-btn action-button grey-btn' value='Закрити'>
             </div>
         </form>
+    </div>
+    
+    <div class='delete-modal'>
+        <div class='delete-modal-container'>
+            <div class='modal-window'>
+                <div class='modal-body'>
+                    <p>Видалити замовлення № <span class='order-number'></span> ?</p>
+                </div>
+                <div class='form-buttons'>
+                    <input type='button' class='ok-btn action-button red-btn' value='OK'>
+                    <input type='button' class='cancel-btn action-button green-btn' value='Скасувати'>
+                </div>
+            </div>
+        </div>
     </div>
     
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>

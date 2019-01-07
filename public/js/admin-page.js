@@ -37,7 +37,7 @@ class CakeList {
                         <h4 class='cake-name'>${cakeName.charAt(0).toUpperCase() + cakeName.slice(1)}</h4>
                     </div>
                     <div class='form-buttons'>
-                        <button type='button' class='btn-edit-order action-button grey-btn' data-id='${cake.order_id}'>Edit order</button>
+                        <button type='button' class='btn-edit-order action-button grey-btn' data-id='${cake.order_id}'>Редагувати</button>
                     </div>
                 </div>`;
         });

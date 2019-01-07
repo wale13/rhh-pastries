@@ -1,4 +1,4 @@
-/* global $ fetch cakeList */
+/* global $ jQuery fetch cakeList */
 const toggleFormShow = () => {
     $('div.form-holder').toggleClass('show-form', 750);
     $('form.cake')[0].reset();
@@ -8,24 +8,25 @@ const toggleForm = (e) => {
     const purpose = e.data.formPurpose;
     if (purpose === 'create') {
         $('#result-fieldset').prop('disabled', true);
+        $('input[type=reset').removeClass('invisible');
+        $('.delete-btn').addClass('invisible');
+        $('#avatar-link, #prototype-link').click();
         fetch('/get-new-order-id')
         .then(res => res.json())
         .then(res => {
             $('.order-number').html(res);
         });
-        $('input[type=reset').removeClass('invisible');
-        $('#avatar-link').click();
-        $('#prototype-link').click();
     } else if (purpose === 'edit') {
-        $('#result-fieldset').prop('disabled', false);
         const id = $(e.target).data('id');
         const url = '/get-order/' + id;
+        $('#result-fieldset').prop('disabled', false);
+        $('input[type=reset').addClass('invisible');
+        $('.delete-btn').removeClass('invisible');
         fetch(url)
             .then(res => res.json())
             .then(product => {
                 fillForm(product);
             });
-        $('input[type=reset').addClass('invisible');
     }
     $('.submit-new').off().on('click', {formPurpose: purpose}, sendOrder);
     toggleFormShow();
@@ -65,6 +66,7 @@ const showSendOrderAlert = (message) => {
 const fillForm = (productData) => {
     const data = productData;
     $('.order-number').html(data['order_id']);
+    $('.delete-btn').data('id', data['order_id']);
     let keys = Object.keys(data);
     keys.forEach((key) => {
         const formTargetEl = $('.cake').find(`[name='${key}']`);
@@ -88,10 +90,8 @@ const fillForm = (productData) => {
                 formTargetEl.val(data[key]);
             }
         }
-        $('#avatar-link').click();
-        $('#prototype-link').click();
-        $('#result-link').click();
     });
+    $('#avatar-link, #result-link, #prototype-link').click();
 };
 
 jQuery.fn.serializeObject = function() {
@@ -119,6 +119,24 @@ jQuery.fn.serializeObject = function() {
 $('.btn-add-order').on('click', {formPurpose: 'create'}, toggleForm);
 
 $('.products-showcase').on('click', '.btn-edit-order', {formPurpose: 'edit'}, toggleForm);
+
+$('.delete-btn').click(function() {
+    const id = $(this).data('id');
+    $('.delete-modal').fadeIn(600);
+    $('.ok-btn').off().click(() => {
+        const link = '/delete-order/' + id;
+        fetch(link)
+            .then(res => res.json())
+            .then(res => {
+                $('.cancel-btn').click();
+                showSendOrderAlert(res);
+            });
+    });
+});
+
+$('.cancel-btn').click(() => {
+    $('.delete-modal').fadeOut(200);
+});
 
 $('.form-close, .close-btn').on('click', toggleFormShow);
 

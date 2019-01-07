@@ -116,6 +116,23 @@ editOrderRouter.post('/', tableDataParser, (req, res) => {
     console.log(insertTimeStamp(), `Order successfully updated!`);
 });
 
+const deleteOrderRouter = express.Router();
+
+deleteOrderRouter.get('/:id', (req, res) => {
+   console.log(insertTimeStamp(), `Received request to delete order #${req.params.id}.`);
+   db.run(`DELETE 
+           FROM Orders
+           WHERE order_id = ${req.params.id};`,
+           (err) => {
+               if (err) {
+                   console.log(err);
+                   res.send(JSON.stringify('Виникла помилка...'));
+                   return;
+               }
+               res.status(200).send(JSON.stringify(`Замовлення № ${req.params.id} успішно видалено.`));
+           });
+});
+
 const getNewOrderIDRouter = express.Router();
 
 getNewOrderIDRouter.get('/', (req, res) => {
@@ -224,8 +241,9 @@ getOrderRouter.get('/:id', (req, res) => {
 });
 
 module.exports = {
-    editOrderRouter,
     addNewOrderRouter,
+    editOrderRouter,
+    deleteOrderRouter,
     getNewOrderIDRouter,
     getCakesQtyRouter,
     getPageContentRouter,
