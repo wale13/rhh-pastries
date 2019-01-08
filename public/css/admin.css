@@ -106,6 +106,7 @@ section {
     padding: 10px 10px 0 10px;
     object-fit: cover;
     border-radius: 20px 30px 0 0;
+    cursor: pointer;
 }
 
 .cake-name {

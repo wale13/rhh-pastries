@@ -87,7 +87,6 @@ section {
     height: 300px;
     position: relative;
     transition: all 0.5s ease-out;
-    cursor: pointer;
 }
 
 .card:hover {
@@ -118,6 +117,7 @@ section {
     object-fit: cover;
     border-radius: 20px 30px 0 0;
     position: relative;
+    cursor: pointer;
 }
 
 .cake-name {

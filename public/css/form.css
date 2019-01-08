@@ -110,6 +110,7 @@ fieldset:disabled {
     max-height: 110px;
     position: relative;
     top: -5px;
+    cursor: pointer;
 }
 .form-close {
     display: block;
