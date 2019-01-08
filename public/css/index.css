@@ -229,6 +229,12 @@ footer {
     cursor: default;
 }
 
+.modal-cakeID {
+    margin-top: 5px;
+    color: #AAA;
+    font-size: 0.8rem;
+}
+
 .close-modal {
     position: absolute;
     top: 15px;

@@ -47,7 +47,8 @@ class CakeList {
     renderCakes(cakes) {
         let cakeListDomString = '';
         cakes.forEach(cake => {
-            const cakeName = cake.theme,
+            const cakeID = cake.order_id,
+                  cakeName = cake.theme,
                   sponges = cake.sponges,
                   cream = cake.cream,
                   filling = cake.fillings,
@@ -65,8 +66,10 @@ class CakeList {
             cakeListDomString += 
                 `<div class='card'>
                     <div class='card-body'>
-                        <img class='cake-icon' src='${(cake.result_photo ? cake.result_photo : cake.prototype ? cake.prototype : './pic/cake.jpg')}'
-                            alt='${cakeName}'>
+                        <img class='cake-icon' 
+                             src='${(cake.result_photo ? cake.result_photo : cake.prototype ? cake.prototype : './pic/cake.jpg')}'
+                             alt='${cakeName}'
+                             data-id='${cakeID}'>
                         <h4 class='cake-name'>${cakeName.charAt(0).toUpperCase() + cakeName.slice(1)}</h4>
                         <div class='cake-details'>
                             ${details}
@@ -109,9 +112,11 @@ class CakeList {
             currentPage = $(this).data("id");
             cakeList();
         });
-        $('.products-showcase').off('mouseenter mouseleave').on('mouseenter', '.card', function() {
-            $(this).siblings('.card').css('filter', 'blur(2px) grayscale(50%)');
-        }).on('mouseleave', '.card', function() {
+        $('.products-showcase').off('mouseenter mouseleave')
+            .on('mouseenter', '.card', function() {
+                $(this).siblings('.card').css('filter', 'blur(2px) grayscale(50%)');
+            })
+            .on('mouseleave', '.card', function() {
             $(this).siblings('.card').css('filter', 'none');
         });
     }
@@ -133,10 +138,13 @@ $('.cake-sections').on('click', '.sections-menu li', function() {
 });
 
 $('.products-showcase').on('click', '.card img', function() {
-    let link = $(this).prop('src');
-    let caption = $(this).siblings('.cake-name').html();
+    const link = $(this).prop('src');
+    const cakeID = $(this).data('id');
+    console.log(cakeID);
+    const caption = $(this).siblings('.cake-name').html();
     $('.modal-img').prop('src', link);
     $('.modal-caption').html(caption);
+    $('.modal-cakeID').html(`#00${cakeID}`);
     $('.modal').fadeIn(600);
 });
 

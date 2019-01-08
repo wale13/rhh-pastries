@@ -72,7 +72,11 @@ section {
 }
 
 .sorteners {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     height: 40px;
+    padding: 0 20px;
     background: linear-gradient(to top right, #7cc 0%, #c69 100%);
 }
 
@@ -111,7 +115,7 @@ section {
     font-stretch: semi-expanded;
     color: #333;
     text-shadow: 3px 2px 3px #999;
-    margin: 10px;
+    margin: 1px;
 }
 
 .pagination {

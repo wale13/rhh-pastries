@@ -28,16 +28,18 @@ class CakeList {
     renderCakes(cakes) {
         let cakeListDomString = '';
         cakes.forEach(cake => {
-            const cakeName = cake.theme;
+            let cakeName = cake.theme;
+            cakeName = cakeName.charAt(0).toUpperCase() + cakeName.slice(1);
             cakeListDomString += 
                 `<div class='card'>
-                    <img class='cake-icon' src='${(cake.result_photo ? cake.result_photo : cake.prototype ? cake.prototype : './pic/cake.jpg')}'
+                    <img class='cake-icon' 
+                        src='${(cake.result_photo ? cake.result_photo : cake.prototype ? cake.prototype : './pic/cake.jpg')}'
                         alt='${cakeName}'>
                     <div class='card-body'>
-                        <h4 class='cake-name'>${cakeName.charAt(0).toUpperCase() + cakeName.slice(1)}</h4>
+                        <h4 class='cake-name'>${cakeName}</h4>
                     </div>
                     <div class='form-buttons'>
-                        <button type='button' class='btn-edit-order action-button grey-btn' data-id='${cake.order_id}'>Редагувати</button>
+                        <button type='button' class='btn-edit-order action-button grey-btn' data-id='${cake.order_id}'>Деталі</button>
                     </div>
                 </div>`;
         });
@@ -68,3 +70,23 @@ class CakeList {
 }
 let cakeList = () => new CakeList(showQty * currentPage - showQty, showQty, currentPage);
 cakeList();
+
+$('.sorteners select').change(() => {
+    showQty = $('select option:selected').data('qty');
+    currentPage = 1;
+    cakeList();
+});
+
+$('.products-showcase, .cake').on('click', 'img', function() {
+    const link = $(this).attr('src');
+    if (!['./pic/cake.jpg', './pic/noavatar.jpg'].includes(link)) {
+        const caption = $(this).attr('alt');
+        $('.modal-img').attr('src', link);
+        $('.modal-caption').html(caption);
+        $('#pic-modal').fadeIn(600);
+    }
+});
+
+$('#pic-modal, .close-modal').click(() => {
+    $('#pic-modal').fadeOut(300);
+})

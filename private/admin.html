@@ -18,33 +18,38 @@
     
     <section>
         <nav class='left-menu'>
-            <button type='button' class='btn-add-order'>Add new order</button>
+            
         </nav>
         
         <div class='products-container'>
             <div class='sorteners'>
-                <p>sorteners will be here</p>
+                <button type='button' class='btn-add-order'>Add new order</button>
+                <div class='qty-selector'>
+                    <span>Тортів на сторінці: </span>
+                    <select name='cakes-per-page' class='qty-selector'>
+                        <option data-qty='10' selected>10</option>
+                        <option data-qty='15'>15</option>
+                        <option data-qty='20'>20</option>
+                    </select>
+                </div>
             </div>
             
-            <div class='products-showcase'>
-                <!-- Product cards are placed here -->
-            </div>
+            <div class='products-showcase'></div>
             
             <nav class='pagination'></nav>
         </div>
     </section>
     
     <footer>
-        <h1>Some footer</h1>
+        <h5>Some footer</h5>
         <a href='index.html'>Головна сторінка</a>
     </footer>
     
-    <!--Order form-->
     <div class='form-holder'>
         <form name='order' class='cake' autocomplete="on">
             <div class='form-header'>
                 <div class='form-close'></div>
-                <p class='order-header'>Замовлення № <span class='order-number'></span></p><br>
+                <p class='order-header'>Замовлення № <span class='order-number'></span></p>
             </div>
             <fieldset id='client-fieldset'>
                 <legend align='center'>Замовник:</legend>
@@ -194,8 +199,8 @@
         </form>
     </div>
     
-    <div class='delete-modal'>
-        <div class='delete-modal-container'>
+    <div id='delete-modal'>
+        <div class='modal-container'>
             <div class='modal-window'>
                 <div class='modal-body'>
                     <p>Видалити замовлення № <span class='order-number'></span> ?</p>
@@ -205,6 +210,24 @@
                     <input type='button' class='cancel-btn action-button green-btn' value='Ні'>
                 </div>
             </div>
+        </div>
+    </div>
+    
+    <div id='alert-modal'>
+        <div class='modal-container'>
+            <div class='modal-window'>
+                <div class='modal-body'>
+                    <span id='alert-message'></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id='pic-modal'>
+        <div class='modal-container'>
+            <span class='close-modal'>×</span>
+            <img class='modal-img'>
+            <div class='modal-caption'></div>
         </div>
     </div>
     

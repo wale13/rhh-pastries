@@ -172,6 +172,7 @@ const getPageContentRouter = express.Router();
 
 getPageContentRouter.post('/', checkSection, (req, res) => {
     db.all(`SELECT 
+                order_id,
                 prototype,
                 result_photo,
                 theme,

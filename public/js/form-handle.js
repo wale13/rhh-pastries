@@ -1,6 +1,6 @@
 /* global $ jQuery fetch cakeList */
 const toggleFormShow = () => {
-    $('div.form-holder').toggleClass('show-form', 750);
+    $('div.form-holder').toggleClass('show-form', 600);
     $('form.cake')[0].reset();
 };
 
@@ -46,21 +46,18 @@ const sendOrder = (e) => {
             body: JSON.stringify(form.serializeObject())
         })
             .then(res => res.json())
-            .then(res => {
-                showSendOrderAlert(res);
-            });
+            .then(res => showSendOrderAlert(res));
     }
 };
 
 const showSendOrderAlert = (message) => {
-    const alertTemplate = 
-        `<div class="alert-success">${message}</div>`;
-    $('.form-holder').append(alertTemplate);
+    $('#alert-message').html(message);
     toggleFormShow();
     cakeList();
+    $('#alert-modal').show();
     setTimeout(() => {
-        $('.alert-success').fadeOut(3500);
-    }, 2000);
+        $('#alert-modal').fadeOut(600);
+    }, 1500);
 };
 
 const fillForm = (productData) => {
@@ -122,7 +119,7 @@ $('.products-showcase').on('click', '.btn-edit-order', {formPurpose: 'edit'}, to
 
 $('.delete-btn').click(function() {
     const id = $(this).data('id');
-    $('.delete-modal').fadeIn(400);
+    $('#delete-modal').fadeIn(300);
     $('.ok-btn').off().click(() => {
         const link = '/delete-order/' + id;
         fetch(link)
@@ -135,14 +132,18 @@ $('.delete-btn').click(function() {
 });
 
 $('.cancel-btn').click(() => {
-    $('.delete-modal').fadeOut(200);
+    $('#delete-modal').fadeOut(200);
 });
 
 $('.form-close, .close-btn').on('click', toggleFormShow);
 
 $('#avatar-link').on('click change', function() {
     if ($(this).val()) {
-        $('#avatar-img').attr('src', $(this).val());
+        $('#avatar-img').attr({
+            src: $(this).val(),
+            alt: $('input[name="name"]').val() + ' ' + 
+                 $('input[name="surname"]').val()
+        });
     } else {
         $('#avatar-img').attr('src', './pic/noavatar.jpg');
     }
@@ -150,7 +151,10 @@ $('#avatar-link').on('click change', function() {
 
 $('#prototype-link').on('click change', function() {
     if ($(this).val()) {
-        $('#prototype-img').attr('src', $(this).val());
+        $('#prototype-img').attr({
+            src: $(this).val(),
+            alt: $('input[name="theme"]').val()
+        });
     } else {
         $('#prototype-img').attr('src', './pic/cake.jpg');
     }
@@ -158,7 +162,10 @@ $('#prototype-link').on('click change', function() {
 
 $('#result-link').on('click change', function() {
     if ($(this).val()) {
-        $('#result-img').attr('src', $(this).val());
+        $('#result-img').attr({
+            src: $(this).val(),
+            alt: $('input[name="theme"]').val()
+        });
     } else {
         $('#result-img').attr('src', './pic/cake.jpg');
     }
