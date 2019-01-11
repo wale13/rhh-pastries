@@ -1,43 +1,38 @@
 /* global $ fetch */
 let currentPage = 1,
     showQty = 10,
-    section = 'all';
+    section = 'all',
+    offset = () => showQty * currentPage - showQty;
 
 class CakeList {
     
     constructor(offset, limit, curPage, section) {
-        let data = {offset: offset, limit: limit};
-        data.section = section;
-        this.section = section;
-        fetch('/get-page', {
+        const data = {
+            offset: offset, 
+            limit: limit,
+            section: section
+        };
+        const fetchParams = {
             headers: {
                 'Content-type': 'application/json'
             },
             method: 'POST',
             body: JSON.stringify(data)
-        })
+        };
+        fetch('/get-page', fetchParams)
             .then(res => res.json())
             .then(cakes => {
-                this.cakes = cakes;
                 this.renderCakes(cakes);
             });
         fetch('/get-sections')
             .then(res => res.json())
             .then(sections => {
-                this.sections = sections;
-                this.renderSections(this.sections);
+                this.renderSections(sections);
             });
-        fetch('/get-cakes-qty', {
-            headers: {
-                'Content-type': 'application/json'
-            },
-            method: 'POST',
-            body: JSON.stringify(data)
-        })
+        fetch('/get-cakes-qty', fetchParams)
             .then(res => res.json())
             .then(qty => {
-                this.pages = qty['count(*)'];
-                this.renderPaginator(this.pages, limit, curPage);
+                this.renderPaginator(qty['count(*)'], limit, curPage);
                 this.addEventListeners();
             });
     }
@@ -81,13 +76,13 @@ class CakeList {
     renderSections(sections) {
         let sectionsDomString = `<ul class="sections-menu">
                                 <li data-name="all">Всі</li>`;
-        sections.forEach(section => {
-            const name = section.cake_section;
+        sections.forEach(sect => {
+            const name = sect.cake_section;
             sectionsDomString += `<li data-name="${name}">${name}</li>`;
         });
         sectionsDomString += '</ul>';
         $('.cake-sections').html(sectionsDomString);
-        $(`.cake-sections li[data-name="${this.section}"]`).addClass('active');
+        $(`.cake-sections li[data-name="${section}"]`).addClass('active');
     }
     
     renderPaginator(pages, limit, curPage) {
@@ -128,7 +123,7 @@ class CakeList {
     }
 }
 
-const cakeList = () => new CakeList(showQty * currentPage - showQty, showQty, currentPage, section);
+const cakeList = () => new CakeList(offset(), showQty, currentPage, section);
 cakeList();
 
 $('.sorteners select').change(function() {

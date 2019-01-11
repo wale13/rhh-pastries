@@ -206,7 +206,8 @@ const getSectionsRouter = express.Router();
 getSectionsRouter.get('/', (req, res) => {
     db.all(`SELECT DISTINCT cake_section
             FROM Orders
-            WHERE cake_section NOT NULL`,
+            WHERE cake_section NOT NULL
+            ORDER BY cake_section ASC;`,
             (err, rows) => {
                 if (err) {
                     console.log(err);
