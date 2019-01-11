@@ -24,9 +24,9 @@ section {
 }
 
 .left-menu {
-    flex: 1;
     background-color: #09c;
     text-align: center;
+    min-width: 150px;
 }
 
 .sections-menu {
@@ -55,7 +55,7 @@ section {
 }
 
 .products-container {
-    flex: 9;
+    width: 100%;
 }
 
 .sorteners {
@@ -87,10 +87,7 @@ section {
     height: 300px;
     position: relative;
     transition: all 0.5s ease-out;
-}
-
-.card:hover {
-    z-index: 1;
+    z-index: 0;
 }
 
 .card-body {
@@ -102,7 +99,7 @@ section {
     box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.35), 0 7px 20px 0 rgba(0, 0, 0, 0.25);
     background: linear-gradient(to bottom right, gold 0%, #ffffff 90%);
     transition: all 0.5s ease-out;
-    z-index: 2;
+    z-index: 1;
 }
 
 .card-body:hover {
@@ -137,12 +134,16 @@ section {
     display: none;
 }
 
-.card:hover .cake-details {
-    display: block;
-}
-
 .cake-details div {
     margin: 0 5% 10px 5%;
+}
+
+.display-on-top {
+    z-index: 2;
+}
+
+.blurred {
+    filter: blur(1px) grayscale(70%);
 }
 
 h5, h6 {
@@ -198,8 +199,7 @@ footer {
 .modal {
     display: none;
     position: fixed;
-    z-index: 2;
-    padding-top: 5%;
+    z-index: 3;
     top: 0;
     left: 0;
     width: 100%;

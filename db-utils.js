@@ -56,7 +56,15 @@ const tableDataParser = (req, res, next) => {
 };
 
 const checkSection = (req, res, next) => {
-    req.body.section ? req.body.whereClause = `WHERE cake_section = "${req.body.section}"` : req.body.whereClause = '';
+    req.body.order_by = 'rowid DESC';
+    if (req.body.section === 'all') {
+        req.body.whereClause = '';
+    } else if (req.body.section === 'in-work') {
+        req.body.whereClause = 'WHERE result_photo = "" OR result_photo IS NULL';
+        req.body.order_by = 'deadline ASC';
+    } else {
+        req.body.whereClause = `WHERE cake_section = "${req.body.section}"`;
+    }
     next();
 };
 
@@ -210,10 +218,11 @@ getSectionsRouter.get('/', (req, res) => {
 
 const getAdminPageContentRouter = express.Router();
 
-getAdminPageContentRouter.post('/', (req, res) => {
+getAdminPageContentRouter.post('/', checkSection, (req, res) => {
     db.all(`SELECT * 
             FROM Orders 
-            ORDER BY rowid DESC 
+            ${req.body.whereClause}
+            ORDER BY ${req.body.order_by} 
             LIMIT ${req.body.offset}, ${req.body.limit};`, 
             (err, rows) => {
                 if (err) {

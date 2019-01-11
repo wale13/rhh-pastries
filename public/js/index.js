@@ -1,15 +1,13 @@
 /* global $ fetch */
 let currentPage = 1,
     showQty = 10,
-    section = 'none';
+    section = 'all';
 
 class CakeList {
     
     constructor(offset, limit, curPage, section) {
         let data = {offset: offset, limit: limit};
-        if (section != 'none') {
-            data.section = section;
-        }
+        data.section = section;
         this.section = section;
         fetch('/get-page', {
             headers: {
@@ -82,7 +80,7 @@ class CakeList {
     
     renderSections(sections) {
         let sectionsDomString = `<ul class="sections-menu">
-                                <li data-name="none">Всі</li>`;
+                                <li data-name="all">Всі</li>`;
         sections.forEach(section => {
             const name = section.cake_section;
             sectionsDomString += `<li data-name="${name}">${name}</li>`;
@@ -113,11 +111,19 @@ class CakeList {
             cakeList();
         });
         $('.products-showcase').off('mouseenter mouseleave')
-            .on('mouseenter', '.card', function() {
-                $(this).siblings('.card').css('filter', 'blur(2px) grayscale(50%)');
-            })
-            .on('mouseleave', '.card', function() {
-            $(this).siblings('.card').css('filter', 'none');
+            .on('mouseenter mouseleave', '.card', function() {
+                $(this).toggleClass('display-on-top');
+                $(this).find('.cake-details').slideToggle(100);
+                $(this).siblings('.card').toggleClass('blurred');
+        });
+        $('.products-showcase').on('click', '.card img', function() {
+            const link = $(this).prop('src');
+            const cakeID = $(this).data('id');
+            const caption = $(this).siblings('.cake-name').html();
+            $('.modal-img').prop('src', link);
+            $('.modal-caption').html(caption);
+            $('.modal-cakeID').html(`#00${cakeID}`);
+            $('.modal').fadeIn(600);
         });
     }
 }
@@ -125,10 +131,14 @@ class CakeList {
 const cakeList = () => new CakeList(showQty * currentPage - showQty, showQty, currentPage, section);
 cakeList();
 
-$('.sorteners select').change(() => {
-    showQty = $('select option:selected').data('qty');
+$('.sorteners select').change(function() {
+    showQty = $(this).val();
     currentPage = 1;
     cakeList();
+});
+
+$('.modal, .close-modal').click(() => {
+    $('.modal').fadeOut(300);
 });
 
 $('.cake-sections').on('click', '.sections-menu li', function() {
@@ -136,18 +146,3 @@ $('.cake-sections').on('click', '.sections-menu li', function() {
     currentPage = 1;
     cakeList();
 });
-
-$('.products-showcase').on('click', '.card img', function() {
-    const link = $(this).prop('src');
-    const cakeID = $(this).data('id');
-    console.log(cakeID);
-    const caption = $(this).siblings('.cake-name').html();
-    $('.modal-img').prop('src', link);
-    $('.modal-caption').html(caption);
-    $('.modal-cakeID').html(`#00${cakeID}`);
-    $('.modal').fadeIn(600);
-});
-
-$('.modal, .close-modal').click(() => {
-    $('.modal').fadeOut(300);
-})
