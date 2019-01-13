@@ -60,7 +60,7 @@ h1 {
 header div a:hover, .btn-add-order:hover {
     text-shadow: 0px 0px 5px #FFF;
     color: white;
-    box-shadow: 5px 5px 10px rgba(0,0,0,0.1), 0px 0px 40px 5px #ceebfd;
+    box-shadow: 5px 5px 10px rgba(255,255,255,0.1), 0px 0px 40px 5px #ceebfd;
     animation: none;
 }
 

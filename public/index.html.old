@@ -8,34 +8,38 @@
     <link rel="stylesheet" href="css/index.css" type="text/css">
 </head>
 <body>
+    <header>
+        <h1>Випічка руденької господині</h1>
+    </header>
     
     <section>
-        <nav class='left-nav'>
-            <div class='section-name'>
-                <p>Категорії:</p>
-            </div>
+        <nav class='left-menu'>
+            <p>Категорії:</p>
             <div class='cake-sections'></div>
         </nav>
         
         <div class='products-container'>
             <div class='sorteners'>
-                <span class='page-name'>Випічка руденької господині</span>
                 <div class='qty-selector'>
-                    <label>Тортів на сторінці: <select name='cakes-per-page' class='qty-selector'></label>
+                    <span>Тортів на сторінці: </span>
+                    <select name='cakes-per-page' class='qty-selector'>
                         <option selected>10</option>
                         <option>15</option>
                         <option>20</option>
                     </select>
                 </div>
             </div>
+            
             <div class='products-showcase'></div>
-            <footer>
-                <p>Some footer</p>
-                <nav class='pagination'></nav>
-                <a href='/admin'>Сторінка адміністратора</a>
-            </footer>
+            
+            <nav class='pagination'></nav>
         </div>
     </section>
+    
+    <footer>
+        <h1>Some footer</h1>
+        <a href='/admin'>Сторінка адміністратора</a>
+    </footer>
     
     <div class='modal'>
         <div class='modal-container'>

@@ -7,109 +7,97 @@
 
 body {
     margin: 0;
-    background-color: #222;
+}
+
+header {
+    text-align: center;
+    padding: 30px;
+    background-color: #F50;
+    background: linear-gradient(141deg, #9fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
+    color: yellow;
+    font-family: 'Ruslan Display';
+    font-size: xx-large;
 }
 
 section {
     display: flex;
-    height: 100vh;
 }
 
-.left-nav {
+.left-menu {
+    background-color: #09c;
     text-align: center;
-    width: 200px;
-    height: 100%;
-}
-
-.section-name {
-    color: white;
-    margin: 45px 5px 10px;
-    background: linear-gradient(to right, transparent, rgba(255,255,255,0.9) 50%, transparent);
-    padding: 2px 0;
-}
-
-.section-name p {
-    background-color: #222;
-    margin: 0;
-    padding: 4px 0 5px 0;
+    min-width: 150px;
 }
 
 .sections-menu {
     list-style-type: none;
     padding: 0;
-    margin-top: 5px;
 }
 
 .sections-menu li {
-    background: radial-gradient(circle 100px, rgba(255,255,255,0.9) 10%, transparent);
+    background-color: lightskyblue;
     font-family: 'Caveat';
     font-weight: bold;
     font-size: 1.5rem;
     letter-spacing: 1px;
     padding: 5px;
-    margin: 0 5px 10px 5px;
+    margin: 10px 5px 0 5px;
     cursor: pointer;
-    color: #111;
-    transition: .5s;
+    transition: all 0.5s;
+    border-radius: 5px;
+    box-shadow: 5px 5px 10px #333;
 }
 
 .sections-menu li:hover,
 .sections-menu li.active {
-    background-color: rgba(255,255,255,0.6);
+    background-color: PaleTurquoise;
     box-shadow: 2px 2px 3px #222;
 }
 
 .products-container {
     width: 100%;
-    display: flex;
-    flex-direction: column;
 }
 
 .sorteners {
-    padding: 5px 20px 0;
+    padding-right: 20px;
+    height: 40px;
+    background: linear-gradient(to top right, #7cc 0%, #c69 100%);
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
-    color: white;
-}
-
-.page-name {
-    font-family: 'Ruslan Display', cursive;
-    font-size: xx-large;
-    text-align: center;
-    z-index: 4;
 }
 
 .products-showcase {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-around;
-    align-items: center;
-    padding-right: 10px;
-    padding-left: 10px;
-    padding-bottom: 180px;
-    overflow-x: hidden;
-    overflow-y: auto;
-    height: 100%;
+    background: linear-gradient(to bottom left, #7cc 0%, #c69 100%);
+    padding: 5px;
 }
 
 .card {
     flex: 1 1 auto;
     width: 18.5%;
-    min-width: 250px;
+    min-width: 260px;
     max-width: 35%;
-    height: 250px;
-    margin: 11px 11px 20px;
+    display: block;
+    justify-content: center;
+    flex-direction: column;
+    margin: 8px 5px;
+    height: 300px;
     position: relative;
-    transition: all 1s ease-out;
+    transition: all 0.5s ease-out;
     z-index: 0;
 }
 
 .card-body {
-    background-color: rgba(255,255,255,0.9);
-    transition: all .5s ease-out;
+    display: block;
+    position: absolute;
+    border-radius: 20px 30px;
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.35), 0 7px 20px 0 rgba(0, 0, 0, 0.25);
+    background: linear-gradient(to bottom right, gold 0%, #ffffff 90%);
+    transition: all 0.5s ease-out;
     z-index: 1;
-    padding: 4px;
 }
 
 .card-body:hover {
@@ -119,21 +107,24 @@ section {
 .cake-icon {
     width: 100%;
     display: block;
-    height: 200px;
+    height: 250px;
+    padding: 10px 10px 0 10px;
     object-fit: cover;
+    border-radius: 20px 30px 0 0;
     position: relative;
     cursor: pointer;
 }
 
 .cake-name {
     text-align: center;
-    font-family: 'Pacifico', cursive;
+    font-family: 'Marck Script', cursive;
     font-size: xx-large;
     color: white;
-    margin: -1px 0 0 0;
-    padding-top: 5px;
+    margin: -1px 10px 10px 10px;
+    padding: 3px 0;
     display: block;
-    background-color: #000;
+    border-radius: 0 0 15px 20px;
+    background-color: #111;
     transition: all 1s;
 }
 
@@ -146,11 +137,11 @@ section {
 }
 
 .display-on-top {
-    z-index: 3;
+    z-index: 2;
 }
 
 .blurred {
-    filter: blur(1px) grayscale(90%) brightness(50%);
+    filter: blur(1px) grayscale(70%);
 }
 
 h5, h6 {
@@ -167,51 +158,39 @@ h6 {
     font-family: 'Marck Script', cursive;
 }
 
-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    text-align: center;
-    padding: 5px;
-    color: white;
-    height: 5vh;
-    width: 100%;
-}
-
-footer > * {
-    flex: 1;
-}
-
 .pagination {
-    height: 35px;
+    height: 40px;
+    background: linear-gradient(to top right, #7cc 0%, #c69 100%);
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .pagination a {
-    color: #ccc;
+    color: white;
     float: left;
     padding: 5px 10px;
     text-decoration: none;
-    transition: .5s;
-    border-right: 1px solid #ccc;
-}
-
-.pagination a:last-child {
-    border: none;
+    transition: background-color .5s;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-right: 5px;
 }
 
 .pagination a.active {
-    color: white;
-    text-shadow: 0 0 10px white;
-    cursor: default;
-    background-color: rgba(255,255,255,0.1);
+    background-color: #4CAF50;
 }
 
 .pagination a:hover:not(.active) {
-    background-color: rgba(255,255,255,0.1);
+    background-color: #ddd;
     cursor: pointer;
+    color: #4CAF50
+}
+
+footer {
+    text-align: center;
+    padding: 5px;
+    background-color: lightgray;
     color: white;
 }
 
@@ -269,16 +248,4 @@ footer > * {
 .close-modal:hover {
     color: lawngreen;
     transform: rotate(90deg);
-}
-
-::-webkit-scrollbar-track {
-	background-color: #777;
-}
-
-::-webkit-scrollbar {
-	width: 5px;
-}
-
-::-webkit-scrollbar-thumb {
-	background-color: #111;
 }

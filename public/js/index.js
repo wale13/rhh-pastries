@@ -106,11 +106,19 @@ class CakeList {
             cakeList();
         });
         $('.products-showcase').off('mouseenter mouseleave')
-            .on('mouseenter mouseleave', '.card', function() {
-                $(this).toggleClass('display-on-top');
-                $(this).find('.cake-details').slideToggle(100);
-                $(this).siblings('.card').toggleClass('blurred');
-        });
+            .on('mouseenter', '.card', function() {
+                $(this).addClass('display-on-top');
+                $(this).find('.cake-details').slideDown(100);
+                this.timer=window.setTimeout(() => {
+                    $(this).siblings('.card').addClass('blurred');
+                }, 2000);
+                
+            })
+            .on('mouseleave', '.card', function() {
+                window.clearTimeout(this.timer);
+                $('.card').removeClass('display-on-top blurred');
+                $('.cake-details').slideUp(100);
+            });
         $('.products-showcase').on('click', '.card img', function() {
             const link = $(this).prop('src');
             const cakeID = $(this).data('id');
