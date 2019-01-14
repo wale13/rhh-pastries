@@ -59,11 +59,13 @@ class CakeList {
             cakeListDomString += 
                 `<div class='card'>
                     <div class='card-body'>
-                        <img class='cake-icon' 
-                             src='${(cake.result_photo ? cake.result_photo : cake.prototype ? cake.prototype : './pic/cake.jpg')}'
-                             alt='${cakeName}'
-                             data-id='${cakeID}'>
-                        <h4 class='cake-name'>${cakeName.charAt(0).toUpperCase() + cakeName.slice(1)}</h4>
+                        <div class='cake-main'>
+                            <img class='cake-icon' 
+                                 src='${(cake.result_photo ? cake.result_photo : cake.prototype ? cake.prototype : './pic/cake.jpg')}'
+                                 alt='${cakeName}'
+                                 data-id='${cakeID}'>
+                            <h4 class='cake-name'>${cakeName.charAt(0).toUpperCase() + cakeName.slice(1)}</h4>
+                        </div>
                         <div class='cake-details'>
                             ${details}
                         </div>
@@ -108,10 +110,10 @@ class CakeList {
         $('.products-showcase').off('mouseenter mouseleave')
             .on('mouseenter', '.card', function() {
                 $(this).addClass('display-on-top');
-                $(this).find('.cake-details').slideDown(100);
+                $(this).find('.cake-details').slideDown(200);
                 this.timer=window.setTimeout(() => {
                     $(this).siblings('.card').addClass('blurred');
-                }, 2000);
+                }, 1200);
                 
             })
             .on('mouseleave', '.card', function() {
@@ -127,6 +129,7 @@ class CakeList {
             $('.modal-caption').html(caption);
             $('.modal-cakeID').html(`#00${cakeID}`);
             $('.modal').fadeIn(600);
+            $('.page-name').addClass('centered');
         });
     }
 }
@@ -142,10 +145,18 @@ $('.sorteners select').change(function() {
 
 $('.modal, .close-modal').click(() => {
     $('.modal').fadeOut(300);
+    $('.page-name').removeClass('centered');
 });
 
 $('.cake-sections').on('click', '.sections-menu li', function() {
     section = $(this).data('name');
     currentPage = 1;
     cakeList();
+});
+
+$('.arrow-helper').on('click', () => {
+    $('.arrow').toggleClass('arrow-left');
+    $('.left-nav').toggleClass('hide-menu');
+    $('.sections-menu li.active, .sections-menu li.lights-off').toggleClass('lights-off').toggleClass('active');
+    $('section').toggleClass('stretch');
 });

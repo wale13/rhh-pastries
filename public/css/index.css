@@ -1,72 +1,135 @@
-@import url('https://fonts.googleapis.com/css?family=Marck+Script|Caveat:400,700|Pacifico|Ruslan+Display');
+@import url('https://fonts.googleapis.com/css?family=Marck+Script|Caveat|Pacifico|Ruslan+Display|Bad+Script');
+
+:root {
+    --main-bg-color: #af0e38;
+    --second-bg-color: rgba(175, 14, 56, 0.85);
+}
 
 * {
     box-sizing: border-box;
-    -webkit-backface-visibility: hidden;
 }
 
 body {
     margin: 0;
-    background-color: #222;
+    background-color: var(--main-bg-color);
 }
 
 section {
-    display: flex;
-    height: 100vh;
+    margin-left: 210px;
+    height: 100%;
+    transition: 1s;
+}
+
+.stretch {
+    margin-left: 20px;
 }
 
 .left-nav {
-    text-align: center;
-    width: 200px;
+    position: fixed;
+    width: 210px;
     height: 100%;
+    box-shadow: 0 0 20px 3px #222;
+    transition: 1s;
+    overflow-x: hidden;
+    left: 0;
+    top: 0;
+    text-align: center;
+}
+
+.hide-menu {
+    left: -190px;
 }
 
 .section-name {
+    display: block;
     color: white;
-    margin: 45px 5px 10px;
+    margin: 56px 15px 15px;
     background: linear-gradient(to right, transparent, rgba(255,255,255,0.9) 50%, transparent);
     padding: 2px 0;
 }
 
 .section-name p {
-    background-color: #222;
+    background-color: var(--main-bg-color);
     margin: 0;
-    padding: 4px 0 5px 0;
+    padding: 4px 0 0;
+    font-family: 'Ruslan Display';
+    font-size: large;
 }
 
 .sections-menu {
     list-style-type: none;
     padding: 0;
     margin-top: 5px;
+    display: block;
 }
 
 .sections-menu li {
-    background: radial-gradient(circle 100px, rgba(255,255,255,0.9) 10%, transparent);
     font-family: 'Caveat';
     font-weight: bold;
     font-size: 1.5rem;
     letter-spacing: 1px;
     padding: 5px;
-    margin: 0 5px 10px 5px;
+    margin: 0 25px 10px 15px;
     cursor: pointer;
-    color: #111;
+    color: #FDD;
     transition: .5s;
+    text-shadow: 2px 2px 5px #000;
 }
 
 .sections-menu li:hover,
 .sections-menu li.active {
-    background-color: rgba(255,255,255,0.6);
-    box-shadow: 2px 2px 3px #222;
+    box-shadow: 0 0 20px 6px white, inset 0 0 10px 1px white;
+    color: white;
+    text-shadow: 2px 2px 5px #FDD;
+}
+
+.lights-off {
+    box-shadow: none;
+}
+
+.arrow {
+    position: absolute;
+    right: 7px;
+    top: 50%;
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-top: 2px solid #FDD;
+    border-right: 2px solid #FDD;
+    transform: rotateY(0) rotateZ(45deg);
+    filter: drop-shadow(0px 0px 3px white);
+    transition: .3s;
+    cursor: pointer;
+}
+
+.arrow-left {
+    transform: rotateY(180deg) rotateZ(45deg);
+    right: 0;
+}
+
+.arrow-helper {
+    position: absolute;
+    height: 100%;
+    right: 0;
+    top: 0;
+    width: 20px;
+    transition: 1s .1s;
+    cursor: pointer;
+}
+
+.arrow-helper:hover {
+    background-color: rgba(255,255,255,.2);
 }
 
 .products-container {
     width: 100%;
+    height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
 .sorteners {
-    padding: 5px 20px 0;
+    padding: 5px 25px 0 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -74,22 +137,37 @@ section {
 }
 
 .page-name {
-    font-family: 'Ruslan Display', cursive;
+    font-family: 'Bad Script', cursive;
     font-size: xx-large;
     text-align: center;
     z-index: 4;
+    text-shadow: 2px 2px 5px #000;
+    transition: .7s ease-in-out;
+}
+
+.centered {
+    padding-left: calc(50vw - 370px);
+}
+
+.qty-selector {
+    color: #FDD;
+    background-color: var(--main-bg-color);
+    border-color: #FDD;
+    text-shadow: 1px 1px 5px #111;
+}
+
+.qty-selector:focus {
+    outline-color: #FDD;
 }
 
 .products-showcase {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-around;
-    align-items: center;
-    padding-right: 10px;
-    padding-left: 10px;
-    padding-bottom: 180px;
+    align-content: flex-start;
+    padding: 10px 10px 180px 20px;
     overflow-x: hidden;
-    overflow-y: auto;
+    overflow-y: scroll;
     height: 100%;
 }
 
@@ -97,29 +175,43 @@ section {
     flex: 1 1 auto;
     width: 18.5%;
     min-width: 250px;
-    max-width: 35%;
+    max-width: 40%;
     height: 250px;
-    margin: 11px 11px 20px;
+    margin: 10px 20px 10px 0;
     position: relative;
     transition: all 1s ease-out;
     z-index: 0;
+    box-shadow: 0px 10px 40px #111;
+}
+
+.blurred {
+    filter: blur(1px) grayscale(90%) brightness(50%) opacity(80%);
+}
+
+.display-on-top {
+    z-index: 3;
 }
 
 .card-body {
     background-color: rgba(255,255,255,0.9);
     transition: all .5s ease-out;
     z-index: 1;
-    padding: 4px;
 }
 
 .card-body:hover {
     transform: scale(1.05);
+    box-shadow: 0 0 15px 6px white, inset 0 0 5px 1px white;
+}
+
+.cake-main {
+    position: relative;
+    
 }
 
 .cake-icon {
     width: 100%;
     display: block;
-    height: 200px;
+    height: 250px;
     object-fit: cover;
     position: relative;
     cursor: pointer;
@@ -127,14 +219,32 @@ section {
 
 .cake-name {
     text-align: center;
-    font-family: 'Pacifico', cursive;
+    font-family: 'Marck Script', cursive;
     font-size: xx-large;
     color: white;
-    margin: -1px 0 0 0;
-    padding-top: 5px;
+    margin: 0;
+    background-color: rgba(175,14,56,.6);
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.card-body:hover .cake-name {
+    position: static;
+    background-color: transparent;
+    color: #af0e38;
+}
+
+.card-body:hover .cake-name:before, .card-body:hover .cake-name:after {
+    content: '';
+    background: linear-gradient(to right, transparent, #af0e38 40%, #af0e38 60%, transparent);
+    margin-top: 5px;
+    height: 3px;
     display: block;
-    background-color: #000;
-    transition: all 1s;
+}
+
+.card-body:hover .cake-name:after {
+    margin-top: 2px;
 }
 
 .cake-details {
@@ -142,29 +252,22 @@ section {
 }
 
 .cake-details div {
-    margin: 0 5% 10px 5%;
-}
-
-.display-on-top {
-    z-index: 3;
-}
-
-.blurred {
-    filter: blur(1px) grayscale(90%) brightness(50%);
+    margin: 0 2%;
 }
 
 h5, h6 {
     display: inline;
     font-size: 1.3rem;
-    text-shadow: 1px 1px 3px white, -1px -1px 3px white;
+    color: #af0e38;
 }
 
 h5 {
-    font-family: 'Ruslan Display';
+    font-family: 'Pacifico';
 }
 
 h6 {
-    font-family: 'Marck Script', cursive;
+    width: 100%;
+    font-family: 'Marck Script';
 }
 
 footer {
@@ -206,7 +309,6 @@ footer > * {
     color: white;
     text-shadow: 0 0 10px white;
     cursor: default;
-    background-color: rgba(255,255,255,0.1);
 }
 
 .pagination a:hover:not(.active) {
@@ -233,6 +335,7 @@ footer > * {
     flex-flow: column;
     justify-content: center;
     align-items: center;
+    padding-top: 60px;
 }
 
 .modal-img {
@@ -258,16 +361,16 @@ footer > * {
     position: absolute;
     top: 15px;
     right: 35px;
-    color: #fff;
+    color: #BBB;
     font-size: 40px;
     font-weight: bold;
     cursor: pointer;
     transition: all 0.5s;
-    text-shadow: 0 0 20px #FFF;
 }
 
 .close-modal:hover {
-    color: lawngreen;
+    color: #FFF;
+    text-shadow: 0 0 20px #FFF;
     transform: rotate(90deg);
 }
 
