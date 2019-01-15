@@ -1,6 +1,6 @@
 /* global $ fetch */
 let currentPage = 1,
-    showQty = 10,
+    showQty = 20,
     section = 'all',
     offset = () => showQty * currentPage - showQty;
 
@@ -110,7 +110,7 @@ class CakeList {
         $('.products-showcase').off('mouseenter mouseleave')
             .on('mouseenter', '.card', function() {
                 $(this).addClass('display-on-top');
-                $(this).find('.cake-details').slideDown(200);
+                $(this).find('.cake-details').slideDown(400);
                 this.timer=window.setTimeout(() => {
                     $(this).siblings('.card').addClass('blurred');
                 }, 1200);
@@ -129,7 +129,6 @@ class CakeList {
             $('.modal-caption').html(caption);
             $('.modal-cakeID').html(`#00${cakeID}`);
             $('.modal').fadeIn(600);
-            $('.page-name').addClass('centered');
         });
     }
 }
@@ -137,15 +136,8 @@ class CakeList {
 const cakeList = () => new CakeList(offset(), showQty, currentPage, section);
 cakeList();
 
-$('.sorteners select').change(function() {
-    showQty = $(this).val();
-    currentPage = 1;
-    cakeList();
-});
-
 $('.modal, .close-modal').click(() => {
     $('.modal').fadeOut(300);
-    $('.page-name').removeClass('centered');
 });
 
 $('.cake-sections').on('click', '.sections-menu li', function() {
@@ -158,5 +150,5 @@ $('.arrow-helper').on('click', () => {
     $('.arrow').toggleClass('arrow-left');
     $('.left-nav').toggleClass('hide-menu');
     $('.sections-menu li.active, .sections-menu li.lights-off').toggleClass('lights-off').toggleClass('active');
-    $('section').toggleClass('stretch');
+    $('.products-showcase').toggleClass('stretch');
 });
