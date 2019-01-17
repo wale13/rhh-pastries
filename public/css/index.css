@@ -1,4 +1,9 @@
-@import url('https://fonts.googleapis.com/css?family=Marck+Script|Caveat|Pacifico|Ruslan+Display|Bad+Script');
+@import url('https://fonts.googleapis.com/css?family=Marck+Script|Caveat|Pacifico|Ruslan+Display');
+
+@font-face {
+    font-family: 'Scriptorama';
+    src: url('./fonts/scriptorama.woff') format('woff');
+}
 
 :root {
     --main-bg-color: #af0e38;
@@ -11,16 +16,17 @@
 
 body {
     margin: 0;
-    background-color: var(--main-bg-color);
+    background-color: var(--second-bg-color);
+    overflow-x: hidden;
 }
 
 header {
-    color: white;
     position: absolute;
     top: 0;
     width: 100%;
+    height: 65px;
     background-color: var(--main-bg-color);
-    z-index: 4;
+    z-index: 3;
     box-shadow: 0 0 20px 1px #FAA;
     filter: drop-shadow(0 0 20px #F66);
     border-bottom-left-radius: 100% 250%;
@@ -29,16 +35,19 @@ header {
 }
 
 .page-name {
-    font-family: 'Bad Script', cursive;
+    color: white;
+    font-family: 'Scriptorama';
+    font-weight: 600;
     font-size: xx-large;
-    text-shadow: 2px 2px 5px #000;
-    transition: .7s ease-in-out;
+    text-shadow: 0px 0px 10px #FFF, 1px 1px 5px #000;
+    letter-spacing: 10px;
+    filter: drop-shadow(0 0 20px #F66);
 }
 
 .left-nav {
-    position: fixed;
+    position: absolute;
     width: 210px;
-    height: 100%;
+    height: 100vh;
     transition: .7s ease-in-out;
     left: 0;
     top: 0;
@@ -58,8 +67,8 @@ header {
 .section-name {
     display: block;
     color: white;
-    margin: 56px 25px 15px;
-    background: linear-gradient(to right, transparent, rgba(255,255,255,0.9) 50%, transparent);
+    margin: 0 25px 15px;
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.9) 50%, transparent);
     padding: 2px 0;
 }
 
@@ -133,7 +142,7 @@ header {
 }
 
 .arrow-helper:hover {
-    background-color: rgba(255,200,200,.2);
+    background-color: rgba(255, 200, 200, .2);
 }
 
 .products-showcase {
@@ -143,7 +152,6 @@ header {
     align-content: flex-start;
     padding: 65px 0px 180px 30px;
     margin-left: 210px;
-    overflow-x: hidden;
     overflow-y: auto;
     height: 100vh;
     background-color: var(--second-bg-color);
@@ -169,7 +177,7 @@ header {
 }
 
 .blurred {
-    filter: blur(1px) grayscale(90%) brightness(50%) opacity(80%) ;
+    filter: blur(1px) grayscale(90%) brightness(50%) opacity(80%);
 }
 
 .display-on-top {
@@ -177,9 +185,8 @@ header {
 }
 
 .card-body {
-    background-color: rgba(255,255,255,0.9);
+    background-color: rgba(255, 255, 255, 0.9);
     transition: all .5s ease-out;
-    z-index: 1;
     border-radius: 10px;
     overflow: hidden;
 }
@@ -187,6 +194,7 @@ header {
 .card-body:hover {
     box-shadow: 0 0 20px 1px #FAA;
     filter: drop-shadow(0 0 20px #F66);
+    margin-bottom: 55px;
 }
 
 .cake-main {
@@ -198,7 +206,6 @@ header {
     display: block;
     height: 250px;
     object-fit: cover;
-    position: relative;
     cursor: pointer;
 }
 
@@ -208,7 +215,7 @@ header {
     font-size: xx-large;
     color: white;
     margin: 0;
-    background-color: rgba(175,14,56,.6);
+    background-color: rgba(175, 14, 56, .6);
     position: absolute;
     bottom: 0;
     width: 100%;
@@ -221,7 +228,8 @@ header {
     transition: 1s;
 }
 
-.card-body:hover .cake-name:before, .card-body:hover .cake-name:after {
+.card-body:hover .cake-name:before,
+.card-body:hover .cake-name:after {
     content: '';
     background: linear-gradient(to right, transparent, #af0e38 40%, #af0e38 60%, transparent);
     margin-top: 5px;
@@ -235,47 +243,61 @@ header {
 
 .cake-details {
     display: none;
-    padding: 5px;
+    padding: 5px 5px 0;
 }
 
 .cake-details div {
-    margin: 0 2%;
+    margin: 0 5px 2px;
 }
 
-h5, h6 {
+h5,
+h6 {
     display: inline;
     font-size: 1.3rem;
-    color: #af0e38;
 }
 
 h5 {
     font-family: 'Pacifico';
+    color: var(--second-bg-color);
 }
 
 h6 {
     width: 100%;
     font-family: 'Marck Script';
+    color: var(--main-bg-color);
 }
 
 footer {
     display: flex;
+    flex-wrap: wrap-reverse;
     justify-content: space-between;
     align-items: center;
-    text-align: center;
-    padding: 5px;
-    color: white;
-    height: 5vh;
+    padding: 5px 10px;
+    min-height: 4.5vh;
     width: 100%;
-    border-top-right-radius: 100% 100%;
+    border-top-right-radius: 80% 100%;
     position: fixed;
     bottom: 0;
     background: var(--main-bg-color);
-    z-index: 2;
+    z-index: 3;
     box-shadow: 0 0 20px 1px #FAA;
     filter: drop-shadow(0 0 20px #F66);
 }
 
-footer > * {
+footer p {
+    margin: 0;
+    color: #FBB;
+    word-break: keep-all;
+    min-width: 240px;
+    font-size: small;
+}
+
+footer p a {
+    text-decoration: none;
+    color: white;
+}
+
+footer>* {
     flex: 1;
 }
 
@@ -306,7 +328,7 @@ footer > * {
 }
 
 .pagination a:hover:not(.active) {
-    background-color: rgba(255,255,255,0.1);
+    background-color: rgba(255, 255, 255, 0.1);
     cursor: pointer;
     color: white;
 }
@@ -318,18 +340,22 @@ footer > * {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.95);
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.95);
 }
 
 .modal-container {
     display: flex;
     width: 100%;
     height: 100%;
+    padding: 3px;
     flex-flow: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    padding-top: 70px;
+}
+
+.modal-container .page-name {
+    text-align: center;
 }
 
 .modal-img {
@@ -353,7 +379,7 @@ footer > * {
 
 .close-modal {
     position: absolute;
-    top: 40px;
+    top: 5px;
     right: 20px;
     color: #BBB;
     font-size: 40px;
@@ -369,13 +395,48 @@ footer > * {
 }
 
 ::-webkit-scrollbar-track {
-	background-color: var(--main-bg-color);
+    background-color: var(--main-bg-color);
 }
 
 ::-webkit-scrollbar {
-	width: 5px;
+    width: 5px;
 }
 
 ::-webkit-scrollbar-thumb {
-	background-color: rgba(0,0,0,.4);
+    background-color: rgba(0, 0, 0, .4);
+}
+
+@media screen and (max-width: 785px) {
+    header {
+        height: auto;
+    }
+    .page-name {
+        letter-spacing: 2px;
+        font-size: x-large;
+    }
+    .products-showcase {
+        padding: 20px 0px 60px 20px;
+    }
+    .card {
+        height: auto;
+        max-width: 100%;
+    }
+    .blurred {
+        filter: none;
+    }
+    .cake-details {
+        display: block;
+    }
+    footer {
+        border-top-right-radius: 50px;
+    }
+    footer p {
+        font-size: x-small;
+    }
+    .tech-element {
+        display: none;
+    }
+    .close-modal {
+        top: 10%;
+    }
 }

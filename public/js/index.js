@@ -1,4 +1,4 @@
-/* global $ fetch */
+/* global $ fetch navigator */
 let currentPage = 1,
     showQty = 20,
     section = 'all',
@@ -96,7 +96,7 @@ class CakeList {
                     htmlString += `<a class='active' data-id='${i}'>${i}</a>`;
                     continue;
                 }
-                htmlString += `<a class='page-link' data-id='${i}'>${i}</a>`;
+                htmlString += `<a class='page-link' data-id='${i}' target='_self'>${i}</a>`;
             }
         }
         $('.pagination').html(htmlString);
@@ -106,21 +106,25 @@ class CakeList {
         $('a.page-link').click(function() {
             currentPage = $(this).data("id");
             cakeList();
+            $('.products-showcase').animate({ scrollTop: 0 }, "slow");
         });
-        $('.products-showcase').off('mouseenter mouseleave')
-            .on('mouseenter', '.card', function() {
-                $(this).addClass('display-on-top');
-                $(this).find('.cake-details').slideDown(400);
-                this.timer=window.setTimeout(() => {
-                    $(this).siblings('.card').addClass('blurred');
-                }, 1200);
-                
-            })
-            .on('mouseleave', '.card', function() {
-                window.clearTimeout(this.timer);
-                $('.card').removeClass('display-on-top blurred');
-                $('.cake-details').slideUp(100);
-            });
+        if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            $('.products-showcase').off('mouseenter mouseleave')
+                .on('mouseenter', '.card', function() {
+                    $(this).addClass('display-on-top');
+                    $(this).find('.cake-details').slideDown(400);
+                    this.timer=window.setTimeout(() => {
+                        $(this).siblings('.card').addClass('blurred');
+                    }, 1200);
+                })
+                .on('mouseleave', '.card', function() {
+                    window.clearTimeout(this.timer);
+                    $('.card').removeClass('display-on-top blurred');
+                    $('.cake-details').slideUp(100);
+                });
+        } else if ($('.arrow').hasClass('arrow-left')) {
+            $('.arrow-helper').click();
+        }
         $('.products-showcase').on('click', '.card img', function() {
             const link = $(this).prop('src');
             const cakeID = $(this).data('id');
@@ -152,3 +156,26 @@ $('.arrow-helper').on('click', () => {
     $('.sections-menu li.active, .sections-menu li.lights-off').toggleClass('lights-off').toggleClass('active');
     $('.products-showcase').toggleClass('stretch');
 });
+
+function hasTouch() {
+    return 'ontouchstart' in document.documentElement
+           || navigator.maxTouchPoints > 0
+           || navigator.msMaxTouchPoints > 0;
+}
+
+if (hasTouch()) {
+    try {
+        for (let x in document.styleSheets) {
+            const styleSheet = document.styleSheets[x];
+            if (!styleSheet.rules) continue;
+
+            for (let y = styleSheet.rules.length - 1; y >= 0; y--) {
+                if (!styleSheet.rules[y].selectorText) continue;
+
+                if (styleSheet.rules[y].selectorText.match(':hover')) {
+                    styleSheet.deleteRule(y);
+                }
+            }
+        }
+    } catch (ex) {}
+}
