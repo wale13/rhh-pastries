@@ -112,7 +112,7 @@ class CakeList {
         $('a.page-link').click(function(e) {
             e.preventDefault();
             currentPage = $(this).data("id");
-            $('.products-showcase').animate({ scrollTop: 0 }, "slow", cakeList);
+            $('html').animate({ scrollTop: 0 }, "slow", "swing", cakeList);
         });
         if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
             $('.products-showcase').off('mouseenter mouseleave')
@@ -121,7 +121,7 @@ class CakeList {
                     $(this).find('.cake-details').slideDown(400);
                     this.timer = window.setTimeout(() => {
                         $(this).siblings('.card').addClass('blurred');
-                    }, 1200);
+                    }, 1500);
                 })
                 .on('mouseleave', '.card', function() {
                     window.clearTimeout(this.timer);
@@ -140,6 +140,7 @@ class CakeList {
             $('.modal-img').prop('src', link);
             $('.modal-caption').html(caption);
             $('.modal-cakeID').html(`#00${cakeID}`);
+            $('body').addClass('hide-scroll');
             $('.modal').fadeIn(600);
             window.location.hash = "modal";
         });
@@ -151,12 +152,13 @@ cakeList();
 
 $('.modal, .close-modal').click(() => {
     $('.modal').fadeOut(300);
+    $('body').removeClass('hide-scroll');
      window.location.hash = '';
 });
 
 $(window).on('hashchange', function() {
     if(window.location.hash != "#modal") {
-        $('.modal').click();
+        $('.modal').fadeOut(300);
     }
 });
 
