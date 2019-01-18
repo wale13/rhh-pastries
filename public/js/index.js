@@ -7,6 +7,8 @@ let currentPage = 1,
 class CakeList {
     
     constructor(offset, limit, curPage, section) {
+        this.limit = limit;
+        this.curPage = curPage;
         const data = {
             offset: offset, 
             limit: limit,
@@ -19,21 +21,22 @@ class CakeList {
             method: 'POST',
             body: JSON.stringify(data)
         };
-        fetch('/get-page', fetchParams)
+        fetch('/get-cakes-qty', fetchParams)
             .then(res => res.json())
-            .then(cakes => {
-                this.renderCakes(cakes);
+            .then(qty => {
+                this.pages = qty['count(*)'];
+            })
+            .then(() => {
+                fetch('/get-page', fetchParams)
+                    .then(res => res.json())
+                    .then(cakes => {
+                        this.renderCakes(cakes);
+                    });
             });
         fetch('/get-sections')
             .then(res => res.json())
             .then(sections => {
                 this.renderSections(sections);
-            });
-        fetch('/get-cakes-qty', fetchParams)
-            .then(res => res.json())
-            .then(qty => {
-                this.renderPaginator(qty['count(*)'], limit, curPage);
-                this.addEventListeners();
             });
     }
     
@@ -73,6 +76,8 @@ class CakeList {
                 </div>`;
         });
         $('.products-showcase').html(cakeListDomString);
+        this.renderPaginator(this.pages, this.limit, this.curPage);
+        this.addEventListeners();
     }
     
     renderSections(sections) {
@@ -88,8 +93,9 @@ class CakeList {
     }
     
     renderPaginator(pages, limit, curPage) {
+        console.log(pages, limit, curPage);
         const pagesQty = pages / limit;
-        let htmlString = '';
+        let htmlString = `<nav class='pagination'>`;
         if (pagesQty > 1) {
             for (let i = 1; i <= Math.ceil(pagesQty); i++) {
                 if (i === curPage) {
@@ -99,21 +105,23 @@ class CakeList {
                 htmlString += `<a class='page-link' data-id='${i}' target='_self'>${i}</a>`;
             }
         }
-        $('.pagination').html(htmlString);
+        htmlString += `</nav>`;
+        $('.products-showcase').append(htmlString);
+        $('.products-showcase').animate({ scrollTop: 0 }, "slow");
     }
     
     addEventListeners() {
-        $('a.page-link').click(function() {
+        $('a.page-link').click(function(e) {
+            e.preventDefault();
             currentPage = $(this).data("id");
             cakeList();
-            $('.products-showcase').animate({ scrollTop: 0 }, "slow");
         });
         if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
             $('.products-showcase').off('mouseenter mouseleave')
                 .on('mouseenter', '.card', function() {
                     $(this).addClass('display-on-top');
                     $(this).find('.cake-details').slideDown(400);
-                    this.timer=window.setTimeout(() => {
+                    this.timer = window.setTimeout(() => {
                         $(this).siblings('.card').addClass('blurred');
                     }, 1200);
                 })
@@ -124,6 +132,8 @@ class CakeList {
                 });
         } else if ($('.arrow').hasClass('arrow-left')) {
             $('.arrow-helper').click();
+        } else {
+            $(()=>{window.scrollTo({top: 1000, behavior: 'smooth'})});
         }
         $('.products-showcase').on('click', '.card img', function() {
             const link = $(this).prop('src');
@@ -133,6 +143,7 @@ class CakeList {
             $('.modal-caption').html(caption);
             $('.modal-cakeID').html(`#00${cakeID}`);
             $('.modal').fadeIn(600);
+            window.location.hash = "modal";
         });
     }
 }
@@ -142,9 +153,17 @@ cakeList();
 
 $('.modal, .close-modal').click(() => {
     $('.modal').fadeOut(300);
+     window.location.hash = '';
 });
 
-$('.cake-sections').on('click', '.sections-menu li', function() {
+$(window).on('hashchange', function() {
+    if(window.location.hash != "#modal") {
+        $('.modal').click();
+    }
+});
+
+$('.cake-sections').on('click', '.sections-menu li', function(e) {
+    e.preventDefault();
     section = $(this).data('name');
     currentPage = 1;
     cakeList();
