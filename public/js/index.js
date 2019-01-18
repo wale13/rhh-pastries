@@ -107,14 +107,13 @@ class CakeList {
         }
         htmlString += `</nav>`;
         $('.products-showcase').append(htmlString);
-        $('.products-showcase').animate({ scrollTop: 0 }, "slow");
     }
     
     addEventListeners() {
         $('a.page-link').click(function(e) {
             e.preventDefault();
             currentPage = $(this).data("id");
-            cakeList();
+            $('.products-showcase').animate({ scrollTop: 0 }, "slow", cakeList);
         });
         if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
             $('.products-showcase').off('mouseenter mouseleave')
@@ -166,7 +165,7 @@ $('.cake-sections').on('click', '.sections-menu li', function(e) {
     e.preventDefault();
     section = $(this).data('name');
     currentPage = 1;
-    cakeList();
+    $('.products-showcase').animate({ scrollTop: 0 }, "slow", cakeList);
 });
 
 $('.arrow-helper').on('click', () => {
