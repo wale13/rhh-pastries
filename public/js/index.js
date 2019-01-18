@@ -23,20 +23,20 @@ class CakeList {
         };
         fetch('/get-cakes-qty', fetchParams)
             .then(res => res.json())
-            .then(qty => {
-                this.pages = qty['count(*)'];
+            .then(res => {
+                this.pages = res['count(*)'];
             })
             .then(() => {
                 fetch('/get-page', fetchParams)
                     .then(res => res.json())
-                    .then(cakes => {
-                        this.renderCakes(cakes);
+                    .then(res => {
+                        this.renderCakes(res);
                     });
             });
         fetch('/get-sections')
             .then(res => res.json())
-            .then(sections => {
-                this.renderSections(sections);
+            .then(res => {
+                this.renderSections(res);
             });
     }
     
@@ -93,7 +93,6 @@ class CakeList {
     }
     
     renderPaginator(pages, limit, curPage) {
-        console.log(pages, limit, curPage);
         const pagesQty = pages / limit;
         let htmlString = `<nav class='pagination'>`;
         if (pagesQty > 1) {

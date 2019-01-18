@@ -8,6 +8,7 @@
 :root {
     --main-bg-color: #af0e38;
     --second-bg-color: #8e0b2e;
+    color: white;
 }
 
 * {
@@ -16,7 +17,6 @@
 
 body {
     background-color: var(--second-bg-color);
-    overflow-x: hidden;
     margin: 0;
 }
 
@@ -35,7 +35,6 @@ header {
 }
 
 .page-name {
-    color: white;
     font-family: 'Scriptorama';
     font-weight: 600;
     font-size: xx-large;
@@ -66,14 +65,13 @@ header {
 
 .section-name {
     display: block;
-    color: white;
     margin: 0 25px 15px;
     background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.9) 50%, transparent);
     padding: 2px 0;
 }
 
 .section-name p {
-    background-color: var(--second-bg-color);
+    background: linear-gradient(to left, var(--main-bg-color) -20%, var(--second-bg-color) 120%);
     margin: 0;
     padding: 4px 0 0;
     font-family: 'Ruslan Display';
@@ -100,7 +98,6 @@ header {
 }
 
 .sections-menu li:hover {
-    box-shadow: 0 0 20px 6px #FCC, inset 0 0 10px 1px #FCC;
     color: white;
     text-shadow: 2px 2px 5px #FDD;
 }
@@ -217,7 +214,6 @@ header {
     text-align: center;
     font-family: 'Marck Script', cursive;
     font-size: xx-large;
-    color: white;
     margin: 0;
     background-color: rgba(175, 14, 56, .6);
     position: absolute;
@@ -327,6 +323,28 @@ footer span a {
     color: white;
 }
 
+.social {
+    position: fixed;
+    display: flex;
+    left: 3%;
+    bottom: 1.8%;
+    z-index: 2;
+}
+
+.social a {
+    padding: 0px 10px;
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+    text-shadow: 0px 0px 20px rgba(255, 200, 200, 0.4);
+    transition: all ease-in-out 150ms;
+}
+
+.social a:hover {
+    margin-top: -15px;
+    transform: translate(0, -8);
+}
+
 .modal {
     display: none;
     position: absolute;
@@ -359,7 +377,6 @@ footer span a {
 }
 
 .modal-caption {
-    color: white;
     font-family: 'Marck Script', cursive;
     font-size: 3rem;
     text-shadow: 0 0 20px #FFF;
