@@ -1,5 +1,4 @@
 /* global $ fetch navigator */
-
 let currentPage = 1,
     showQty = 20,
     section = 'all',
