@@ -169,7 +169,7 @@ header {
     flex-flow: row wrap;
     justify-content: space-around;
     align-content: flex-start;
-    padding: 4rem 0 7rem 1.875rem;
+    padding: 4rem 0 8.5rem 1.875rem;
     margin-left: 13.125rem;
     background-color: var(--second-bg-color);
     transition: .7s ease-in-out;

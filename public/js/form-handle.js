@@ -113,7 +113,7 @@ jQuery.fn.serializeObject = function() {
     return objectData;
 };
 
-$('.btn-add-order').on('click', {formPurpose: 'create'}, toggleForm);
+$('.products-showcase').on('click', '.new-order', {formPurpose: 'create'}, toggleForm);
 
 $('.products-showcase').on('click', '.btn-edit-order', {formPurpose: 'edit'}, toggleForm);
 
@@ -142,7 +142,8 @@ $('#avatar-link').on('click change', function() {
         $('#avatar-img').attr({
             src: $(this).val(),
             alt: $('input[name="name"]').val() + ' ' + 
-                 $('input[name="surname"]').val()
+                 $('input[name="surname"]').val() + '</br>' +
+                 $('input[name="tel"]').val()
         });
     } else {
         $('#avatar-img').attr('src', './pic/noavatar.jpg');

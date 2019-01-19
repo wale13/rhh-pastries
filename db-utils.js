@@ -57,9 +57,12 @@ const tableDataParser = (req, res, next) => {
 
 const checkSection = (req, res, next) => {
     req.body.order_by = 'rowid DESC';
+    req.body.joinClause = '';
     if (req.body.section === 'all') {
         req.body.whereClause = '';
     } else if (req.body.section === 'in-work') {
+        req.body.joinClause = `INNER JOIN Clients 
+                               ON Orders.client_id = Clients.client_id`;
         req.body.whereClause = 'WHERE result_photo = "" OR result_photo IS NULL';
         req.body.order_by = 'deadline ASC';
     } else {
@@ -222,7 +225,8 @@ const getAdminPageContentRouter = express.Router();
 getAdminPageContentRouter.post('/', checkSection, (req, res) => {
     db.all(`SELECT * 
             FROM Orders 
-            ${req.body.whereClause}
+            ${req.body.joinClause} 
+            ${req.body.whereClause} 
             ORDER BY ${req.body.order_by} 
             LIMIT ${req.body.offset}, ${req.body.limit};`, 
             (err, rows) => {

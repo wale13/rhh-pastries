@@ -1,3 +1,4 @@
+// to run add " -r dotenv/config" to "start" at "package.json"
 const express = require('express');
 const app = express();
 app.use(express.static('public'));
