@@ -46,11 +46,11 @@ const sendOrder = (e) => {
             body: JSON.stringify(form.serializeObject())
         })
             .then(res => res.json())
-            .then(res => showSendOrderAlert(res));
+            .then(res => showAlert(res));
     }
 };
 
-const showSendOrderAlert = (message) => {
+const showAlert = (message) => {
     $('#alert-message').html(message);
     toggleFormShow();
     cakeList();
@@ -126,7 +126,7 @@ $('.delete-btn').click(function() {
             .then(res => res.json())
             .then(res => {
                 $('.cancel-btn').click();
-                showSendOrderAlert(res);
+                showAlert(res);
             });
     });
 });

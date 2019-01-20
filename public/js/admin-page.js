@@ -52,6 +52,7 @@ class CakeList {
                       cream = cake.cream,
                       filling = cake.fillings,
                       comments = cake.comments,
+                      delivery = cake.delivery,
                       weight = cake.final_weight;
                 let details = `<div class='client'>
                                     <img class='mini-avatar'
@@ -61,18 +62,21 @@ class CakeList {
                                         <p>${cake.name + ' ' + cake.surname}</p>
                                         <p>${cake.tel}</p>
                                     </div>
-                               </div>`;
+                               </div>
+                               <table class='order-details'>
+                                    <tbody>`;
                 if (sponges) {
-                    details += `<div><h5>Коржі: </h5><h6>${sponges.replace(/,/g, ', ').replace(/\+/g, ' + ')}.</h6></div>`;
+                    details += `<tr><td><b>Коржі: </b></td><td>${sponges.replace(/,/g, ', ').replace(/\+/g, ' + ')}.</td></tr>`;
                 } if (cream) {
-                    details += `<div><h5>Крем: </h5><h6>${cream.replace(/,/g, ', ').replace(/\+/g, ' + ')}.</h6></div>`;
+                    details += `<tr><td><b>Крем: </b></td><td>${cream.replace(/,/g, ', ').replace(/\+/g, ' + ')}.</td></tr>`;
                 } if (filling) {
-                    details += `<div><h5>Наповнення: </h5><h6>${filling.replace(/,/g, ', ').replace(/\+/g, ' + ')}.</h6></div>`;
+                    details += `<tr><td><b>Наповнення: </b></td><td>${filling.replace(/,/g, ', ').replace(/\+/g, ' + ')}.</td></tr>`;
                 } if (weight) {
-                    details += `<div><h5>Вага: </h5><h6>${weight} кг</h6></div>`;
+                    details += `<tr><td><b>Вага: </b></td><td>${weight} кг</td></tr>`;
                 } if (comments) {
-                    details += `<div><h5>Коментар: </h5><h6>${comments}</h6></div>`;
+                    details += `<tr><td><b>Коментар: </b></td><td>${comments}</td></tr>`;
                 }
+                details += '</tbody></table>';
                 cakeListDomString += 
                     `<div class='card detailed'>
                         <div class='cake-main'>
@@ -80,7 +84,9 @@ class CakeList {
                                  src='${(cake.result_photo ? cake.result_photo : cake.prototype ? cake.prototype : './pic/cake.jpg')}'
                                  alt='${cakeName}'
                                  data-id='${cakeID}'>
-                            <h6 class='mini-id'>${cake.order_id}</h6>
+                            <h5 class='mini-id'>${cake.order_id}</h6>
+                            ${delivery ? '<i class="fas fa-shipping-fast"></i>' : ''}
+                            <h5 class='date'>${cake.deadline}</h5>
                             <h4 class='cake-name'>${cakeName.charAt(0).toUpperCase() + cakeName.slice(1)}</h4>
                         </div>
                         <div class='cake-details'>

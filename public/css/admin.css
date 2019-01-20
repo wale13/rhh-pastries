@@ -113,6 +113,7 @@ section {
 
 .card.new-order {
     cursor: pointer;
+    max-width: 240px;
 }
 
 .card.new-order img {
@@ -140,7 +141,7 @@ section {
 }
 
 .card {
-    flex: 1 1 auto;
+    flex: 1 0 auto;
     width: 250px;
     min-width: 200px;
     max-width: 350px;
@@ -153,11 +154,12 @@ section {
 }
 
 .card.detailed {
-    width: auto;
+    min-width: 500px;
     max-width: 600px;
-    flex-flow: row wrap;
+    flex-flow: row;
     justify-content: space-between;
     background-color: #EEE;
+    margin-top: 25px;
 }
 
 .card.detailed .cake-icon {
@@ -188,19 +190,42 @@ section {
     width: 100%;
 }
 
-.mini-id {
+.cake-main h5, .fa-shipping-fast {
     position: absolute;
     top: 0;
-    left: 0;
     color: white;
-    background-color: rgba(0, 0, 0, .4);
+    background-color: rgba(255, 0, 0, .7);
+    height: 26px;
+    font-size: 1rem;
     padding: 5px 10px;
     margin: 0;
 }
 
+.mini-id {
+    left: 0;
+    border-radius: 0 0 10px 0;
+}
+
+.cake-main .date {
+    height: 26px;
+    left: 55px;
+    top: -26px;
+    text-align: center;
+    padding: 0 5px;
+    background-color: transparent;
+    font-size: 26px;
+    text-shadow: 0 0 10px #FAA;
+    filter: drop-shadow(0 0 10px #FAA);
+}
+
+.fa-shipping-fast {
+    right: 0;
+    border-radius: 0 0 0 10px;
+}
+
 .cake-details {
     padding: 5px;
-    flex: 1 0 auto;
+    flex: 1 1 auto;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -217,26 +242,29 @@ section {
 }
 
 .client-info {
-    flex: 1 0 auto;
+    flex: 1 1 auto;
     color: #555;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-.cake-details div:not([class]):nth-child(even) {
+.order-details {
+    border-collapse: collapse;
+}
+
+.order-details tr:nth-of-type(odd) {
     background-color: #DDD;
 }
 
-.cake-details h5, h6 {
-    display: inline;
-    padding: 0;
+.order-details td {
+    padding: 2px 0;
     margin: 0;
-    font-size: 12px;
+    font-size: 13px;
 }
-
-.cake-details h5 {
-    color: #F22;
+.order-details td:nth-of-type(1) {
+    text-align: right;
+    padding-right: 5px;
 }
 
 .pagination {
