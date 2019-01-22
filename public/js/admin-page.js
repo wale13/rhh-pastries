@@ -45,7 +45,7 @@ class CakeList {
             let dates = {};
             cakes.forEach(cake => {
                 let options = {weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'},
-                    date = new Date(cake['deadline']).toLocaleString("uk-UA", options);
+                    date = new Date(cake['deadline']).toLocaleDateString("uk-UA", options);
                 dates[date] ? dates[date].push(cake) : (dates[date] = [], dates[date].push(cake));
             });
             for (const date in dates) {
@@ -94,7 +94,6 @@ class CakeList {
                                      alt='${cakeName}'
                                      data-id='${cakeID}'>
                                 <h5 class='mini-id'>${cake.order_id}</h6>
-                                
                                 <h5 class='date'>${cake.deadline}</h5>
                                 <h4 class='cake-name'>${cakeName.charAt(0).toUpperCase() + cakeName.slice(1)}</h4>
                             </div>
@@ -112,6 +111,7 @@ class CakeList {
             }
         } else {
             cakes.forEach(cake => {
+                const date = new Date(cake['deadline']).toLocaleDateString("uk-UA");
                 let cakeName = cake.theme;
                 cakeName = cakeName.charAt(0).toUpperCase() + cakeName.slice(1);
                 cakeListDomString += 
@@ -123,7 +123,7 @@ class CakeList {
                                 cake.prototype : './pic/cake.jpg')}'
                                 alt='${cakeName}'>
                             <h4 class='cake-name'>${cakeName}</h4>
-                            <h5 class='date'>${cake.deadline}</h5>
+                            <h5 class='date'>${date}</h5>
                             <h5 class='mini-id'>${cake.order_id}</h6>
                         </div>
                         <div class='form-buttons'>

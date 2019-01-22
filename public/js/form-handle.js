@@ -113,7 +113,7 @@ jQuery.fn.serializeObject = function() {
     return objectData;
 };
 
-$('.products-showcase').on('click', '.new-order', {formPurpose: 'create'}, toggleForm);
+$('.new-order').click({formPurpose: 'create'}, toggleForm);
 
 $('.products-showcase').on('click', '.btn-edit-order', {formPurpose: 'edit'}, toggleForm);
 

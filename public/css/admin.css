@@ -131,7 +131,7 @@ section {
 }
 
 .new-order:hover .new-order-name {
-    color: #AAA;
+    color: #DDD;
 }
 
 .new-order-icon {
@@ -145,13 +145,13 @@ section {
     font-family: 'Marck Script', cursive;
     margin: 0;
     font-size: small;
-    color: #EEE;
+    color: #FFF;
 }
 
 .dated-group {
     display: flex;
     flex-flow: row wrap;
-    margin: 5px 10px;
+    margin: 5px 10px 0;
     justify-content: space-around;
     border-bottom: 2px solid #EEE;
     width: 100%;
@@ -204,7 +204,7 @@ section {
 }
 
 .cake-name {
-    color: white;
+    color: #EEE;
     text-align: center;
     font-family: 'Marck Script', cursive;
     font-size: xx-large;
@@ -254,7 +254,7 @@ section {
 .mini-avatar {
     height: 100%;
     object-fit: cover;
-    filter: drop-shadow(-5px 5px 4px #777);
+    filter: drop-shadow(-3px 4px 4px #777);
 }
 
 .client-info {
