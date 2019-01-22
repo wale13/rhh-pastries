@@ -1,6 +1,6 @@
 /* global $ fetch */
 let currentPage = 1,
-    showQty = 10,
+    showQty = 18,
     section = 'in-work',
     offset = () => showQty * currentPage - showQty;
 
@@ -29,77 +29,87 @@ class CakeList {
             .then(res => {
                 this.renderSections(res);
             });
-        fetch('/get-cakes-qty', fetchParams)
-            .then(res => res.json())
-            .then(res => {
-                this.renderPaginator(res['count(*)'], limit, curPage);
-                this.addEventListeners();
-            });
+        if (section !== 'in-work') {
+            fetch('/get-cakes-qty', fetchParams)
+                .then(res => res.json())
+                .then(res => {
+                    this.renderPaginator(res['count(*)'], limit, curPage);
+                });
+        }
+        this.addEventListeners();
     }
     
     renderCakes(cakes, section) {
         let cakeListDomString = '';
         if (section === 'in-work') {
-            cakeListDomString += 
-                `<div class='card new-order'>
-                    <img class='new-order-icon' src='./pic/new-order.png' alt='add new order'>
-                    <h4 class='new-order-name'>Нове замовлення</h4>
-                </div>`;
+            let dates = {};
             cakes.forEach(cake => {
-                const cakeID = cake.order_id,
-                      cakeName = cake.theme,
-                      sponges = cake.sponges,
-                      cream = cake.cream,
-                      filling = cake.fillings,
-                      comments = cake.comments,
-                      delivery = cake.delivery,
-                      weight = cake.final_weight;
-                let details = `<div class='client'>
-                                    <img class='mini-avatar'
-                                         src='${cake.avatar ? cake.avatar : './pic/noavatar.jpg'}'
-                                         alt='${cake.name + ' ' + cake.surname + '</br>' + cake.tel}'>
-                                    <div class='client-info'>
-                                        <p>${cake.name + ' ' + cake.surname}</p>
-                                        <p>${cake.tel}</p>
-                                    </div>
-                               </div>
-                               <table class='order-details'>
-                                    <tbody>`;
-                if (sponges) {
-                    details += `<tr><td><b>Коржі: </b></td><td>${sponges.replace(/,/g, ', ').replace(/\+/g, ' + ')}.</td></tr>`;
-                } if (cream) {
-                    details += `<tr><td><b>Крем: </b></td><td>${cream.replace(/,/g, ', ').replace(/\+/g, ' + ')}.</td></tr>`;
-                } if (filling) {
-                    details += `<tr><td><b>Наповнення: </b></td><td>${filling.replace(/,/g, ', ').replace(/\+/g, ' + ')}.</td></tr>`;
-                } if (weight) {
-                    details += `<tr><td><b>Вага: </b></td><td>${weight} кг</td></tr>`;
-                } if (comments) {
-                    details += `<tr><td><b>Коментар: </b></td><td>${comments}</td></tr>`;
-                }
-                details += '</tbody></table>';
-                cakeListDomString += 
-                    `<div class='card detailed'>
-                        <div class='cake-main'>
-                            <img class='cake-icon' 
-                                 src='${(cake.result_photo ? cake.result_photo : cake.prototype ? cake.prototype : './pic/cake.jpg')}'
-                                 alt='${cakeName}'
-                                 data-id='${cakeID}'>
-                            <h5 class='mini-id'>${cake.order_id}</h6>
-                            ${delivery ? '<i class="fas fa-shipping-fast"></i>' : ''}
-                            <h5 class='date'>${cake.deadline}</h5>
-                            <h4 class='cake-name'>${cakeName.charAt(0).toUpperCase() + cakeName.slice(1)}</h4>
-                        </div>
-                        <div class='cake-details'>
-                            ${details}
-                            <div class='form-buttons'>
-                                <button type='button' 
-                                    class='btn-edit-order action-button grey-btn' 
-                                    data-id='${cake.order_id}'>Деталі</button>
-                            </div>
-                        </div>
-                        
-                    </div>`;
+                let options = {weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'},
+                    date = new Date(cake['deadline']).toLocaleString("uk-UA", options);
+                dates[date] ? dates[date].push(cake) : (dates[date] = [], dates[date].push(cake));
             });
+            for (const date in dates) {
+                    cakeListDomString += `<section class='dated-group'>
+                                                <div class='date-header' align='center'>
+                                                    ${date}
+                                                </div>`;
+                    dates[date].forEach(cake => {
+                    const cakeID = cake.order_id,
+                          cakeName = cake.theme,
+                          sponges = cake.sponges,
+                          cream = cake.cream,
+                          filling = cake.fillings,
+                          comments = cake.comments,
+                          delivery = cake.delivery,
+                          weight = cake.desired_weight;
+                    let details = `<div class='client'>
+                                        <img class='mini-avatar'
+                                             src='${cake.avatar ? cake.avatar : './pic/noavatar.jpg'}'
+                                             alt='${cake.name + ' ' + cake.surname + '</br>' + cake.tel}'>
+                                        <div class='client-info'>
+                                            <p>${cake.name + ' ' + cake.surname}</p>
+                                            <p>${cake.tel}</p>
+                                        </div>
+                                   </div>
+                                   <table class='order-details'>
+                                        <tbody>`;
+                    if (sponges) {
+                        details += `<tr><td><b>Коржі: </b></td><td>${sponges.replace(/,/g, ', ').replace(/\+/g, ' + ')}.</td></tr>`;
+                    } if (cream) {
+                        details += `<tr><td><b>Крем: </b></td><td>${cream.replace(/,/g, ', ').replace(/\+/g, ' + ')}.</td></tr>`;
+                    } if (filling) {
+                        details += `<tr><td><b>Наповнення: </b></td><td>${filling.replace(/,/g, ', ').replace(/\+/g, ' + ')}.</td></tr>`;
+                    } if (weight) {
+                        details += `<tr><td><b>Вага: </b></td><td>± ${weight} кг</td></tr>`;
+                    } if (comments) {
+                        details += `<tr><td><b>Коментар: </b></td><td>${comments}</td></tr>`;
+                    }
+                    details += '</tbody></table>';
+                    cakeListDomString += 
+                        `<div class='card detailed'>
+                            ${delivery ? '<i class="fas fa-shipping-fast"></i>' : ''}
+                            <div class='cake-main'>
+                                <img class='cake-icon' 
+                                     src='${(cake.result_photo ? cake.result_photo : cake.prototype ? cake.prototype : './pic/cake.jpg')}'
+                                     alt='${cakeName}'
+                                     data-id='${cakeID}'>
+                                <h5 class='mini-id'>${cake.order_id}</h6>
+                                
+                                <h5 class='date'>${cake.deadline}</h5>
+                                <h4 class='cake-name'>${cakeName.charAt(0).toUpperCase() + cakeName.slice(1)}</h4>
+                            </div>
+                            <div class='cake-details'>
+                                ${details}
+                                <div class='form-buttons'>
+                                    <button type='button' 
+                                        class='btn-edit-order' 
+                                        data-id='${cake.order_id}'><i class="far fa-edit"></i></button>
+                                </div>
+                            </div>
+                        </div>`;
+                });
+                cakeListDomString += '</section>';
+            }
         } else {
             cakes.forEach(cake => {
                 let cakeName = cake.theme;
@@ -113,11 +123,13 @@ class CakeList {
                                 cake.prototype : './pic/cake.jpg')}'
                                 alt='${cakeName}'>
                             <h4 class='cake-name'>${cakeName}</h4>
+                            <h5 class='date'>${cake.deadline}</h5>
+                            <h5 class='mini-id'>${cake.order_id}</h6>
                         </div>
                         <div class='form-buttons'>
                             <button type='button' 
-                                class='btn-edit-order action-button grey-btn' 
-                                data-id='${cake.order_id}'>Деталі</button>
+                                class='btn-edit-order' 
+                                data-id='${cake.order_id}'><i class="far fa-edit"></i></button>
                         </div>
                     </div>`;
             });
@@ -154,10 +166,11 @@ class CakeList {
     }
     
     addEventListeners() {
-        $('a.page-link').click(function() {
+        $('.pagination').on('click', '.page-link', function() {
             currentPage = $(this).data("id");
             cakeList();
         });
+        $('.date, .card').draggable();
     }
 }
 let cakeList = () => new CakeList(offset(), showQty, currentPage, section);

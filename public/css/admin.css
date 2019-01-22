@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Marck+Script|Ruslan+Display');
 
 :root {
-    --main-bg-color: lightskyblue;
-    --secondary-bg-color: lawngreen;
-    --third-bg-color: hsla(0, 5%, 0%, 1);
+    --main-bg-color: #af0e38;
+    --second-bg-color: #8e0b2e;
+    --third-bg-color: rgba(0, 0, 0, .4);
 }
 
 * {
@@ -12,7 +12,8 @@
 
 body {
     margin: 0;
-    background-color: #333;
+    /*background: linear-gradient(45deg, var(--second-bg-color), var(--main-bg-color), var(--second-bg-color));*/
+    background-color: #999;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -58,7 +59,7 @@ header a:hover {
     align-items: center;
     height: 30px;
     padding: 0 15px;
-    background: linear-gradient(to left, #00E000 0%, transparent 25%);
+    background: linear-gradient(to left, #0005 0%, transparent 25%);
     color: #FFF;
 }
 
@@ -74,8 +75,9 @@ section {
 
 .section-name {
     padding: 10px;
-    border: 1px solid #EEE;
-    background-color: rgba(255,255,255, 0.2);
+    background: linear-gradient(135deg, #fff5, #fff2, #fff7);
+    color: #EEE;
+    box-shadow: 2px 2px 3px #555;
 }
 
 .sections-menu {
@@ -85,7 +87,7 @@ section {
 }
 
 .sections-menu li {
-    background-color: lightskyblue;
+    background-color: #0003;
     font-family: 'Caveat';
     font-weight: bold;
     font-size: 1.5rem;
@@ -94,72 +96,95 @@ section {
     margin: 10px 5px 0 5px;
     cursor: pointer;
     transition: all 0.3s;
+    color: #CCC;
+    box-shadow: 3px 3px 2px #3336;
 }
 
 .sections-menu li:hover,
 .sections-menu li.active {
     text-shadow: 0px 0px 4px #FFF;
     color: white;
-    box-shadow: 4px 4px 8px rgba(255,255,255,0.1), 0px 0px 30px 4px #ceebfd;
+    filter: drop-shadow(0 0 3px #AAA);
 }
 
 .products-showcase {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-around;
-    padding: 10px;
+    align-items: flex-start;
+    padding: 5px;
     width: 100%;
 }
 
-.card.new-order {
+.new-order {
     cursor: pointer;
-    max-width: 240px;
+    position: fixed;
+    bottom: 10px;
+    left: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.card.new-order img {
-    filter: contrast(200%);
-}
-
-.card.new-order:hover img {
+.new-order:hover img {
     filter: contrast(100%);
 }
 
-.card.new-order:hover .new-order-name {
-    color: #444;
+.new-order:hover .new-order-name {
+    color: #AAA;
 }
 
 .new-order-icon {
-    height: 210px;
     object-fit: scale-down;
+    filter: contrast(200%);
+    height: 85px;
 }
 
 .new-order-name {
     text-align: center;
     font-family: 'Marck Script', cursive;
-    font-size: xx-large;
     margin: 0;
+    font-size: small;
+    color: #EEE;
+}
+
+.dated-group {
+    display: flex;
+    flex-flow: row wrap;
+    margin: 5px 10px;
+    justify-content: space-around;
+    border-bottom: 2px solid #EEE;
+    width: 100%;
+    padding-bottom: 10px;
+}
+
+.date-header {
+    padding: 5px 10px 10px;
+    margin-bottom: 10px;
+    color: #FFF;
+    font-size: xx-large;
+    width: 100%;
+    border-bottom: 2px solid #EEE;
 }
 
 .card {
     flex: 1 0 auto;
     width: 250px;
-    min-width: 200px;
-    max-width: 350px;
+    max-width: 400px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.35), 0 7px 20px 0 rgba(0, 0, 0, 0.25);
     background-color: #999;
     margin: 5px;
+    position: relative;
 }
 
 .card.detailed {
     min-width: 500px;
     max-width: 600px;
     flex-flow: row;
-    justify-content: space-between;
     background-color: #EEE;
-    margin-top: 25px;
 }
 
 .card.detailed .cake-icon {
@@ -190,11 +215,11 @@ section {
     width: 100%;
 }
 
-.cake-main h5, .fa-shipping-fast {
+.mini-id, .fa-shipping-fast, .date {
     position: absolute;
     top: 0;
     color: white;
-    background-color: rgba(255, 0, 0, .7);
+    background-color: var(--third-bg-color);
     height: 26px;
     font-size: 1rem;
     padding: 5px 10px;
@@ -203,24 +228,14 @@ section {
 
 .mini-id {
     left: 0;
-    border-radius: 0 0 10px 0;
 }
 
-.cake-main .date {
-    height: 26px;
-    left: 55px;
-    top: -26px;
-    text-align: center;
-    padding: 0 5px;
-    background-color: transparent;
-    font-size: 26px;
-    text-shadow: 0 0 10px #FAA;
-    filter: drop-shadow(0 0 10px #FAA);
+.date {
+    right: 0;
 }
 
 .fa-shipping-fast {
     right: 0;
-    border-radius: 0 0 0 10px;
 }
 
 .cake-details {
@@ -239,6 +254,7 @@ section {
 .mini-avatar {
     height: 100%;
     object-fit: cover;
+    filter: drop-shadow(-5px 5px 4px #777);
 }
 
 .client-info {
@@ -247,6 +263,7 @@ section {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    filter: drop-shadow(0px 0px 3px #AAA);
 }
 
 .order-details {
@@ -261,15 +278,36 @@ section {
     padding: 2px 0;
     margin: 0;
     font-size: 13px;
+    text-align: justify;
 }
+
 .order-details td:nth-of-type(1) {
     text-align: right;
     padding-right: 5px;
+    filter: drop-shadow(0px 0px 3px #AAA);
+}
+
+.cake-details .form-buttons {
+    text-align: right;
+    filter: drop-shadow(-2px 2px 1px #999);
+}
+
+.btn-edit-order {
+    font-size: 1.5rem;
+    border: none;
+    background-color: transparent;
+    padding: 0;
+    outline: none;
+    cursor: pointer;
+    color: inherit;
+}
+
+.btn-edit-order:hover {
+    color: #F22;
 }
 
 .pagination {
     height: 40px;
-    background: radial-gradient(CIRCLE, #00E000 0%, transparent 45%);
     display: flex;
     justify-content: center;
     align-items: center;

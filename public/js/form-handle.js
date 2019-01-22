@@ -17,7 +17,7 @@ const toggleForm = (e) => {
             $('.order-number').html(res);
         });
     } else if (purpose === 'edit') {
-        const id = $(e.target).data('id');
+        const id = $(e.currentTarget).data('id');
         const url = '/get-order/' + id;
         $('#result-fieldset').prop('disabled', false);
         $('input[type=reset').addClass('invisible');

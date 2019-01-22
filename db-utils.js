@@ -58,6 +58,7 @@ const tableDataParser = (req, res, next) => {
 const checkSection = (req, res, next) => {
     req.body.order_by = 'rowid DESC';
     req.body.joinClause = '';
+    req.body.limitClause = `LIMIT ${req.body.offset}, ${req.body.limit}`;
     if (req.body.section === 'all') {
         req.body.whereClause = '';
     } else if (req.body.section === 'in-work') {
@@ -65,6 +66,7 @@ const checkSection = (req, res, next) => {
                                ON Orders.client_id = Clients.client_id`;
         req.body.whereClause = 'WHERE result_photo = "" OR result_photo IS NULL';
         req.body.order_by = 'deadline ASC';
+        req.body.limitClause = '';
     } else {
         req.body.whereClause = `WHERE cake_section = "${req.body.section}"`;
     }
@@ -228,7 +230,7 @@ getAdminPageContentRouter.post('/', checkSection, (req, res) => {
             ${req.body.joinClause} 
             ${req.body.whereClause} 
             ORDER BY ${req.body.order_by} 
-            LIMIT ${req.body.offset}, ${req.body.limit};`, 
+            ${req.body.limitClause};`, 
             (err, rows) => {
                 if (err) {
                     console.log(err);

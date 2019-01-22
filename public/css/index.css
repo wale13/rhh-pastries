@@ -169,7 +169,7 @@ header {
     flex-flow: row wrap;
     justify-content: space-around;
     align-content: flex-start;
-    padding: 4rem 0 8.5rem 1.875rem;
+    padding: 4rem 0 6rem 1.875rem;
     margin-left: 13.125rem;
     background-color: var(--second-bg-color);
     transition: .7s ease-in-out;
@@ -235,26 +235,6 @@ header {
     position: absolute;
     bottom: 0;
     width: 100%;
-}
-
-.card-body:hover .cake-name {
-    position: static;
-    background-color: transparent;
-    color: #af0e38;
-    transition: 1s;
-}
-
-.card-body:hover .cake-name:before,
-.card-body:hover .cake-name:after {
-    content: '';
-    background: linear-gradient(to right, transparent, #af0e38 40%, #af0e38 60%, transparent);
-    margin-top: 0.3rem;
-    height: 0.19rem;
-    display: block;
-}
-
-.card-body:hover .cake-name:after {
-    margin-top: 0.06rem;
 }
 
 .cake-details {
