@@ -5,7 +5,6 @@ let currentPage = 1,
     offset = () => showQty * currentPage - showQty;
 
 class CakeList {
-    
     constructor(offset, limit, curPage, section) {
         const data = {
             offset: offset, 
@@ -22,7 +21,7 @@ class CakeList {
         fetch('/get-admin-page', fetchParams)
             .then(res => res.json())
             .then(res => {
-                this.renderCakes(res, section);
+                this.renderContent(res, section);
             });
         fetch('/get-sections')
             .then(res => res.json())
@@ -36,24 +35,23 @@ class CakeList {
                     this.renderPaginator(res['count(*)'], limit, curPage);
                 });
         }
-        this.addEventListeners();
     }
-    
-    renderCakes(cakes, section) {
+    renderContent(content, section) {
         let cakeListDomString = '';
         if (section === 'in-work') {
+            $('.pagination, .sorteners').addClass('invisible');
             let dates = {};
-            cakes.forEach(cake => {
-                let options = {weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'},
+            content.forEach(cake => {
+                const options = {weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'},
                     date = new Date(cake['deadline']).toLocaleDateString("uk-UA", options);
                 dates[date] ? dates[date].push(cake) : (dates[date] = [], dates[date].push(cake));
             });
             for (const date in dates) {
-                    cakeListDomString += `<section class='dated-group'>
-                                                <div class='date-header' align='center'>
-                                                    ${date}
-                                                </div>`;
-                    dates[date].forEach(cake => {
+                cakeListDomString += `<section class='dated-group'>
+                                            <div class='date-header'>
+                                                ${date}
+                                            </div>`;
+                dates[date].forEach(cake => {
                     const cakeID = cake.order_id,
                           cakeName = cake.theme,
                           sponges = cake.sponges,
@@ -61,7 +59,8 @@ class CakeList {
                           filling = cake.fillings,
                           comments = cake.comments,
                           delivery = cake.delivery,
-                          weight = cake.desired_weight;
+                          weight = cake.desired_weight,
+                          shortDate = new Date(cake['deadline']).toLocaleDateString("uk-UA");
                     let details = `<div class='client'>
                                         <img class='mini-avatar'
                                              src='${cake.avatar ? cake.avatar : './pic/noavatar.jpg'}'
@@ -93,8 +92,8 @@ class CakeList {
                                      src='${(cake.result_photo ? cake.result_photo : cake.prototype ? cake.prototype : './pic/cake.jpg')}'
                                      alt='${cakeName}'
                                      data-id='${cakeID}'>
-                                <h5 class='mini-id'>${cake.order_id}</h6>
-                                <h5 class='date'>${cake.deadline}</h5>
+                                <h5 class='mini-id'>${cakeID}</h6>
+                                <h5 class='date'>${shortDate}</h5>
                                 <h4 class='cake-name'>${cakeName.charAt(0).toUpperCase() + cakeName.slice(1)}</h4>
                             </div>
                             <div class='cake-details'>
@@ -102,41 +101,67 @@ class CakeList {
                                 <div class='form-buttons'>
                                     <button type='button' 
                                         class='btn-edit-order' 
-                                        data-id='${cake.order_id}'><i class="far fa-edit"></i></button>
+                                        data-id='${cakeID}'>
+                                        <i class="far fa-edit"></i>
+                                    </button>
                                 </div>
                             </div>
                         </div>`;
                 });
                 cakeListDomString += '</section>';
             }
+        } else if (section === 'all-clients') {
+            $('.pagination, .sorteners').addClass('invisible');
+            content.forEach(client => {
+                const fullName = client.name + ' ' + client.surname,
+                      clientID = client.client_id;
+                let total = '???';                                              /* <-- фетч кількості тортів */
+                cakeListDomString += 
+                    `<div class='card user-card'>
+                        <div class='user-card-main'>
+                            <img class='large-avatar'
+                                 src='${client.avatar ? client.avatar : './pic/noavatar.jpg'}'
+                                 alt='${fullName}'>
+                            <h5 class='mini-id'>${clientID}</h6>
+                        </div>
+                        <div class='user-details'>
+                            <h2><b>${fullName}</b></h2>
+                            <h3><small>Тел.: </small>${client.tel}</b></h3>
+                            <h4>Всього замовлень: ${total}</h4>
+                            <div class='form-buttons'>
+                                <button type='button' 
+                                    class='btn-edit-user' 
+                                    data-id='${clientID}'>
+                                    <i class="far fa-edit"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>`;
+            });
         } else {
-            cakes.forEach(cake => {
+            $('.pagination, .sorteners').removeClass('invisible');
+            content.forEach(cake => {
                 const date = new Date(cake['deadline']).toLocaleDateString("uk-UA");
                 let cakeName = cake.theme;
                 cakeName = cakeName.charAt(0).toUpperCase() + cakeName.slice(1);
                 cakeListDomString += 
                     `<div class='card'>
                         <div class='cake-main'>
-                            <img class='cake-icon' 
+                            <img class='cake-body-icon' 
                                 src='${(cake.result_photo ? 
                                 cake.result_photo : cake.prototype ?
                                 cake.prototype : './pic/cake.jpg')}'
+                                data-id='${cake.order_id}'
                                 alt='${cakeName}'>
                             <h4 class='cake-name'>${cakeName}</h4>
                             <h5 class='date'>${date}</h5>
                             <h5 class='mini-id'>${cake.order_id}</h6>
-                        </div>
-                        <div class='form-buttons'>
-                            <button type='button' 
-                                class='btn-edit-order' 
-                                data-id='${cake.order_id}'><i class="far fa-edit"></i></button>
                         </div>
                     </div>`;
             });
         }
         $('.products-showcase').html(cakeListDomString);
     }
-    
     renderSections(sections) {
         let sectionsDomString = `<ul class="sections-menu">
                                 <li data-name="in-work">В роботі</li>
@@ -147,9 +172,9 @@ class CakeList {
         });
         sectionsDomString += '</ul>';
         $('.cake-sections').html(sectionsDomString);
-        $(`.cake-sections li[data-name="${section}"]`).addClass('active');
+        $('li').removeClass('active');
+        $(`li[data-name="${section}"]`).addClass('active');
     }
-    
     renderPaginator(pages, limit, curPage) {
         const pagesQty = pages / limit;
         let htmlString = '';
@@ -164,15 +189,8 @@ class CakeList {
         }
         $('.pagination').html(htmlString);
     }
-    
-    addEventListeners() {
-        $('.pagination').on('click', '.page-link', function() {
-            currentPage = $(this).data("id");
-            cakeList();
-        });
-        $('.date, .card').draggable();
-    }
 }
+
 let cakeList = () => new CakeList(offset(), showQty, currentPage, section);
 cakeList();
 
@@ -182,7 +200,12 @@ $('.sorteners select').change(function() {
     cakeList();
 });
 
-$('.products-showcase, .cake').on('click', 'img:not(.new-order-icon)', function() {
+$('.pagination').on('click', '.page-link', function() {
+    currentPage = $(this).data("id");
+    cakeList();
+});
+
+$('.products-showcase, .cake').on('click', 'img:not(.new-order-icon):not(.cake-body-icon)', function() {
     const link = $(this).attr('src');
     if (!['./pic/cake.jpg', './pic/noavatar.jpg'].includes(link)) {
         const caption = $(this).attr('alt');
@@ -196,8 +219,21 @@ $('#pic-modal, .close-modal').click(() => {
     $('#pic-modal').fadeOut(300);
 });
 
-$('.cake-sections').on('click', '.sections-menu li', function() {
+$('.cake-sections, .clients-menu').on('click', 'li', function() {
     section = $(this).data('name');
     currentPage = 1;
     cakeList();
+});
+
+$(window).scroll(function(){
+    if ($(this).scrollTop() > 500) {
+        $('#scroll').fadeIn();
+    } else {
+        $('#scroll').fadeOut();
+    }
+});
+
+$('#scroll').click(function(){
+    $("html, body").animate({ scrollTop: 0 }, 600);
+    return false;
 });

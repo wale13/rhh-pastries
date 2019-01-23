@@ -10,7 +10,7 @@ const { checkOrdersDB, addNewOrderRouter, editOrderRouter, deleteOrderRouter,
         getCakesQtyRouter, getOrderRouter, insertDateStamp, 
         getAdminPageContentRouter, getSectionsRouter } = require('./db-utils');
 const passport = require('./passport.js');
-const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn();
+const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn('/login');
 const backupDB = new CronJob('00 00 23 * * *', () => {
     console.log(insertTimeStamp(), 'Starting backup...');
     fs.copyFile(`${process.env.DB_PATH}orders.db`, 
@@ -23,15 +23,6 @@ const backupDB = new CronJob('00 00 23 * * *', () => {
                 });
 }, null, true);
 
-app.use('/add-order', addNewOrderRouter);
-app.use('/edit-order', editOrderRouter);
-app.use('/delete-order', deleteOrderRouter);
-app.use('/get-new-order-id', getNewOrderIDRouter);
-app.use('/get-page', getPageContentRouter);
-app.use('/get-admin-page', getAdminPageContentRouter);
-app.use('/get-cakes-qty', getCakesQtyRouter);
-app.use('/get-order', getOrderRouter);
-app.use('/get-sections', getSectionsRouter);
 app.use(require('cookie-parser')());
 app.use(require('body-parser').urlencoded({ extended: true }));
 app.use(require('express-session')({ secret: process.env.SECRET,
@@ -39,6 +30,15 @@ app.use(require('express-session')({ secret: process.env.SECRET,
                                      saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use('/add-order', ensureLoggedIn, addNewOrderRouter);
+app.use('/edit-order', ensureLoggedIn, editOrderRouter);
+app.use('/delete-order', ensureLoggedIn, deleteOrderRouter);
+app.use('/get-new-order-id', getNewOrderIDRouter);
+app.use('/get-page', getPageContentRouter);
+app.use('/get-admin-page', ensureLoggedIn, getAdminPageContentRouter);
+app.use('/get-cakes-qty', getCakesQtyRouter);
+app.use('/get-order', getOrderRouter);
+app.use('/get-sections', getSectionsRouter);
 
 app.get('/', 
     (req, res) => res.redirect('./index.html'));

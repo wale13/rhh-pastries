@@ -56,18 +56,22 @@ const tableDataParser = (req, res, next) => {
 };
 
 const checkSection = (req, res, next) => {
-    req.body.order_by = 'rowid DESC';
+    req.body.fromClause = 'Orders';
     req.body.joinClause = '';
+    req.body.whereClause = '';
+    req.body.orderBy = 'rowid DESC';
     req.body.limitClause = `LIMIT ${req.body.offset}, ${req.body.limit}`;
-    if (req.body.section === 'all') {
-        req.body.whereClause = '';
-    } else if (req.body.section === 'in-work') {
+    if (req.body.section === 'in-work') {
         req.body.joinClause = `INNER JOIN Clients 
                                ON Orders.client_id = Clients.client_id`;
         req.body.whereClause = 'WHERE result_photo = "" OR result_photo IS NULL';
-        req.body.order_by = 'deadline ASC';
+        req.body.orderBy = 'deadline ASC';
         req.body.limitClause = '';
-    } else {
+    } else if (req.body.section === 'all-clients') {
+        req.body.fromClause = 'Clients';
+        req.body.orderBy = 'name ASC, surname ASC';
+        req.body.limitClause = '';
+    } else if (req.body.section !== 'all') {
         req.body.whereClause = `WHERE cake_section = "${req.body.section}"`;
     }
     next();
@@ -226,10 +230,10 @@ const getAdminPageContentRouter = express.Router();
 
 getAdminPageContentRouter.post('/', checkSection, (req, res) => {
     db.all(`SELECT * 
-            FROM Orders 
+            FROM ${req.body.fromClause} 
             ${req.body.joinClause} 
             ${req.body.whereClause} 
-            ORDER BY ${req.body.order_by} 
+            ORDER BY ${req.body.orderBy} 
             ${req.body.limitClause};`, 
             (err, rows) => {
                 if (err) {

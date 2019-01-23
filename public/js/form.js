@@ -146,10 +146,18 @@
                 </div>
             </fieldset>
             <div class='form-buttons'>
-                <input type='submit' class='submit-new action-button green-btn' value='Зберегти'>
-                <input type='reset' class='reset-btn action-button red-btn' value='Очистити'>
-                <input type='button' class='delete-btn action-button red-btn' value='Видалити'>
-                <input type='button' class='close-btn action-button grey-btn' value='Закрити'>
+                <button type='submit' class='submit-new action-button green-btn'>
+                    Зберегти <i class="far fa-save"></i>
+                </button>
+                <button type='reset' class='reset-btn action-button red-btn'>
+                    Очистити <i class="fas fa-sync-alt"></i>
+                </button>
+                <button type='button' class='delete-btn action-button red-btn'>
+                    Видалити <i class="far fa-trash-alt"></i>
+                </button>
+                <button type='button' class='close-btn action-button grey-btn'>
+                    Закрити <i class="fas fa-times"></i>
+                </button>
             </div>
         </form>
     </div>

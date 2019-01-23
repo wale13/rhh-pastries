@@ -11,8 +11,9 @@
 </head>
 <body>
     <header>
+        <p></p>
         <h1>Випічка руденької господині</h1>
-        <a href='/logout'>Вихід</a>
+        <a href='/logout'><i class="fas fa-power-off"></i></a>
     </header>
     
     <div class='sorteners'>
@@ -34,6 +35,9 @@
             </div>
             <div class='clients-section'>
                 <p class='section-name'>Клієнти</p>
+                    <ul class="clients-menu">
+                        <li data-name="all-clients">Всі</li>
+                    </ul>
             </div>
             <div class='new-order'>
                 <img class='new-order-icon' src='./pic/new-order.png' alt='add new order'>
@@ -46,8 +50,9 @@
     
     <nav class='pagination'></nav>
     
+    <span id='scroll'><i class="far fa-arrow-alt-circle-up"></i></span>
+    
     <footer>
-        <h5>Some footer</h5>
         <a href='/'>Головна сторінка</a>
     </footer>
     

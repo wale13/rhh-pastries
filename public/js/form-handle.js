@@ -8,7 +8,7 @@ const toggleForm = (e) => {
     const purpose = e.data.formPurpose;
     if (purpose === 'create') {
         $('#result-fieldset').prop('disabled', true);
-        $('input[type=reset').removeClass('invisible');
+        $('button[type=reset').removeClass('invisible');
         $('.delete-btn').addClass('invisible');
         $('#avatar-link, #prototype-link').click();
         fetch('/get-new-order-id')
@@ -20,7 +20,7 @@ const toggleForm = (e) => {
         const id = $(e.currentTarget).data('id');
         const url = '/get-order/' + id;
         $('#result-fieldset').prop('disabled', false);
-        $('input[type=reset').addClass('invisible');
+        $('button[type=reset').addClass('invisible');
         $('.delete-btn').removeClass('invisible');
         fetch(url)
             .then(res => res.json())
@@ -115,7 +115,7 @@ jQuery.fn.serializeObject = function() {
 
 $('.new-order').click({formPurpose: 'create'}, toggleForm);
 
-$('.products-showcase').on('click', '.btn-edit-order', {formPurpose: 'edit'}, toggleForm);
+$('.products-showcase').on('click', '.btn-edit-order, .cake-body-icon', {formPurpose: 'edit'}, toggleForm);
 
 $('.delete-btn').click(function() {
     const id = $(this).data('id');
