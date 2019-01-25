@@ -15,7 +15,7 @@
                         <label for="surname">Прізвище:</label>
                         <input type="text" name="surname" placeholder="Прізвище"><br>
                         <label for="tel">Номер тел.:</label>
-                        <input type="text" name="tel" placeholder="Телефон" required><br>
+                        <input type="text" name="tel" placeholder="Телефон"><br>
                         <label for="avatar">Ссилка на фото клієнта:</label>
                         <input type="url" id='avatar-link' name="avatar" placeholder="URL аватарки">
                     </div>

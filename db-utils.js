@@ -91,7 +91,8 @@ addNewOrderRouter.post('/', tableDataParser, (req, res) => {
     const addNewOrder = () => {
         db.get(`SELECT client_id 
                 FROM Clients 
-                WHERE tel = '${req.body.tel}';`,
+                WHERE name = '${req.body.name}' 
+                AND surname = '${req.body.surname}';`,
                 (err, row) => {
                     if (err) {
                         console.log(err);
