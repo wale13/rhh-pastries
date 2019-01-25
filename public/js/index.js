@@ -111,6 +111,7 @@ class CakeList {
     addEventListeners() {
         $('a.page-link').click(function(e) {
             e.preventDefault();
+            $('.card').addClass('blurred');
             currentPage = $(this).data("id");
             $('html').animate({ scrollTop: 0 }, "slow", "swing", cakeList);
         });
@@ -165,6 +166,7 @@ $(window).on('hashchange', function() {
 
 $('.cake-sections').on('click', '.sections-menu li', function(e) {
     e.preventDefault();
+    $('.card').addClass('blurred');
     section = $(this).data('name');
     currentPage = 1;
     $('.products-showcase').animate({ scrollTop: 0 }, "slow", cakeList);

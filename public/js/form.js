@@ -137,12 +137,6 @@
                     <div class='details-simple'>
                         <img id='result-img' src="./pic/cake.jpg"></img>
                     </div>
-                    <div class='details-right invisible'>
-                        <label for="client_id">клієнт №</label>
-                        <input type="text" name="client_id" readonly><br>
-                        <label for="order_id">замовлення №</label>
-                        <input type="text" name="order_id" readonly><br>
-                    </div>
                 </div>
             </fieldset>
             <div class='form-buttons'>
@@ -158,6 +152,12 @@
                 <button type='button' class='close-btn action-button grey-btn'>
                     Закрити <i class="fas fa-times"></i>
                 </button>
+                <div class='invisible'>
+                    <label for="client_id">клієнт №</label>
+                    <input type="text" name="client_id" readonly><br>
+                    <label for="order_id">замовлення №</label>
+                    <input type="text" name="order_id" readonly><br>
+                </div>
             </div>
         </form>
     </div>

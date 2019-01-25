@@ -28,7 +28,7 @@ class CakeList {
             .then(res => {
                 this.renderSections(res);
             });
-        if (section !== 'in-work') {
+        if (section !== ('in-work' && 'all-clients')) {
             fetch('/get-cakes-qty', fetchParams)
                 .then(res => res.json())
                 .then(res => {
@@ -60,11 +60,12 @@ class CakeList {
                           comments = cake.comments,
                           delivery = cake.delivery,
                           weight = cake.desired_weight,
+                          fullName = cake.name + ' ' + cake.surname,
                           shortDate = new Date(cake['deadline']).toLocaleDateString("uk-UA");
                     let details = `<div class='client'>
                                         <img class='mini-avatar'
                                              src='${cake.avatar ? cake.avatar : './pic/noavatar.jpg'}'
-                                             alt='${cake.name + ' ' + cake.surname + '</br>' + cake.tel}'>
+                                             alt='${fullName + '</br>' + cake.tel}'>
                                         <div class='client-info'>
                                             <p>${cake.name + ' ' + cake.surname}</p>
                                             <p>${cake.tel}</p>
@@ -100,7 +101,7 @@ class CakeList {
                                 ${details}
                                 <div class='form-buttons'>
                                     <button type='button' 
-                                        class='btn-edit-order' 
+                                        class='card-button btn-edit-order' 
                                         data-id='${cakeID}'>
                                         <i class="far fa-edit"></i>
                                     </button>
@@ -115,27 +116,33 @@ class CakeList {
             content.forEach(client => {
                 const fullName = client.name + ' ' + client.surname,
                       clientID = client.client_id;
-                let total = '???';                                              /* <-- фетч кількості тортів */
                 cakeListDomString += 
-                    `<div class='card user-card'>
-                        <div class='user-card-main'>
+                    `<div class='card client-card'>
+                        <div class='client-card-main'>
                             <img class='large-avatar'
                                  src='${client.avatar ? client.avatar : './pic/noavatar.jpg'}'
-                                 alt='${fullName}'>
+                                 alt='${fullName + '</br>' + client.tel}'>
                             <h5 class='mini-id'>${clientID}</h6>
                         </div>
-                        <div class='user-details'>
+                        <div class='client-details'>
                             <h2><b>${fullName}</b></h2>
                             <h3><small>Тел.: </small>${client.tel}</b></h3>
-                            <h4>Всього замовлень: ${total}</h4>
+                            <h4>Всього замовлень: ${client.total}</h4>
+                            <h4>Замовлень "в роботі": ${client.in_progress}</h4>
                             <div class='form-buttons'>
                                 <button type='button' 
-                                    class='btn-edit-user' 
+                                    class='card-button btn-client-cakes' 
+                                    data-id='${clientID}'>
+                                    <i class="fas fa-birthday-cake"></i>
+                                </button>
+                                <button type='button' 
+                                    class='card-button btn-edit-client' 
                                     data-id='${clientID}'>
                                     <i class="far fa-edit"></i>
                                 </button>
                             </div>
                         </div>
+                        <div class='clients-cakes'></div>
                     </div>`;
             });
         } else {
@@ -201,8 +208,35 @@ $('.sorteners select').change(function() {
 });
 
 $('.pagination').on('click', '.page-link', function() {
-    currentPage = $(this).data("id");
+    currentPage = $(this).data('id');
     cakeList();
+});
+
+$('.products-showcase').on('click', '.btn-client-cakes', function() {
+    const target = $(this).parents('.client-details').siblings('.clients-cakes'),
+          clientID = $(this).data('id');
+    if (target.is(':empty')) {
+        target.slideUp(0);
+        fetch(`/client-cakes/${clientID}`)
+            .then(res => res.json())
+            .then(cakes => {
+                cakes.forEach(cake => {
+                    let cakeName = cake.theme;
+                    const htmlString = `<div class='cake-main'>
+                                            <img class='cake-body-icon mini' 
+                                                src='${(cake.result_photo ? 
+                                                cake.result_photo : cake.prototype ?
+                                                cake.prototype : './pic/cake.jpg')}'
+                                                data-id='${cake.order_id}'
+                                                alt='${cakeName}'>
+                                            <h4 class='cake-name'>${cakeName}</h4>
+                                            <h5 class='mini-id'>${cake.order_id}</h6>
+                                        </div>`;
+                    target.append(htmlString);
+                });
+            });
+    }
+    target.slideToggle();
 });
 
 $('.products-showcase, .cake').on('click', 'img:not(.new-order-icon):not(.cake-body-icon)', function() {
@@ -236,4 +270,8 @@ $(window).scroll(function(){
 $('#scroll').click(function(){
     $("html, body").animate({ scrollTop: 0 }, 600);
     return false;
+});
+
+$('#color-changer').click(() => {
+    $('body').toggleClass('red-body');
 });

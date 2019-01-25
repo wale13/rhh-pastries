@@ -6,11 +6,36 @@ const toggleFormShow = () => {
 
 const toggleForm = (e) => {
     const purpose = e.data.formPurpose;
+    $('.form-close').removeClass('invisible');
+    $('.cake fieldset').prop('disabled', true);
+    $('button[type=reset').addClass('invisible');
+    $('.delete-btn').addClass('invisible');
+    $('.order-header').removeClass('invisible');
     if (purpose === 'create') {
-        $('#result-fieldset').prop('disabled', true);
+        $('.cake fieldset:not(#result-fieldset)').prop('disabled', false);
         $('button[type=reset').removeClass('invisible');
-        $('.delete-btn').addClass('invisible');
         $('#avatar-link, #prototype-link').click();
+        
+        // По введенню телефона:
+        
+        $('input[name="tel"]').off().focusout(function() {
+            if ($(this).val().length == 10) {
+                const data = {tel: $(this).val().toString()};
+                fetch('/get-client', {
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    method: 'POST',
+                    body: JSON.stringify(data)
+                })
+                    .then(res => res.json())
+                    .then(client => {
+                        fillForm(client);
+                    });
+            }
+        });
+        
+        
         fetch('/get-new-order-id')
         .then(res => res.json())
         .then(res => {
@@ -18,14 +43,22 @@ const toggleForm = (e) => {
         });
     } else if (purpose === 'edit') {
         const id = $(e.currentTarget).data('id');
-        const url = '/get-order/' + id;
-        $('#result-fieldset').prop('disabled', false);
-        $('button[type=reset').addClass('invisible');
+        $('.cake fieldset').prop('disabled', false);
         $('.delete-btn').removeClass('invisible');
-        fetch(url)
+        fetch(`/get-order/${id}`)
             .then(res => res.json())
             .then(product => {
                 fillForm(product);
+            });
+    } else if (purpose === 'edit-client') {
+        const id = $(e.currentTarget).data('id');
+        $('.cake #client-fieldset').prop('disabled', false);
+        $('.order-header').addClass('invisible');
+        $('.form-close').addClass('invisible');
+        fetch(`/get-client/${id}`)
+            .then(res => res.json())
+            .then(client => {
+                fillForm(client);
             });
     }
     $('.submit-new').off().on('click', {formPurpose: purpose}, sendOrder);
@@ -35,7 +68,8 @@ const toggleForm = (e) => {
 const sendOrder = (e) => {
     const form = $('.cake');
     const purpose = e.data.formPurpose;
-    const link = purpose === 'create' ? '/add-order' : '/edit-order';
+    const link = purpose === 'create' ? '/add-order' : 
+                 purpose === 'edit' ? '/edit-order' : '/edit-client';
     if (form[0].checkValidity()) {
         e.preventDefault();
         fetch(link, {
@@ -60,8 +94,8 @@ const showAlert = (message) => {
     }, 1500);
 };
 
-const fillForm = (productData) => {
-    const data = productData;
+const fillForm = (formData) => {
+    const data = formData;
     $('.order-number').html(data['order_id']);
     $('.delete-btn').data('id', data['order_id']);
     let keys = Object.keys(data);
@@ -116,6 +150,8 @@ jQuery.fn.serializeObject = function() {
 $('.new-order').click({formPurpose: 'create'}, toggleForm);
 
 $('.products-showcase').on('click', '.btn-edit-order, .cake-body-icon', {formPurpose: 'edit'}, toggleForm);
+
+$('.products-showcase').on('click', '.btn-edit-client', {formPurpose: 'edit-client'}, toggleForm);
 
 $('.delete-btn').click(function() {
     const id = $(this).data('id');

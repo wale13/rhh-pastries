@@ -18,12 +18,15 @@
 
 body {
     margin: 0;
-    /*background: linear-gradient(45deg, var(--second-bg-color), var(--main-bg-color), var(--second-bg-color));*/
     background-color: #888;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     min-height: 100vh;
+}
+
+.red-body {
+    background: linear-gradient(45deg, var(--second-bg-color), var(--main-bg-color), var(--second-bg-color));
 }
 
 header {
@@ -46,16 +49,17 @@ header a {
     margin: 10px;
 }
 
-header a, #scroll {
+header a, #scroll, #color-changer {
     font-family: 'Marck Script', cursive;
     font-size: 1.8rem;
     text-decoration: none;
     filter: drop-shadow(2px 4px 3px #666);
     color: #DDD;
+    cursor: pointer;
+    opacity: .8;
 }
 
-header a:hover, #scroll:hover {
-    text-shadow: 0px 0px 5px #FFF;
+header a:hover, #scroll:hover, #color-changer:hover {
     color: white;
     filter: drop-shadow(0px 0px 4px #EEE);
 }
@@ -70,14 +74,15 @@ header a:hover, #scroll:hover {
     color: #FFF;
 }
 
-section {
-    display: flex;
-}
-
 .left-menu {
-    flex: 1;
-    min-width: 150px;
-    padding-top: 15px;
+    display: flex;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 150px;
+    height: 100vh;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .section-name {
@@ -121,6 +126,7 @@ li.active {
     align-items: flex-start;
     align-content: flex-start;
     padding: 5px;
+    padding-left: 150px;
     width: 100%;
 }
 
@@ -180,6 +186,7 @@ li.active {
 .card {
     flex: 1 0 auto;
     width: 250px;
+    max-width: 35%;
     box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.35), 0 7px 20px 0 rgba(0, 0, 0, 0.25);
     background-color: #999;
     margin: 5px;
@@ -208,6 +215,30 @@ li.active {
     height: 15.6rem;
     object-fit: cover;
     cursor: pointer;
+}
+
+.clients-cakes {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.clients-cakes .cake-main {
+    flex: 1 0 auto;
+    margin: 2px;
+    width: 75px;
+    max-width: 25%;
+}
+
+.clients-cakes h4,
+.clients-cakes h5 {
+    font-size: small;
+}
+
+.mini {
+    width: 100%;
+    height: 75px;
 }
 
 .cake-name {
@@ -243,7 +274,7 @@ li.active {
     right: 0;
 }
 
-.cake-details, .user-details {
+.cake-details, .client-details {
     padding: 5px;
     flex: 1 1 auto;
     display: flex;
@@ -294,16 +325,16 @@ li.active {
 }
 
 .cake-details .form-buttons,
-.user-details .form-buttons {
+.client-details .form-buttons {
     text-align: right;
     filter: drop-shadow(-2px 2px 1px #999);
 }
 
-.user-card {
+.client-card {
     display: flex;
     min-width: 350px;
     max-width: 600px;
-    flex-flow: row;
+    flex-flow: row wrap;
     background-color: #EEE;
     text-align: center;
 }
@@ -316,10 +347,15 @@ li.active {
     cursor: pointer;
 }
 
+h2 {
+    text-shadow: -1px 2px 2px #999;
+    font-size: small;
+}
+
 h2, h3 {
     padding: 0;
     margin: 0;
-    font-size: larger;
+    font-size: large;
 }
 
 h4 {
@@ -328,7 +364,7 @@ h4 {
     font-size: medium;
 }
 
-.btn-edit-order, .btn-edit-user {
+.card-button  {
     font-size: 1.5rem;
     border: none;
     background-color: transparent;
@@ -338,8 +374,7 @@ h4 {
     color: #555;
 }
 
-.btn-edit-order:hover, 
-.btn-edit-user:hover {
+.card-button:hover {
     color: #F22;
 }
 
@@ -381,6 +416,12 @@ h4 {
     bottom: 20px;
     right: 20px;
     display: none;
+}
+
+#color-changer {
+    position: fixed;
+    top: 20px;
+    left: 20px;
 }
 
 footer {

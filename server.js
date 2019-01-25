@@ -1,4 +1,3 @@
-// to run add " -r dotenv/config" to "start" at "package.json"
 const express = require('express');
 const app = express();
 app.use(express.static('public'));
@@ -6,9 +5,10 @@ app.use(express.json());
 const fs = require('fs');
 const CronJob = require('cron').CronJob;
 const { checkOrdersDB, addNewOrderRouter, editOrderRouter, deleteOrderRouter, 
-        insertTimeStamp, getNewOrderIDRouter, getPageContentRouter, 
-        getCakesQtyRouter, getOrderRouter, insertDateStamp, 
-        getAdminPageContentRouter, getSectionsRouter } = require('./db-utils');
+        getClientsCakesRouter, getNewOrderIDRouter, getPageContentRouter, 
+        getCakesQtyRouter, getOrderRouter, insertDateStamp, insertTimeStamp, 
+        getAdminPageContentRouter, getSectionsRouter, getClientRouter, 
+        editClientRouter } = require('./db-utils');
 const passport = require('./passport.js');
 const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn('/login');
 const backupDB = new CronJob('00 00 23 * * *', () => {
@@ -38,6 +38,9 @@ app.use('/get-page', getPageContentRouter);
 app.use('/get-admin-page', ensureLoggedIn, getAdminPageContentRouter);
 app.use('/get-cakes-qty', getCakesQtyRouter);
 app.use('/get-order', getOrderRouter);
+app.use('/get-client', getClientRouter);
+app.use('/edit-client', editClientRouter);
+app.use('/client-cakes', getClientsCakesRouter);
 app.use('/get-sections', getSectionsRouter);
 
 app.get('/', 

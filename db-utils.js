@@ -56,20 +56,27 @@ const tableDataParser = (req, res, next) => {
 };
 
 const checkSection = (req, res, next) => {
+    req.body.selectClause = '*'
     req.body.fromClause = 'Orders';
     req.body.joinClause = '';
     req.body.whereClause = '';
-    req.body.orderBy = 'rowid DESC';
+    req.body.groupClause = '';
+    req.body.orderClause = 'rowid DESC';
     req.body.limitClause = `LIMIT ${req.body.offset}, ${req.body.limit}`;
     if (req.body.section === 'in-work') {
         req.body.joinClause = `INNER JOIN Clients 
                                ON Orders.client_id = Clients.client_id`;
         req.body.whereClause = 'WHERE result_photo = "" OR result_photo IS NULL';
-        req.body.orderBy = 'deadline ASC';
+        req.body.orderClause = 'deadline ASC';
         req.body.limitClause = '';
     } else if (req.body.section === 'all-clients') {
+        req.body.selectClause = `Clients.client_id, name, surname, tel, avatar, 
+                                 count(*) AS total, 
+                                 SUM(result_photo = '') AS in_progress`;
         req.body.fromClause = 'Clients';
-        req.body.orderBy = 'name ASC, surname ASC';
+        req.body.joinClause = 'INNER JOIN Orders ON Orders.client_id = Clients.client_id';
+        req.body.groupClause = 'GROUP BY Clients.client_id';
+        req.body.orderClause = 'in_progress DESC, name ASC, surname ASC';
         req.body.limitClause = '';
     } else if (req.body.section !== 'all') {
         req.body.whereClause = `WHERE cake_section = "${req.body.section}"`;
@@ -84,8 +91,7 @@ addNewOrderRouter.post('/', tableDataParser, (req, res) => {
     const addNewOrder = () => {
         db.get(`SELECT client_id 
                 FROM Clients 
-                WHERE name = '${req.body.name}' 
-                AND surname = '${req.body.surname}';`,
+                WHERE tel = '${req.body.tel}';`,
                 (err, row) => {
                     if (err) {
                         console.log(err);
@@ -131,6 +137,18 @@ editOrderRouter.post('/', tableDataParser, (req, res) => {
     });
     res.status(201).send(JSON.stringify('Дані успішно оновлено.'));
     console.log(insertTimeStamp(), `Order successfully updated!`);
+});
+
+const editClientRouter = express.Router();
+
+editClientRouter.post('/', tableDataParser, (req, res) => {
+    console.log(insertTimeStamp(), `Received edited client # ${req.body.client_id} data.`);
+    db.run(`UPDATE Clients 
+            SET (${req.clientKeys}) = (${req.clientValues}) 
+            WHERE client_id = ${req.body.client_id};`, 
+            logNodeError);
+    res.status(201).send(JSON.stringify('Дані успішно оновлено.'));
+    console.log(insertTimeStamp(), `Client's data successfully updated!`);
 });
 
 const deleteOrderRouter = express.Router();
@@ -199,7 +217,7 @@ getPageContentRouter.post('/', checkSection, (req, res) => {
                 sponges
             FROM Orders 
             ${req.body.whereClause} 
-            ORDER BY rowid DESC 
+            ORDER BY ${req.body.orderClause} 
             LIMIT ${req.body.offset}, ${req.body.limit};`, 
             (err, rows) => {
                 if (err) {
@@ -229,11 +247,12 @@ getSectionsRouter.get('/', (req, res) => {
 const getAdminPageContentRouter = express.Router();
 
 getAdminPageContentRouter.post('/', checkSection, (req, res) => {
-    db.all(`SELECT * 
+    db.all(`SELECT ${req.body.selectClause} 
             FROM ${req.body.fromClause} 
             ${req.body.joinClause} 
             ${req.body.whereClause} 
-            ORDER BY ${req.body.orderBy} 
+            ${req.body.groupClause} 
+            ORDER BY ${req.body.orderClause} 
             ${req.body.limitClause};`, 
             (err, rows) => {
                 if (err) {
@@ -261,6 +280,49 @@ getOrderRouter.get('/:id', (req, res) => {
             });
 });
 
+const getClientRouter = express.Router();
+
+getClientRouter.get('/:clientID', (req, res) => {
+    db.get(`SELECT *
+            FROM Clients
+            WHERE client_id = '${req.params.clientID}';`,
+            (err, row) => {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                res.status(200).send(row);
+            });
+});
+
+getClientRouter.post('/', (req, res) => {
+    db.get(`SELECT *
+            FROM Clients
+            WHERE tel = '${req.body.tel}';`,
+            (err, row) => {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                res.status(200).send(row);
+            });
+});
+
+const getClientsCakesRouter = express.Router();
+
+getClientsCakesRouter.get('/:clientID', (req, res) => {
+    db.all(`SELECT order_id, result_photo, prototype, theme
+            FROM Orders
+            WHERE client_id = '${req.params.clientID}';`,
+            (err, rows) => {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                res.status(200).send(rows);
+            });
+});
+
 module.exports = {
     addNewOrderRouter,
     editOrderRouter,
@@ -271,7 +333,10 @@ module.exports = {
     getSectionsRouter,
     getAdminPageContentRouter,
     getOrderRouter,
+    getClientsCakesRouter,
     checkOrdersDB,
     insertTimeStamp,
+    getClientRouter,
+    editClientRouter,
     insertDateStamp
 };
