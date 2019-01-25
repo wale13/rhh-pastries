@@ -15,9 +15,11 @@ const toggleForm = (e) => {
         $('.cake fieldset:not(#result-fieldset)').prop('disabled', false);
         $('button[type=reset').removeClass('invisible');
         $('#avatar-link, #prototype-link').click();
-        
-        // По введенню телефона:
-        
+        fetch('/get-new-order-id')
+        .then(res => res.json())
+        .then(res => {
+            $('.order-number').html(res);
+        });
         $('input[name="tel"]').off().focusout(function() {
             if ($(this).val().length == 10) {
                 const data = {tel: $(this).val().toString()};
@@ -33,13 +35,6 @@ const toggleForm = (e) => {
                         fillForm(client);
                     });
             }
-        });
-        
-        
-        fetch('/get-new-order-id')
-        .then(res => res.json())
-        .then(res => {
-            $('.order-number').html(res);
         });
     } else if (purpose === 'edit') {
         const id = $(e.currentTarget).data('id');
