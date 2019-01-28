@@ -1,2 +1,2 @@
 .env
-**/cake-db/*.db
+**/cake-db/**/*.db
