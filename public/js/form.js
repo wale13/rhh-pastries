@@ -138,12 +138,12 @@
                         <img id='result-img' src="./pic/cake.jpg"></img>
                     </div>
                 </div>
-                <div class='invisible'>
-                    <label for="client_id">клієнт №</label>
-                    <input type="text" name="client_id" readonly><br>
-                    <label for="order_id">замовлення №</label>
-                    <input type="text" name="order_id" readonly><br>
-                </div>
+            </fieldset>
+            <fieldset id='tech_data' class='invisible'>
+                <label for="client_id">клієнт №</label>
+                <input type="text" name="client_id" readonly><br>
+                <label for="order_id">замовлення №</label>
+                <input type="text" name="order_id" readonly><br>
             </fieldset>
             <div class='form-buttons'>
                 <button type='submit' class='submit-new action-button green-btn'>

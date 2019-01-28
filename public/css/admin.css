@@ -304,6 +304,7 @@ li.active {
 }
 
 .order-details {
+    width: 100%;
     border-collapse: collapse;
 }
 

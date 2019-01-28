@@ -12,7 +12,7 @@ const toggleForm = (e) => {
     $('.delete-btn').addClass('invisible');
     $('.order-header').removeClass('invisible');
     if (purpose === 'create') {
-        $('.cake fieldset:not(#result-fieldset)').prop('disabled', false);
+        $('.cake fieldset:not(#result-fieldset):not(#tech_data)').prop('disabled', false);
         $('button[type=reset').removeClass('invisible');
         $('#avatar-link, #prototype-link').click();
         fetch('/get-new-order-id')
@@ -47,7 +47,7 @@ const toggleForm = (e) => {
             });
     } else if (purpose === 'edit-client') {
         const id = $(e.currentTarget).data('id');
-        $('.cake #client-fieldset').prop('disabled', false);
+        $('#client-fieldset, #tech_data').prop('disabled', false);
         $('.order-header').addClass('invisible');
         $('.form-close').addClass('invisible');
         fetch(`/get-client/${id}`)

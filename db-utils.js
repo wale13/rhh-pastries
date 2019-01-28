@@ -72,7 +72,7 @@ const checkSection = (req, res, next) => {
     } else if (req.body.section === 'all-clients') {
         req.body.selectClause = `Clients.client_id, name, surname, tel, avatar, 
                                  count(*) AS total, 
-                                 SUM(result_photo = '') AS in_progress`;
+                                 SUM(result_photo = '' OR result_photo IS NULL) AS in_progress`;
         req.body.fromClause = 'Clients';
         req.body.joinClause = 'INNER JOIN Orders ON Orders.client_id = Clients.client_id';
         req.body.groupClause = 'GROUP BY Clients.client_id';
