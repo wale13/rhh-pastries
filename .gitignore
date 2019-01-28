@@ -1,2 +1,2 @@
 .env
-/**/cake-db/**/*.db
+/private/cake-db/orders.db
