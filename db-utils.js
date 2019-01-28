@@ -59,14 +59,14 @@ const checkSection = (req, res, next) => {
     req.body.selectClause = '*'
     req.body.fromClause = 'Orders';
     req.body.joinClause = '';
-    req.body.whereClause = 'WHERE result_photo != "" ';
+    req.body.whereClause = 'WHERE result_photo != "" AND result_photo IS NOT NULL ';
     req.body.groupClause = '';
     req.body.orderClause = 'rowid DESC';
     req.body.limitClause = `LIMIT ${req.body.offset}, ${req.body.limit}`;
     if (req.body.section === 'in-work') {
         req.body.joinClause = `INNER JOIN Clients 
                                ON Orders.client_id = Clients.client_id`;
-        req.body.whereClause = 'WHERE result_photo = ""';
+        req.body.whereClause = 'WHERE result_photo = "" OR result_photo IS NULL';
         req.body.orderClause = 'deadline ASC';
         req.body.limitClause = '';
     } else if (req.body.section === 'all-clients') {
