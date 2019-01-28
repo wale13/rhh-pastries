@@ -59,14 +59,14 @@ const checkSection = (req, res, next) => {
     req.body.selectClause = '*'
     req.body.fromClause = 'Orders';
     req.body.joinClause = '';
-    req.body.whereClause = '';
+    req.body.whereClause = 'WHERE result_photo != ""';
     req.body.groupClause = '';
     req.body.orderClause = 'rowid DESC';
     req.body.limitClause = `LIMIT ${req.body.offset}, ${req.body.limit}`;
     if (req.body.section === 'in-work') {
         req.body.joinClause = `INNER JOIN Clients 
                                ON Orders.client_id = Clients.client_id`;
-        req.body.whereClause = 'WHERE result_photo = "" OR result_photo IS NULL';
+        req.body.whereClause = 'WHERE result_photo = ""';
         req.body.orderClause = 'deadline ASC';
         req.body.limitClause = '';
     } else if (req.body.section === 'all-clients') {
@@ -79,7 +79,7 @@ const checkSection = (req, res, next) => {
         req.body.orderClause = 'in_progress DESC, name ASC, surname ASC';
         req.body.limitClause = '';
     } else if (req.body.section !== 'all') {
-        req.body.whereClause = `WHERE cake_section = "${req.body.section}"`;
+        req.body.whereClause += `AND cake_section = "${req.body.section}"`;
     }
     next();
 };
@@ -234,7 +234,7 @@ const getSectionsRouter = express.Router();
 getSectionsRouter.get('/', (req, res) => {
     db.all(`SELECT DISTINCT cake_section
             FROM Orders
-            WHERE cake_section NOT NULL
+            WHERE cake_section != '' 
             ORDER BY cake_section ASC;`,
             (err, rows) => {
                 if (err) {
