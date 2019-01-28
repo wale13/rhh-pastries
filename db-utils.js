@@ -59,7 +59,7 @@ const checkSection = (req, res, next) => {
     req.body.selectClause = '*'
     req.body.fromClause = 'Orders';
     req.body.joinClause = '';
-    req.body.whereClause = 'WHERE result_photo != ""';
+    req.body.whereClause = 'WHERE result_photo != "" ';
     req.body.groupClause = '';
     req.body.orderClause = 'rowid DESC';
     req.body.limitClause = `LIMIT ${req.body.offset}, ${req.body.limit}`;
