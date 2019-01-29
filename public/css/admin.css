@@ -431,6 +431,10 @@ footer {
     color: white;
 }
 
+footer a {
+    color: white;
+}
+
 p {
     margin: 0;
     text-align: center;
