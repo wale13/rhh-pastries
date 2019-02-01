@@ -16,7 +16,7 @@
                         <input type="text" name="surname" placeholder="Прізвище"><br>
                         <label for="tel">Номер тел.:</label>
                         <input type="text" name="tel" placeholder="Телефон"><br>
-                        <label for="avatar">Ссилка на фото клієнта:</label>
+                        <label for="avatar">Аватарка:</label>
                         <input type="url" id='avatar-link' name="avatar" placeholder="URL аватарки">
                     </div>
                     <div class='details-simple'>
@@ -40,14 +40,14 @@
                         <input type="text" name="theme" placeholder="Тема торта" required><br>
                         <label for="deadline">На коли:</label>
                         <input type="date" name="deadline" required><br>
-                        <label for="desired_weight">Бажана вага:</label>
-                        <input type="text" name="desired_weight" placeholder="Бажана вага"><br>
+                        <label for="base_price">Ціна за кг:</label>
+                        <input type="text" name="base_price" required><br>
                     </div>
                     <div class='details-right'>
                         <label for="desired_value">Бажана ціна:</label>
                         <input type="text" name="desired_value" placeholder="Бажана ціна"><br>
-                        <label for="base_price">Ціна за кг:</label>
-                        <input type="text" name="base_price" value='270'required><br>
+                        <label for="desired_weight">Бажана вага:</label>
+                        <input type="text" name="desired_weight" placeholder="Бажана вага"><br>
                         <label for='diameter'>d коржів: </label>
                         <select name='diameter' required>
                             <option value='18 см'>18 см</option>
@@ -56,7 +56,7 @@
                             <option value='28 см'>28 см</option>
                             <option value='Інше'>Інше</option>
                         </select><br>
-                        <label for="prototype">Лінк на прототип:</label>
+                        <label for="prototype">Прототип:</label>
                         <input type="url" id='prototype-link' name="prototype" placeholder='Ссилка на торт-приклад'>
                     </div>
                     <div class='details-simple'>
@@ -71,8 +71,8 @@
                     <label><input type="checkbox" name="sponges" value='шоколадні'><span>Шоколадні</span></label>
                     <label><input type="checkbox" name="sponges" value='горіхові'><span>Горіхові</span></label>
                     <label><input type="checkbox" name="sponges" value='масляний бісквіт'><span>Масляний бісквіт</span></label>
-                    <label><input type="checkbox" name="sponges" value='червоний оксамит'><span>Червоний оксамит</span></label></br>
-                    <label><input type="checkbox" name="sponges" value='медові'><span>Медові</span></label>
+                    <label><input type="checkbox" name="sponges" value='червоний оксамит'><span>Червоний оксамит</span></label>
+                    <label><input type="checkbox" name="sponges" value='медові'><span>Медові</span></label></br>
                     <label><input type="checkbox" name="sponges" value='кокосові'><span>Кокосові</span></label>
                     <label><input type="checkbox" name="sponges" value='кольорові'><span>Кольорові</span></label>
                 </div>
@@ -86,10 +86,15 @@
                     <label><input type="checkbox" name="fillings" value='чорниця'><span>Чорниця</span></label>
                     <label><input type="checkbox" name="fillings" value='малина'><span>Малина</span></label>
                     <label><input type="checkbox" name="fillings" value='чорна смородина'><span>Чорна смородина</span></label>
-                    <label><input type="checkbox" name="fillings" value='ананаси'><span>Ананаси</span></label>
-                    <label><input type="checkbox" name="fillings" value='горіхи'><span>Горіхи</span></label></br>
+                    <label><input type="checkbox" name="fillings" value='ананаси'><span>Ананаси</span></label></br>
+                    <label><input type="checkbox" name="fillings" value='горіхи'><span>Горіхи</span></label>
                     <label><input type="checkbox" name="fillings" value='полуниця'><span>Полуниця</span></label>
+                    <label><input type="checkbox" name="fillings" value='груші'><span>Груші</span></label>
+                    <label><input type="checkbox" name="fillings" value='виноград'><span>Виноград</span></label>
                     <label><input type="checkbox" name="fillings" value='конфі'><span>Конфі</span></label>
+                    <label><input type="checkbox" name="fillings" value='фруктове желе'><span>Желе</span></label>
+                    <label><input type="checkbox" name="fillings" value='шоколадна крихта'><span>Шок. крихта</span></label>
+                    <label><input type="checkbox" name="fillings" value='меренга'><span>Меренга</span></label></br>
                     <label><input type="checkbox" name="fillings" value='кокос'><span>Кокос</span></label>
                     <label><input type="checkbox" name="fillings" value='цукерки'><span>Цукерки</span></label>
                 </div>
@@ -105,8 +110,9 @@
                     <label><input type="checkbox" name="cream" value='масло+згущонка'><span>Масло + згущонка</span></label>
                     <label><input type="checkbox" name="cream" value='творожний'><span>Творожний</span></label>
                     <label><input type="checkbox" name="cream" value='заварний'><span>Заварний</span></label>
-                    <label><input type="checkbox" name="cream" value='заварний+згущонка'><span>Заварний + згущонка</span></label>
-                    <label><input type="checkbox" name="cream" value='заварний+шоколад'><span>Заварний + шоколад</span></label></br>
+                    <label><input type="checkbox" name="cream" value='білково-заварний'><span>Білково-заварний</span></label>
+                    <label><input type="checkbox" name="cream" value='заварний+згущонка'><span>Заварний + згущонка</span></label></br>
+                    <label><input type="checkbox" name="cream" value='заварний+шоколад'><span>Заварний + шоколад</span></label>
                     <label><input type="checkbox" name="cream" value='мус'><span>Мус</span></label>
                     <label><input type="checkbox" name="cream" value='крем-чіз'><span>Крем-чіз</span></label>
                 </div>
@@ -118,7 +124,7 @@
                     </div>
                     <div class='details-simple'>
                         <label id='comments-label' for="comments">Коментар: </label>
-                        <textarea rows="3" cols="60" name="comments"></textarea>
+                        <textarea rows="3" cols="50" name="comments"></textarea>
                     </div>
                 </div>
             </fieldset>
@@ -126,7 +132,7 @@
                 <legend align='center'>Результат:</legend>
                 <div class='fieldset-items'>
                     <div class='details-left'>
-                        <label for="result_photo">Лінк на результат:</label>
+                        <label for="result_photo">Результат:</label>
                         <input type="url" id='result-link' name="result_photo" placeholder='Ссилка на результат'><br>
                         <label for="final_weight">Фінальна вага:</label>
                         <input type="text" name="final_weight" placeholder="Фінальна вага"><br>
