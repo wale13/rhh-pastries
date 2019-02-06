@@ -33,7 +33,7 @@ const logNodeError = error => {
   }
 };
 
-const tableDataParser = (req, res, next) => {
+const formDataParser = (req, res, next) => {
     ['sponges', 'fillings', 'cream', 'delivery'].forEach( el => {
         if (!req.body[el]) {req.body[el] = ''}
     });
@@ -86,13 +86,13 @@ const checkSection = (req, res, next) => {
 
 const addNewOrderRouter = express.Router();
 
-addNewOrderRouter.post('/', tableDataParser, (req, res) => {
+addNewOrderRouter.post('/', formDataParser, (req, res) => {
     console.log(insertTimeStamp(), 'Received some new order...');
     const addNewOrder = () => {
         db.get(`SELECT client_id 
                 FROM Clients 
-                WHERE name = '${req.body.name}' 
-                AND surname = '${req.body.surname}';`,
+                WHERE name = "${req.body.name}" 
+                AND surname = "${req.body.surname}";`,
                 (err, row) => {
                     if (err) {
                         console.log(err);
@@ -124,7 +124,7 @@ addNewOrderRouter.post('/', tableDataParser, (req, res) => {
 
 const editOrderRouter = express.Router();
 
-editOrderRouter.post('/', tableDataParser, (req, res) => {
+editOrderRouter.post('/', formDataParser, (req, res) => {
     console.log(insertTimeStamp(), `Received edited order # ${req.body.order_id}.`);
     db.parallelize(() => {
         db.run(`UPDATE Clients 
@@ -142,7 +142,7 @@ editOrderRouter.post('/', tableDataParser, (req, res) => {
 
 const editClientRouter = express.Router();
 
-editClientRouter.post('/', tableDataParser, (req, res) => {
+editClientRouter.post('/', formDataParser, (req, res) => {
     console.log(insertTimeStamp(), `Received edited client # ${req.body.client_id} data.`);
     db.run(`UPDATE Clients 
             SET (${req.clientKeys}) = (${req.clientValues}) 
@@ -324,6 +324,21 @@ getClientsCakesRouter.get('/:clientID', (req, res) => {
             });
 });
 
+const getClientsListRouter = express.Router();
+
+getClientsListRouter.get('/', (req, res) => {
+    db.all(`SELECT client_id, avatar, name, surname 
+            FROM Clients 
+            ORDER BY name ASC, surname ASC;`,
+            (err, rows) => {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                res.status(200).send(rows);
+            });
+});
+
 module.exports = {
     addNewOrderRouter,
     editOrderRouter,
@@ -339,5 +354,6 @@ module.exports = {
     insertTimeStamp,
     getClientRouter,
     editClientRouter,
+    getClientsListRouter,
     insertDateStamp
 };

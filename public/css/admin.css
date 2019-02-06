@@ -29,6 +29,10 @@ body {
     background: linear-gradient(45deg, var(--second-bg-color), var(--main-bg-color), var(--second-bg-color));
 }
 
+.hide-scroll {
+    overflow: hidden;
+}
+
 header {
     display: flex;
     justify-content: space-between;

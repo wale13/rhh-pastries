@@ -235,6 +235,8 @@ header {
     position: absolute;
     bottom: 0;
     width: 100%;
+    padding: 2px 2px 3px;
+    line-height: 100%;
 }
 
 .cake-details {

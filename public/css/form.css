@@ -23,6 +23,8 @@
     border-radius: 15px;
     padding: 5px 7px;
     background-color: #EEE;
+    position: relative;
+    perspective: 800px;
 }
 
 .form-header {
@@ -55,7 +57,7 @@ select:focus {
     outline-color: #F50;
 }
 
-.cake legend {
+.cake legend, .contacts-heading {
     text-shadow: 1px 1px 3px;
     padding: 4px 7px;
     display: inline-block;
@@ -90,6 +92,7 @@ input:checked+span {
     margin-bottom: 3px;
     box-shadow: 0 10px 15px 0 rgba(0, 0, 0, 0.25);
     background-color: #FFF;
+    padding-bottom: 3px;
 }
 
 .cake fieldset:disabled {
@@ -120,6 +123,7 @@ input:checked+span {
     text-align: center;
     margin-top: auto;
     margin-bottom: auto;
+    position: relative;
 }
 
 #avatar-img,
@@ -137,6 +141,77 @@ input:checked+span {
     position: relative;
     top: -5px;
     cursor: pointer;
+}
+
+.btn-contacts {
+    position: absolute;
+    top: 0;
+    right: 7px;
+    font-size: x-large;
+    color: #999;
+    cursor: pointer;
+    transition: 1s 0.1s;
+}
+
+.btn-contacts.active {
+    color: #F50;
+}
+
+.contacts {
+    position: absolute;
+    top: 0;
+    left: 101%;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    max-height: 100%;
+    width: 0;
+    transform-origin: -5% 0%;
+    transition: 1s 0.1s;
+    transform: rotateY(65deg);
+}
+
+.contacts.shown {
+    width: auto;
+    backface-visibility: hidden;
+    transform: rotateY(0deg);
+}
+
+.contacts-list {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.contact-card {
+    flex: 1 1 auto;
+    display: flex;
+    font-size: smaller;
+    background-color: #EEE;
+    cursor: pointer;
+}
+
+.contact-card:nth-of-type(even) {
+    background-color: #BBB;
+    color: white;
+}
+
+.contact-card:hover {
+    filter: brightness(110%);
+}
+
+.contact-img {
+    display: block;
+    object-fit: cover;
+    height: 50px;
+    width: 50px;
+}
+
+.contact-name {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 3px;
+    width: 100%;
 }
 
 .form-close {

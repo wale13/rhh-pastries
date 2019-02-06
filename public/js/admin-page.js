@@ -60,14 +60,14 @@ class CakeList {
                           comments = cake.comments,
                           delivery = cake.delivery,
                           weight = cake.desired_weight,
-                          fullName = cake.name + ' ' + cake.surname,
+                          fullName = cake.name + " " + cake.surname,
                           shortDate = new Date(cake['deadline']).toLocaleDateString("uk-UA");
                     let details = `<div class='client'>
                                         <img class='mini-avatar'
-                                             src='${cake.avatar ? cake.avatar : './pic/noavatar.jpg'}'
-                                             alt='${fullName + '</br>' + cake.tel}'>
+                                             src="${cake.avatar ? cake.avatar : './pic/noavatar.jpg'}"
+                                             alt="${fullName + "</br>" + cake.tel}">
                                         <div class='client-info'>
-                                            <p>${cake.name + ' ' + cake.surname}</p>
+                                            <p>${cake.name + " " + cake.surname}</p>
                                             <p>${cake.tel}</p>
                                         </div>
                                    </div>
@@ -90,8 +90,8 @@ class CakeList {
                             ${delivery ? '<i class="fas fa-shipping-fast"></i>' : ''}
                             <div class='cake-main'>
                                 <img class='cake-icon' 
-                                     src='${(cake.result_photo ? cake.result_photo : cake.prototype ? cake.prototype : './pic/cake.jpg')}'
-                                     alt='${cakeName}'
+                                     src="${(cake.result_photo ? cake.result_photo : cake.prototype ? cake.prototype : './pic/cake.jpg')}"
+                                     alt="${cakeName}"
                                      data-id='${cakeID}'>
                                 <h5 class='mini-id'>${cakeID}</h6>
                                 <h5 class='date'>${shortDate}</h5>
@@ -114,14 +114,14 @@ class CakeList {
         } else if (section === 'all-clients') {
             $('.pagination, .sorteners').addClass('invisible');
             content.forEach(client => {
-                const fullName = client.name + ' ' + client.surname,
+                const fullName = client.name + " " + client.surname,
                       clientID = client.client_id;
                 cakeListDomString += 
                     `<div class='card client-card'>
                         <div class='client-card-main'>
                             <img class='large-avatar'
                                  src='${client.avatar ? client.avatar : './pic/noavatar.jpg'}'
-                                 alt='${fullName + '</br>' + client.tel}'>
+                                 alt="${fullName + "</br>" + client.tel}">
                             <h5 class='mini-id'>${clientID}</h6>
                         </div>
                         <div class='client-details'>
@@ -154,7 +154,7 @@ class CakeList {
                 cakeListDomString += 
                     `<div class='card'>
                         <div class='cake-main'>
-                            <img class='cake-body-icon' 
+                            <img class='cake-body-icon unclickable' 
                                 src='${(cake.result_photo ? 
                                 cake.result_photo : cake.prototype ?
                                 cake.prototype : './pic/cake.jpg')}'
@@ -239,7 +239,7 @@ $('.products-showcase').on('click', '.btn-client-cakes', function() {
     target.slideToggle();
 });
 
-$('.products-showcase, .cake').on('click', 'img:not(.new-order-icon):not(.cake-body-icon)', function() {
+$('.products-showcase, .cake').on('click', 'img:not(.unclickable)', function() {
     const link = $(this).attr('src');
     if (!['./pic/cake.jpg', './pic/noavatar.jpg'].includes(link)) {
         const caption = $(this).attr('alt');
@@ -268,8 +268,7 @@ $(window).scroll(function(){
 });
 
 $('#scroll').click(function(){
-    $("html, body").animate({ scrollTop: 0 }, 600);
-    return false;
+    $('html, body').animate({ scrollTop: 0 }, 600);
 });
 
 $('#color-changer').click(() => {

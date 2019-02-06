@@ -8,7 +8,7 @@ const { checkOrdersDB, addNewOrderRouter, editOrderRouter, deleteOrderRouter,
         getClientsCakesRouter, getNewOrderIDRouter, getPageContentRouter, 
         getCakesQtyRouter, getOrderRouter, insertDateStamp, insertTimeStamp, 
         getAdminPageContentRouter, getSectionsRouter, getClientRouter, 
-        editClientRouter } = require('./db-utils');
+        getClientsListRouter, editClientRouter } = require('./db-utils');
 const passport = require('./passport.js');
 const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn('/login');
 const backupDB = new CronJob('00 00 23 * * *', () => {
@@ -40,6 +40,7 @@ app.use('/get-cakes-qty', getCakesQtyRouter);
 app.use('/get-order', getOrderRouter);
 app.use('/get-client', getClientRouter);
 app.use('/edit-client', editClientRouter);
+app.use('/get-clients-list', getClientsListRouter);
 app.use('/client-cakes', getClientsCakesRouter);
 app.use('/get-sections', getSectionsRouter);
 
@@ -49,7 +50,7 @@ app.get('/',
 app.route('/login')
     .get((req, res) => res.redirect('./login.html'))
     .post(passport.authenticate('local', 
-        { successReturnToOrRedirect: '/', failureRedirect: '/login' }));
+        { successReturnToOrRedirect: '/admin', failureRedirect: '/login' }));
 
 app.get('/logout', (req, res) => {
     req.logout();
@@ -57,10 +58,14 @@ app.get('/logout', (req, res) => {
 
 app.get('/admin*',
     ensureLoggedIn,
-    (req, res) => res.sendFile(__dirname + process.env.ADMIN_PAGE));
+    (req, res) => {
+        res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        res.sendFile(__dirname + process.env.ADMIN_PAGE);
+    });
 
 app.listen(process.env.PORT || 8080, process.env.IP || '0.0.0.0' );
 
 console.log(insertTimeStamp(), 'Server is running...', 
             process.env.PORT || 8080, process.env.IP || '0.0.0.0');
+            
 checkOrdersDB();

@@ -15,12 +15,15 @@
                         <label for="surname">Прізвище:</label>
                         <input type="text" name="surname" placeholder="Прізвище"><br>
                         <label for="tel">Номер тел.:</label>
-                        <input type="text" name="tel" placeholder="Телефон"><br>
+                        <input type="text" name="tel" placeholder="Телефон" pattern="\\d*" title="лише цифри"><br>
                         <label for="avatar">Аватарка:</label>
                         <input type="url" id='avatar-link' name="avatar" placeholder="URL аватарки">
                     </div>
                     <div class='details-simple'>
-                        <img id='avatar-img' src="./pic/noavatar.jpg" alt='аватарка'></img>
+                        <img id='avatar-img' src="./pic/noavatar.jpg" alt='аватарка'>
+                        <span class='btn-contacts'>
+                            <i class="far fa-address-book"></i>
+                        </span>
                     </div>
                 </div>
             </fieldset>
@@ -33,7 +36,6 @@
                             <option value='Мастіка'>Мастіка</option>
                             <option value='Крем'>Крем</option>
                             <option value='Дзеркальна глазур'>Дзеркальна глазур</option>
-                            <option value='Шоколадна заливка'>Шоколадна заливка</option>
                             <option value='Шоколадна глазур'>Шоколадна глазур</option>
                         </select><br>
                         <label for="theme">Тематика:</label>
@@ -73,8 +75,27 @@
                     <label><input type="checkbox" name="sponges" value='масляний бісквіт'><span>Масляний бісквіт</span></label>
                     <label><input type="checkbox" name="sponges" value='червоний оксамит'><span>Червоний оксамит</span></label>
                     <label><input type="checkbox" name="sponges" value='медові'><span>Медові</span></label></br>
+                    <label><input type="checkbox" name="sponges" value='наполеон'><span>Наполеон</span></label>
                     <label><input type="checkbox" name="sponges" value='кокосові'><span>Кокосові</span></label>
                     <label><input type="checkbox" name="sponges" value='кольорові'><span>Кольорові</span></label>
+                </div>
+            </fieldset>
+            <fieldset id='cream-fieldset'>
+                <legend align='center'>Крем:</legend>
+                <div class='details-simple'>
+                    <label><input type="checkbox" name="cream" value='сметанковий'><span>Сметанковий</span></label>
+                    <label><input type="checkbox" name="cream" value='вершковий'><span>Вершковий</span></label>
+                    <label><input type="checkbox" name="cream" value='маскарпоне'><span>Маскарпоне</span></label>
+                    <label><input type="checkbox" name="cream" value='маскарпоне+шоколад'><span>Маскарпоне + шоколад</span></label>
+                    <label><input type="checkbox" name="cream" value='масло+шоколад'><span>Масло + шоколад</span></label><br>
+                    <label><input type="checkbox" name="cream" value='масло+згущонка'><span>Масло + згущонка</span></label>
+                    <label><input type="checkbox" name="cream" value='творожний'><span>Творожний</span></label>
+                    <label><input type="checkbox" name="cream" value='заварний'><span>Заварний</span></label>
+                    <label><input type="checkbox" name="cream" value='білково-заварний'><span>Білково-заварний</span></label>
+                    <label><input type="checkbox" name="cream" value='заварний+згущонка'><span>Заварний + згущонка</span></label></br>
+                    <label><input type="checkbox" name="cream" value='заварний+шоколад'><span>Заварний + шоколад</span></label>
+                    <label><input type="checkbox" name="cream" value='мус'><span>Мус</span></label>
+                    <label><input type="checkbox" name="cream" value='крем-чіз'><span>Крем-чіз</span></label>
                 </div>
             </fieldset>
             <fieldset id='fillings-fieldset'>
@@ -97,24 +118,6 @@
                     <label><input type="checkbox" name="fillings" value='меренга'><span>Меренга</span></label></br>
                     <label><input type="checkbox" name="fillings" value='кокос'><span>Кокос</span></label>
                     <label><input type="checkbox" name="fillings" value='цукерки'><span>Цукерки</span></label>
-                </div>
-            </fieldset>
-            <fieldset id='cream-fieldset'>
-                <legend align='center'>Крем:</legend>
-                <div class='details-simple'>
-                    <label><input type="checkbox" name="cream" value='сметанковий'><span>Сметанковий</span></label>
-                    <label><input type="checkbox" name="cream" value='вершковий'><span>Вершковий</span></label>
-                    <label><input type="checkbox" name="cream" value='маскарпоне'><span>Маскарпоне</span></label>
-                    <label><input type="checkbox" name="cream" value='маскарпоне+шоколад'><span>Маскарпоне + шоколад</span></label>
-                    <label><input type="checkbox" name="cream" value='масло+шоколад'><span>Масло + шоколад</span></label><br>
-                    <label><input type="checkbox" name="cream" value='масло+згущонка'><span>Масло + згущонка</span></label>
-                    <label><input type="checkbox" name="cream" value='творожний'><span>Творожний</span></label>
-                    <label><input type="checkbox" name="cream" value='заварний'><span>Заварний</span></label>
-                    <label><input type="checkbox" name="cream" value='білково-заварний'><span>Білково-заварний</span></label>
-                    <label><input type="checkbox" name="cream" value='заварний+згущонка'><span>Заварний + згущонка</span></label></br>
-                    <label><input type="checkbox" name="cream" value='заварний+шоколад'><span>Заварний + шоколад</span></label>
-                    <label><input type="checkbox" name="cream" value='мус'><span>Мус</span></label>
-                    <label><input type="checkbox" name="cream" value='крем-чіз'><span>Крем-чіз</span></label>
                 </div>
             </fieldset>
             <fieldset id='comments-fieldset'>
@@ -150,7 +153,7 @@
                         </select>
                     </div>
                     <div class='details-simple'>
-                        <img id='result-img' src="./pic/cake.jpg"></img>
+                        <img id='result-img' src="./pic/cake.jpg">
                     </div>
                 </div>
             </fieldset>
@@ -174,6 +177,7 @@
                     Закрити <i class="fas fa-times"></i>
                 </button>
             </div>
+            <div class='contacts'></div>
         </form>
     </div>
     `);

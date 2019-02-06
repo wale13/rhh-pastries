@@ -1,6 +1,6 @@
-/* global $ jQuery fetch cakeList */
 const toggleFormShow = () => {
     $('div.form-holder').toggleClass('show-form', 600);
+    $('body').toggleClass('hide-scroll');
     $('form.cake')[0].reset();
 };
 
@@ -127,6 +127,7 @@ jQuery.fn.serializeObject = function() {
         let value;
         if (this.value != null) {
             value = this.value;
+            value = value.trim();
         } else {
             value = '';
         }
@@ -204,3 +205,54 @@ $('#result-link').on('click change', function() {
 });
 
 $('*[required]').prev().css('color', '#F50');
+
+$('.btn-contacts').click(function() {
+    if (!$('.contacts').hasClass('shown')) {
+        fetch('/get-clients-list')
+            .then(res => res.json())
+            .then(contacts => {
+                let contactsHTMLString = `<div class='contacts-heading'>
+                                              <p>Контакти:</p>
+                                          </div>
+                                          <div class='contacts-list'>`;
+                contacts.forEach(contact => {
+                    const name = contact.name,
+                          surname = contact.surname,
+                          avatar = contact.avatar;
+                    contactsHTMLString += `<div class='contact-card' 
+                                            data-id='${contact.client_id}'>
+                                                <div class='contact-photo'>
+                                                    <img class='contact-img unclickable' 
+                                                         src="${avatar ? avatar : './pic/noavatar.jpg'}" 
+                                                         alt='${name + surname}' 
+                                                    />
+                                                </div>
+                                                <div class='contact-name'>
+                                                    <p>${name}</p>
+                                                    <p>${surname}</p>
+                                                </div>
+                                           </div>`;
+                });
+                contactsHTMLString += '</div>';
+                $('.contacts').html(contactsHTMLString);
+            })
+            .then(() => {
+                $('.contacts').addClass('shown', 400);
+                $('.btn-contacts').addClass('active');
+            });
+    } else {
+        $('.contacts').removeClass('shown', 400);
+        $('.btn-contacts').removeClass('active');
+    }
+});
+
+$('.contacts').on('click', '.contact-card', function(e) {
+    const id = $(e.currentTarget).data('id');
+    fetch(`/get-client/${id}`)
+        .then(res => res.json())
+        .then(client => {
+            fillForm(client);
+        });
+    $('.contacts').removeClass('shown', 400);
+    $('.btn-contacts').removeClass('active');
+});
