@@ -30,12 +30,12 @@ app.use(require('express-session')({ secret: process.env.SECRET,
                                      saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use('/add-order', ensureLoggedIn, addNewOrderRouter);
-app.use('/edit-order', ensureLoggedIn, editOrderRouter);
-app.use('/delete-order', ensureLoggedIn, deleteOrderRouter);
+app.use('/add-order', addNewOrderRouter);
+app.use('/edit-order', editOrderRouter);
+app.use('/delete-order', deleteOrderRouter);
 app.use('/get-new-order-id', getNewOrderIDRouter);
 app.use('/get-page', getPageContentRouter);
-app.use('/get-admin-page', ensureLoggedIn, getAdminPageContentRouter);
+app.use('/get-admin-page', getAdminPageContentRouter);
 app.use('/get-cakes-qty', getCakesQtyRouter);
 app.use('/get-order', getOrderRouter);
 app.use('/get-client', getClientRouter);
