@@ -323,7 +323,7 @@ footer span a {
 .social {
     position: fixed;
     display: flex;
-    left: 2.75rem;
+    left: 0.75rem;
     bottom: 1rem;
     z-index: 2;
 }
@@ -345,6 +345,10 @@ footer span a {
 
 .social a:nth-of-type(2):hover {
     color: #e95950;
+}
+
+.social a:nth-of-type(3):hover {
+    color: #60F;
 }
 
 .modal {
