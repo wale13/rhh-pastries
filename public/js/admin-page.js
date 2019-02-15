@@ -223,7 +223,7 @@ $('.products-showcase').on('click', '.btn-client-cakes', function() {
                 cakes.forEach(cake => {
                     let cakeName = cake.theme;
                     const htmlString = `<div class='cake-main'>
-                                            <img class='cake-body-icon mini' 
+                                            <img class='cake-body-icon mini unclickable' 
                                                 src='${(cake.result_photo ? 
                                                 cake.result_photo : cake.prototype ?
                                                 cake.prototype : './pic/cake.jpg')}'

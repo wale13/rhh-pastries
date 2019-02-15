@@ -78,6 +78,7 @@
                     <label><input type="checkbox" name="sponges" value='наполеон'><span>Наполеон</span></label>
                     <label><input type="checkbox" name="sponges" value='кокосові'><span>Кокосові</span></label>
                     <label><input type="checkbox" name="sponges" value='кольорові'><span>Кольорові</span></label>
+                    <label><input type="checkbox" name="sponges" value='макові'><span>Макові</span></label>
                 </div>
             </fieldset>
             <fieldset id='cream-fieldset'>
@@ -118,6 +119,7 @@
                     <label><input type="checkbox" name="fillings" value='меренга'><span>Меренга</span></label></br>
                     <label><input type="checkbox" name="fillings" value='кокос'><span>Кокос</span></label>
                     <label><input type="checkbox" name="fillings" value='цукерки'><span>Цукерки</span></label>
+                    <label><input type="checkbox" name="fillings" value='чорнослив'><span>Чорнослив</span></label>
                 </div>
             </fieldset>
             <fieldset id='comments-fieldset'>
