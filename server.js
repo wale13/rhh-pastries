@@ -11,7 +11,7 @@ const { checkOrdersDB, addNewOrderRouter, editOrderRouter, deleteOrderRouter,
         getClientsListRouter, editClientRouter } = require('./db-utils');
 const passport = require('./passport.js');
 const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn('/login');
-const backupDB = new CronJob('00 00 23 * * *', () => {
+const backupDB = new CronJob('00 00 08 * * *', () => {
     console.log(insertTimeStamp(), 'Starting backup...');
     fs.copyFile(`${process.env.DB_PATH}orders.db`, 
                 `${process.env.DB_PATH}backup/orders-${insertDateStamp()}.db`, 
